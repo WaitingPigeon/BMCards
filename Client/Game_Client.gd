@@ -3239,7 +3239,7 @@ func effect_76(type_of_effect, zone_activating, color_activating, pos_activating
 				yield(damage_hero(2, color_activating, pos_activating, 4), "completed")
 				return
 			if not get_player2_spells_cards()[color_activating][pos_activating] == 0:
-				yield(damage_spell(1, color_activating, pos_activating, 4), "completed")
+				yield(damage_spell(2, color_activating, pos_activating, 4), "completed")
 				return
 func effect_77(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
 	yield(get_tree(), "idle_frame")
