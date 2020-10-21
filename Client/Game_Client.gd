@@ -3323,8 +3323,8 @@ func effect_84(type_of_effect, zone_activating, color_activating, pos_activating
 						yield(damage_hero(1, color, pos, 4), "completed")
 						yield(damage_hero(2, color, pos, 4), "completed")
 			elif life == 2:
-				yield(damage_player(1, "green", get_player2_points()["green"]/2), "completed")
-				yield(damage_player(1, "red", get_player2_points()["red"]/2), "completed")
+				yield(damage_player(1, "green", get_player1_points()["green"]/2), "completed")
+				yield(damage_player(1, "red", get_player1_points()["red"]/2), "completed")
 			else:
 				yield(draw_cards(2),"completed")
 func effect_85(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
