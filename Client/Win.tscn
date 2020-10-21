@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Win.gd" type="Script" id=1]
+[ext_resource path="res://Resources/Win.png" type="Texture" id=2]
+
+[node name="Node2D" type="Node2D"]
+position = Vector2( 271.139, 247.355 )
+script = ExtResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 185.516, 105.839 )
+scale = Vector2( 1.76184, 1.76665 )
+texture = ExtResource( 2 )
