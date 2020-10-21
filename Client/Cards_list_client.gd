@@ -1,5 +1,5 @@
 extends Node
-#Questa è una prova di GITHUB
+
 func get_color_heros(color):
 	var list = []
 	for card in card_list_dict:
