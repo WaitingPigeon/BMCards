@@ -2942,7 +2942,10 @@ func effect_51(type_of_effect, zone_activating, color_activating, pos_activating
 			while cards_deck.size() > 0 and counter < 3:
 				var card = cards_deck[index]
 				if load_card(card)["tipo"] == "hero":
+					rpc_id(Network.opponent, "play_sound", "draw")
+					play_sound("draw")
 					cards_deck.remove(index)
+					meta_rset_id(Network.opponent, "cards_deck", cards_deck)
 					yield(random_summon_hero(card), "completed")
 					counter += 1
 				else:
