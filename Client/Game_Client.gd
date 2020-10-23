@@ -1055,6 +1055,7 @@ func shuffle_deck():
 	cards_deck.shuffle()
 	meta_rset_id(Network.opponent, "cards_deck", cards_deck)
 remote func draw_cards(numOfCards):
+	
 	yield(get_tree(), "idle_frame")
 	if cards_deck.size() == 0:
 		lose_game()
