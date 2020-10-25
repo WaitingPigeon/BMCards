@@ -49,6 +49,8 @@ func _on_Button_pressed():
 	$LineEdit.clear()
 	Network.send_chat_line(string)
 
-
 func _on_Button2_pressed():
 	get_tree().quit()
+
+func _on_Button3_pressed():
+	OS.window_fullscreen = !OS.window_fullscreen

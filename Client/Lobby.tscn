@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://Lobby.gd" type="Script" id=1]
 [ext_resource path="res://Resources/Comic_Sans2.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Resources/Comic_Sans.tres" type="DynamicFont" id=3]
 
 [node name="Lobby" type="Node"]
 script = ExtResource( 1 )
@@ -11,25 +12,32 @@ margin_left = 19.0
 margin_top = 93.6471
 margin_right = 580.0
 margin_bottom = 441.647
+custom_fonts/font = ExtResource( 3 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Gioca" type="Button" parent="."]
-margin_left = 673.469
-margin_top = 53.1557
-margin_right = 867.469
-margin_bottom = 172.156
+margin_left = 652.142
+margin_top = 120.503
+margin_right = 846.142
+margin_bottom = 239.504
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color_disabled = Color( 0, 1, 0.133333, 1 )
+custom_colors/font_color = Color( 0, 1, 0.133333, 1 )
 text = "Gioca"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Annulla" type="Button" parent="."]
-margin_left = 678.756
-margin_top = 228.992
-margin_right = 873.756
-margin_bottom = 350.992
+margin_left = 651.817
+margin_top = 269.401
+margin_right = 846.817
+margin_bottom = 391.401
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color_disabled = Color( 0.921569, 0.0313726, 0.0313726, 1 )
+custom_colors/font_color = Color( 0.921569, 0.0313726, 0.0313726, 1 )
 disabled = true
 text = "Annulla"
 __meta__ = {
@@ -38,9 +46,9 @@ __meta__ = {
 
 [node name="Match_history" type="RichTextLabel" parent="."]
 margin_left = 14.4126
-margin_top = 485.0
+margin_top = 480.31
 margin_right = 600.413
-margin_bottom = 680.0
+margin_bottom = 675.31
 rect_clip_content = false
 bbcode_enabled = true
 scroll_following = true
@@ -49,19 +57,19 @@ __meta__ = {
 }
 
 [node name="LineEdit" type="LineEdit" parent="."]
-margin_left = 613.0
-margin_top = 506.0
-margin_right = 810.0
-margin_bottom = 562.0
+margin_left = 601.108
+margin_top = 521.46
+margin_right = 798.108
+margin_bottom = 577.46
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Button" type="Button" parent="."]
-margin_left = 825.439
-margin_top = 506.252
-margin_right = 894.439
-margin_bottom = 564.252
+margin_left = 813.547
+margin_top = 521.712
+margin_right = 882.547
+margin_bottom = 579.712
 text = "Invia"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -69,23 +77,35 @@ __meta__ = {
 
 [node name="Label" type="Label" parent="."]
 margin_left = 76.0859
-margin_top = 8.00902
+margin_top = 6.88658
 margin_right = 651.086
-margin_bottom = 117.009
+margin_bottom = 115.887
 custom_fonts/font = ExtResource( 2 )
-custom_colors/font_color = Color( 0.168627, 0.827451, 0.192157, 1 )
+custom_colors/font_color = Color( 0.160784, 0, 0.937255, 1 )
 text = "Giocatori online:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="Button2" type="Button" parent="."]
-margin_left = 754.0
-margin_top = 635.0
-margin_right = 891.0
+margin_left = 776.0
+margin_top = 634.0
+margin_right = 894.0
 margin_bottom = 691.0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "ESCI DAL GIOCO"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button3" type="Button" parent="."]
+margin_left = 600.852
+margin_top = 633.933
+margin_right = 762.852
+margin_bottom = 688.933
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color = Color( 0.886275, 0.180392, 0.929412, 1 )
+text = "Schermo intero"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -93,3 +113,4 @@ __meta__ = {
 [connection signal="pressed" from="Annulla" to="." method="_on_Annulla_pressed"]
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]
+[connection signal="pressed" from="Button3" to="." method="_on_Button3_pressed"]
