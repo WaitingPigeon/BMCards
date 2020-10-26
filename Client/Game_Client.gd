@@ -1,5 +1,6 @@
 extends Node
 
+
 const DEFAULT_WAIT_TIME = 0.5
 
 var sound_volume = 0.1
@@ -1408,7 +1409,7 @@ remote func lose_game():
 	get_tree().change_scene('res://Lose.tscn')
 
 
-#Funzioni di caricamento e grafica
+#Funzioni di caricamento, grafica e suono
 func load_card(num):
 	return($Board_Stuff.card_list_dict[num])
 func load_card_img(num):
@@ -1519,8 +1520,6 @@ remote func play_played_card_sound(num):
 		$Board_Stuff.remove_child(player2)
 		if not $Board_Stuff/Background_music.volume_db == -INF:
 			$Board_Stuff/Background_music.volume_db = linear2db($Settings/HSlider.value)
-	
-
 remote func play_sound(sound, volume = null):
 	var player = AudioStreamPlayer.new()
 	if volume == null:
@@ -1533,6 +1532,19 @@ remote func play_sound(sound, volume = null):
 	yield(player, "finished")
 	$Board_Stuff.remove_child(player)
 
+#Funzioni di cronologia
+var history
+func history_write(content):
+	history = File.new()
+	history.open("user://history.txt", File.READ_WRITE)
+	history.store_line(content)
+	history.close()
+func history_read():
+	history = File.new()
+	history.open("user://save_game.dat", File.READ)
+	var content = history.get_as_text()
+	history.close()
+	return content
 
 #Altre funzioni utili
 func _on_Button_pressed():

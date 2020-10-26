@@ -63,6 +63,18 @@ script = ExtResource( 1 )
 [node name="Board_Stuff" type="Node" parent="."]
 script = ExtResource( 2 )
 
+[node name="History" type="TextEdit" parent="Board_Stuff"]
+light_mask = -2147483648
+margin_left = 14.0
+margin_top = 115.0
+margin_right = 619.0
+margin_bottom = 544.0
+text = "prova"
+readonly = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Card_Container" type="Panel" parent="Board_Stuff"]
 margin_left = 8.0
 margin_top = 112.0
@@ -1481,9 +1493,10 @@ __meta__ = {
 }
 
 [node name="Points" type="Control" parent="Player_2"]
-margin_top = 1.10803
-margin_right = 40.0
-margin_bottom = 41.108
+margin_left = -1.0
+margin_top = 0.10803
+margin_right = 39.0
+margin_bottom = 40.108
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1602,10 +1615,10 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="Settings"]
-margin_left = -80.877
-margin_top = 38.4401
-margin_right = 85.123
-margin_bottom = 78.4401
+margin_left = -81.0
+margin_top = -2.0
+margin_right = 85.0
+margin_bottom = 78.0
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "RESA"
 __meta__ = {
@@ -1621,6 +1634,16 @@ text = "Chiudi"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Button3" type="Button" parent="Settings"]
+margin_left = -176.0
+margin_top = 99.0
+margin_right = 183.0
+margin_bottom = 139.0
+text = "CRONOLOGIA PARTITA"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Board_Stuff/Button" to="." method="_on_Button_pressed"]
 [connection signal="mouse_entered" from="Board_Stuff/Objective_Panel_1" to="." method="_on_Objective_Panel_mouse_entered"]
 [connection signal="mouse_entered" from="Board_Stuff/Objective_Panel_2" to="." method="_on_Objective_Panel_2_mouse_entered"]
@@ -1630,3 +1653,4 @@ __meta__ = {
 [connection signal="value_changed" from="Settings/HSlider2" to="." method="_on_HSlider2_value_changed"]
 [connection signal="pressed" from="Settings/Button" to="." method="_on_Resa_pressed"]
 [connection signal="pressed" from="Settings/Button2" to="." method="_on_Button2_pressed"]
+[connection signal="pressed" from="Settings/Button3" to="." method="_on_Button3_pressed"]

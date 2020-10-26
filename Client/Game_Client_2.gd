@@ -126,3 +126,7 @@ func _on_Button2_pressed():
 
 func _on_Set_Button_pressed():
 	$Settings.visible = true
+
+
+func _on_Button3_pressed():
+	$History.visible = true
