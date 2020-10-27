@@ -64,13 +64,15 @@ script = ExtResource( 1 )
 script = ExtResource( 2 )
 
 [node name="History" type="TextEdit" parent="Board_Stuff"]
-light_mask = -2147483648
+visible = false
+light_mask = -2147483647
 margin_left = 14.0
 margin_top = 115.0
-margin_right = 619.0
-margin_bottom = 544.0
-text = "prova"
+margin_right = 613.0
+margin_bottom = 553.0
+text = "prova PROVA PROVA PROVA PROVA PROVA PROVA PROVA"
 readonly = true
+wrap_enabled = true
 __meta__ = {
 "_edit_use_anchors_": false
 }

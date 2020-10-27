@@ -982,6 +982,7 @@ func update_mana():
 #Funzioni di meccanica gioco 
 func _ready():
 #warning-ignore:unused_variable
+	history_create()
 	$Player_2/Hand_area/Label.text = Network.opponent_user
 	Network.connect("disconnected_opponent", self, "win_game")
 	randomize()
@@ -1534,14 +1535,20 @@ remote func play_sound(sound, volume = null):
 
 #Funzioni di cronologia
 var history
+func history_create():
+	history = File.new()
+	history.open("user://history.txt", File.WRITE)
+	history.store_line("Cronologia della partita in corso")
+	history.close()
 func history_write(content):
 	history = File.new()
 	history.open("user://history.txt", File.READ_WRITE)
+	history.seek_end()
 	history.store_line(content)
 	history.close()
 func history_read():
 	history = File.new()
-	history.open("user://save_game.dat", File.READ)
+	history.open("user://history.txt", File.READ)
 	var content = history.get_as_text()
 	history.close()
 	return content
