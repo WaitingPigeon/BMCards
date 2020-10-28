@@ -1538,7 +1538,7 @@ var history
 func history_create():
 	history = File.new()
 	history.open("user://history.txt", File.WRITE)
-	history.store_line("Cronologia della partita in corso")
+	history.store_line("CRONOLOGIA DELLA PARTITA")
 	history.close()
 func history_write(content):
 	history = File.new()

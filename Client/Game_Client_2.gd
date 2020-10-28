@@ -129,13 +129,12 @@ func _on_Set_Button_pressed():
 
 
 func _on_Button3_pressed():
-	if $Board_Stuff/History.visible == false:
-		history_write("Questa è una prova di scrittura e stampa!AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA")
-		$Board_Stuff/History.text = history_read()
-		$Board_Stuff/History.visible = true
+	if $Settings/History_node/History_text.visible == false:
+		$Settings/History_node/History_text.text = history_read()
+		$Settings/History_node/History_text.visible = true
 		$Settings/Button3.text = "CHIUDI CRONOLOGIA"
-	elif $Board_Stuff/History.visible == true:
-		$Board_Stuff/History.visible = false
+	elif $Settings/History_node/History_text.visible == true:
+		$Settings/History_node/History_text.visible = false
 		$Settings/Button3.text = "CRONOLOGIA PARTITA"
 	else:
-		 $Settings/Button3.text = "errore"
+		 $Settings/Button3.text = "!!!ERRORE!!!"
