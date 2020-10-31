@@ -1112,7 +1112,7 @@ remote func attack(color, pos):
 		yield(get_tree().create_timer(DEFAULT_WAIT_TIME/2), "timeout")
 		show_hero_attack(1, color, pos, false)
 		return(false)
-	history_write("%s attacca %s\n" % [ load_card(attacking_card)["nome"], load_card(attacked_card)["nome"] ])
+	history_write("%s di %s in posizione %c%d attacca %s\n" % [ load_card(attacking_card)["nome"], Network.username, color[0].to_upper(), pos,  load_card(attacked_card)["nome"] ])
 	yield(get_tree().create_timer(0.2),"timeout")
 	if attacked_card == 0:
 		yield(activate_effect(attacking_card, "tease", "heros", color, pos),"completed")
@@ -1173,7 +1173,7 @@ func play_hero(hand_pos, color, board_pos):
 		update_hand_cards()
 		return
 	meta_rset_id(Network.opponent, "is_beta_busy", true)
-	history_write("Viene giocato l'eroe %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0], board_pos])
+	history_write("Viene giocato l'eroe %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
 	mana_left -= 1
 	update_mana()
 	show_bolt(1, "heros", color, board_pos, true)
@@ -1206,9 +1206,9 @@ func play_spell(hand_pos, color, board_pos):
 		return
 	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	if load_card(played_card)["tipo"]=="spell":
-		history_write("Viene giocato l'oggetto magico %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0], board_pos])
+		history_write("Viene giocato l'oggetto magico %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
 	elif load_card(played_card)["tipo"]=="event":
-		history_write("Viene giocato l'evento %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0], board_pos])
+		history_write("Viene giocato l'evento %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
 	mana_left -= 1
 	update_mana()
 	show_bolt(1, "spells", color, board_pos, true)
@@ -1244,7 +1244,7 @@ remote func summon_hero(num, color, board_pos):
 	if !((load_card(played_card)["tipo"] == "hero") and (color in load_card(played_card)["colori"]) and (board_card == 0)):
 		return
 	meta_rset_id(Network.opponent, "is_beta_busy", true)
-	history_write("Viene evocato l'eroe %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0], board_pos])
+	history_write("Viene evocato l'eroe %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
 	show_bolt(1, "heros", color, board_pos, true)
 	change_player_1_heros_card(color, board_pos, played_card)
 	change_player_1_heros_life(color, board_pos, "=", load_card(played_card)["vita"])
@@ -1272,9 +1272,9 @@ remote func summon_spell(num, color, board_pos):
 		return
 	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	if load_card(played_card)["tipo"]=="spell":
-		history_write("Viene evocato l'oggetto magico %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0], board_pos])
+		history_write("Viene evocato l'oggetto magico %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
 	if load_card(played_card)["tipo"]=="event":
-		history_write("Viene evocato l'evento %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0], board_pos])
+		history_write("Viene evocato l'evento %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
 	show_bolt(1, "spells", color, board_pos, true)
 	change_player_1_spells_card(color, board_pos, played_card)
 	change_player_1_spells_life(color, board_pos, "=", load_card(played_card)["vita"])
@@ -1306,7 +1306,7 @@ remote func activate_effect(num, type_of_effect, zone_activating, color_activati
 	if num == 0:
 		remove_switch(switch)
 		return
-	history_write("%s attiva l'effetto %s dalla posizione %c%d\n" % [load_card(num)["nome"], type_of_effect, color_activating[0], pos_activating])
+	history_write("%s di %s attiva l'effetto %s dalla posizione %c%d\n" % [load_card(num)["nome"], Network.username, type_of_effect, color_activating[0].to_upper(), pos_activating])
 	yield(call("effect_" + str(num), type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger), "completed")
 	remove_switch(switch)
 func trigger_effects(type_of_effect, zone_trigger = null, player_trigger = null, color_trigger = null , pos_trigger = null):
@@ -1718,7 +1718,7 @@ func kill_hero(player, color, index):
 		yield(trigger_effects("killing_hero","heros", 1, color, index), "completed")
 		if kill_confirmation_flag == false:
 			return(false)
-		history_write("L'eroe %s è morto\n" % load_card(dying_card)["nome"])
+		history_write("L'eroe %s di %s in posizione %c%d è morto\n" % [load_card(dying_card)["nome"], Network.username, color[0].to_upper(), index])
 		rpc_id(Network.opponent, "play_sound", "death")
 		play_sound("death")
 		show_skull(1, "heros", color, index, true)
@@ -1749,7 +1749,7 @@ func kill_hero(player, color, index):
 		yield(trigger_effects("killing_hero","heros", 2, color, index), "completed")
 		if kill_confirmation_flag == false:
 			return(false)
-		history_write("L'eroe %s è morto\n" % load_card(dying_card)["nome"])
+		history_write("L'eroe %s di %s in posizione %c%d è morto\n" % [load_card(dying_card)["nome"], Network.opponent_user, color[0].to_upper(), index])
 		rpc_id(Network.opponent, "play_sound", "death")
 		play_sound("death")
 		show_skull(2, "heros", color, index, true)
@@ -1786,7 +1786,7 @@ func kill_spell(player, color, index):
 		yield(trigger_effects("killing_spell","spells", 1, color, index), "completed")
 		if kill_confirmation_flag == false:
 			return(false)
-		history_write("L'oggetto magico %s è stato distrutto\n" % load_card(dying_card)["nome"])
+		history_write("L'oggetto magico %s di %s in posizione %c%d è stato distrutto\n" % [load_card(dying_card)["nome"], Network.username, color[0].to_upper(), index])
 		rpc_id(Network.opponent, "play_sound", "death")
 		play_sound("death")
 		show_skull(1, "spells", color, index, true)
@@ -1817,7 +1817,7 @@ func kill_spell(player, color, index):
 		yield(trigger_effects("killing_spell","spells", 2, color, index), "completed")
 		if kill_confirmation_flag == false:
 			return(false)
-		history_write("L'oggetto magico %s è stato distrutto\n" % load_card(dying_card)["nome"])
+		history_write("L'oggetto magico %s di %s in posizione %c%d è stato distrutto\n" % [load_card(dying_card)["nome"], Network.opponent_user, color[0].to_upper(), index])
 		rpc_id(Network.opponent, "play_sound", "death")
 		play_sound("death")
 		show_skull(2, "spells", color, index, true)
@@ -1854,7 +1854,7 @@ func damage_spell(player, color, index, amount):
 		yield(trigger_effects("damaging_spell","heros", 1, color, index), "completed")
 		if damage_hero_confirmation_flag == false:
 			return(false)
-		history_write("L'oggetto magico %s di %s in posizione %c%d subisce %d danni\n" % [load_card(damaged_card)["nome"], Network.username, color[0], index, amount])
+		history_write("L'oggetto magico %s di %s in posizione %c%d subisce %d danni\n" % [load_card(damaged_card)["nome"], Network.username, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "damage")
 		play_sound("damage")
 		show_damage_card(player, "spells", color, index, true)
@@ -1877,7 +1877,7 @@ func damage_spell(player, color, index, amount):
 		yield(trigger_effects("damaging_spell","heros", 2, color, index), "completed")
 		if damage_hero_confirmation_flag == false:
 			return(false)
-		history_write("L'oggetto magico %s di %s in posizione %c%d subisce %d danni\n" % [load_card(damaged_card)["nome"], Network.opponent_user, color[0], index, amount])
+		history_write("L'oggetto magico %s di %s in posizione %c%d subisce %d danni\n" % [load_card(damaged_card)["nome"], Network.opponent_user, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "damage")
 		play_sound("damage")
 		show_damage_card(player,"spells", color, index, true)
@@ -1904,7 +1904,7 @@ func damage_hero(player, color, index, amount):
 		yield(trigger_effects("damaging_hero","heros", 1, color, index), "completed")
 		if damage_hero_confirmation_flag == false:
 			return(false)
-		history_write("L'eroe %s di %s in posizione %c%d subisce %d danni\n" % [load_card(damaged_card)["nome"], Network.username, color[0], index, amount])
+		history_write("L'eroe %s di %s in posizione %c%d subisce %d danni\n" % [load_card(damaged_card)["nome"], Network.username, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "damage")
 		play_sound("damage")
 		show_damage_card(player, "heros", color, index, true)
@@ -1925,7 +1925,7 @@ func damage_hero(player, color, index, amount):
 		yield(trigger_effects("damaging_hero","heros", 2, color, index), "completed")
 		if damage_hero_confirmation_flag == false:
 			return(false)
-		history_write("L'eroe %s di %s in posizione %c%d subisce %d danni\n" % [load_card(damaged_card)["nome"], Network.opponent_user, color[0], index, amount])
+		history_write("L'eroe %s di %s in posizione %c%d subisce %d danni\n" % [load_card(damaged_card)["nome"], Network.opponent_user, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "damage")
 		play_sound("damage")
 		show_damage_card(player,"heros", color, index, true)
@@ -1948,7 +1948,7 @@ func heal_spell(player, color, index, amount):
 		var healed_card = get_player1_spells_cards()[color][index]
 		if healed_card == 0 or load_card(healed_card)["tipo"] == "event":
 			return
-		history_write("L'oggetto magico %s di %s in posizione %c%d guadagna %d di durabilità\n" % [load_card(healed_card)["nome"], Network.username, color[0], index, amount])
+		history_write("L'oggetto magico %s di %s in posizione %c%d guadagna %d di durabilità\n" % [load_card(healed_card)["nome"], Network.username, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "heal")
 		play_sound("heal")
 		show_heal_card(player, "spells", color, index, true)
@@ -1966,7 +1966,7 @@ func heal_spell(player, color, index, amount):
 		var healed_card = get_player2_spells_cards()[color][index]
 		if healed_card == 0:
 			return
-		history_write("L'oggetto magico %s di %s in posizione %c%d guadagna %d di durabilità\n" % [load_card(healed_card)["nome"], Network.opponent_user, color[0], index, amount])
+		history_write("L'oggetto magico %s di %s in posizione %c%d guadagna %d di durabilità\n" % [load_card(healed_card)["nome"], Network.opponent_user, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "heal")
 		play_sound("heal")
 		show_heal_card(player,"spells", color, index, true)
@@ -1988,7 +1988,7 @@ func heal_hero(player, color, index, amount):
 		var healed_card = get_player1_heros_cards()[color][index]
 		if healed_card == 0:
 			return
-		history_write("L'eroe %s di %s in posizione %c%d guadagna %d di vita\n" % [load_card(healed_card)["nome"], Network.username, color[0], index, amount])
+		history_write("L'eroe %s di %s in posizione %c%d guadagna %d di vita\n" % [load_card(healed_card)["nome"], Network.username, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "heal")
 		play_sound("heal")
 		show_heal_card(player, "heros", color, index, true)
@@ -2004,7 +2004,7 @@ func heal_hero(player, color, index, amount):
 		var healed_card = get_player2_heros_cards()[color][index]
 		if healed_card == 0:
 			return
-		history_write("L'eroe %s di %s in posizione %c%d guadagna %d di vita\n" % [load_card(healed_card)["nome"], Network.opponent_user, color[0], index, amount])
+		history_write("L'eroe %s di %s in posizione %c%d guadagna %d di vita\n" % [load_card(healed_card)["nome"], Network.opponent_user, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "heal")
 		play_sound("heal")
 		show_heal_card(player,"heros", color, index, true)
