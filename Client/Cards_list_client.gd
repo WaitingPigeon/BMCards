@@ -461,7 +461,7 @@ var card_list_dict = {
 	32:{
 		"nome" : "Materasso gonfiabile",
 		"tipo" : "hero",
-		"effetti": ["end_turn", "begin_turn"],
+		"effetti": ["end_turn"],
 		"vita" : 8,
 		"attacco" : 3,
 		"quantità": 3,

@@ -3360,7 +3360,7 @@ func effect_75(type_of_effect, zone_activating, color_activating, pos_activating
 	yield(get_tree(), "idle_frame")
 	match type_of_effect:
 		"hero_teased":
-			if color_trigger == color_activating and pos_trigger == pos_activating:
+			if color_trigger == color_activating and pos_trigger == pos_activating and player_trigger == 2:
 				var spots = get_heros_spots(2) #tutti i posti in cui c'è un eroe, 2 è l' avversario
 				if spots.size() > 0:
 					var spot = spots[randi()%spots.size()] #seleziona a caso...
