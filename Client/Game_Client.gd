@@ -3278,7 +3278,7 @@ func effect_67(type_of_effect, zone_activating, color_activating, pos_activating
 					rpc_id(Network.opponent, "discard_cards", 10)
 					yield(get_tree().create_timer(5.0), "timeout")
 					return
-			yield(get_tree().create_timer(1.0), "timeout")
+			yield(get_tree().create_timer(10.0), "timeout")
 			win_game() #se sì, vince
 		"dead":
 			yield(add_to_deck(68), "completed") #rimescolalo nel mazzo

@@ -112,9 +112,9 @@ region_rect = Rect2( 0, 0, 200, 100 )
 
 [node name="Cards_left" type="Label" parent="Board_Stuff"]
 margin_left = 16.551
-margin_top = 71.4719
+margin_top = 75.0395
 margin_right = 64.551
-margin_bottom = 96.472
+margin_bottom = 100.04
 text = "12"
 align = 1
 valign = 1

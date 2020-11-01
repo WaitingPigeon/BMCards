@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://Login.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -7,6 +7,8 @@
 [ext_resource path="res://Resources/27.png" type="Texture" id=5]
 [ext_resource path="res://Resources/28.png" type="Texture" id=6]
 [ext_resource path="res://Resources/49.png" type="Texture" id=7]
+[ext_resource path="res://Resources/44.png" type="Texture" id=8]
+[ext_resource path="res://Resources/51.png" type="Texture" id=9]
 
 [node name="Node" type="Node"]
 script = ExtResource( 1 )
@@ -64,9 +66,9 @@ custom_fonts/italics_font = ExtResource( 3 )
 custom_fonts/bold_font = ExtResource( 3 )
 custom_fonts/normal_font = ExtResource( 3 )
 bbcode_enabled = true
-bbcode_text = "[color=#ff4136]alpha_1.1[/color]
+bbcode_text = "[color=#ff4136]alpha_1.2[/color]
 "
-text = "alpha_1.1
+text = "alpha_1.2
 "
 scroll_active = false
 __meta__ = {
@@ -132,10 +134,10 @@ __meta__ = {
 }
 
 [node name="Text4" type="Label" parent="."]
-margin_left = 508.347
-margin_top = 516.49
-margin_right = 745.347
-margin_bottom = 612.49
+margin_left = 487.208
+margin_top = 523.056
+margin_right = 707.208
+margin_bottom = 611.056
 text = "Per l'aiuto nella 
 creazione delle carte"
 align = 1
@@ -145,10 +147,10 @@ __meta__ = {
 }
 
 [node name="Text5" type="Label" parent="."]
-margin_left = 681.374
-margin_top = 519.665
-margin_right = 918.374
-margin_bottom = 615.665
+margin_left = 650.527
+margin_top = 518.54
+margin_right = 887.527
+margin_bottom = 614.54
 text = "Per le musiche
  del gioco"
 align = 1
@@ -178,8 +180,8 @@ __meta__ = {
 }
 
 [node name="icon" type="Sprite" parent="."]
-position = Vector2( 849.927, 41.8619 )
-scale = Vector2( 0.237105, 0.230618 )
+position = Vector2( 851.427, 46.8619 )
+scale = Vector2( 0.4, 0.4 )
 texture = ExtResource( 2 )
 
 [node name="Title" type="Sprite" parent="."]
@@ -188,43 +190,54 @@ scale = Vector2( 0.750183, 0.731121 )
 texture = ExtResource( 4 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-margin_left = 563.381
-margin_top = 90.6504
-margin_right = 891.381
-margin_bottom = 186.65
+margin_left = 475.495
+margin_top = 111.977
+margin_right = 1005.5
+margin_bottom = 155.977
+custom_fonts/normal_font = ExtResource( 3 )
 bbcode_enabled = true
-bbcode_text = "[shake rate=5 level=10][rainbow freq=0.5 sat=50 val=10]Ideato e programmato con tanto amore da:[/rainbow][/shake]"
-text = "Ideato e programmato con tanto amore da:"
+bbcode_text = "[shake rate=5 level=10][rainbow freq=0.5 sat=50 val=10]Programmato con tanto amore dal BMCards Team:[/rainbow][/shake]"
+text = "Programmato con tanto amore dal BMCards Team:"
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="."]
-margin_left = 630.784
-margin_top = 345.993
-margin_right = 898.784
-margin_bottom = 444.993
+margin_left = 612.819
+margin_top = 356.412
+margin_right = 880.819
+margin_bottom = 455.412
 bbcode_enabled = true
-bbcode_text = "[shake rate=5 level=10][rainbow freq=0.2 sat=10 val=20]Ringraziamento speciale a:[/rainbow][/shake]"
-text = "Ringraziamento speciale a:"
+bbcode_text = "[shake rate=5 level=10][rainbow freq=0.2 sat=10 val=20]Si ringraziano anche:[/rainbow][/shake]"
+text = "Si ringraziano anche:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
 [node name="28" type="Sprite" parent="."]
-position = Vector2( 698.336, 220.563 )
-scale = Vector2( 0.445955, 0.401735 )
+position = Vector2( 679.343, 251.904 )
+scale = Vector2( 0.35, 0.35 )
 texture = ExtResource( 6 )
 
+[node name="44" type="Sprite" parent="."]
+position = Vector2( 535.16, 253.358 )
+scale = Vector2( 0.35, 0.35 )
+texture = ExtResource( 8 )
+
+[node name="30" type="Sprite" parent="."]
+position = Vector2( 822.504, 253.417 )
+scale = Vector2( 0.35, 0.35 )
+texture = ExtResource( 9 )
+
 [node name="27" type="Sprite" parent="."]
-position = Vector2( 627.847, 456.028 )
-scale = Vector2( 0.318104, 0.305612 )
+position = Vector2( 595.884, 464.162 )
+scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 5 )
 
 [node name="49" type="Sprite" parent="."]
-position = Vector2( 794.559, 452.775 )
-scale = Vector2( 0.31827, 0.310094 )
+position = Vector2( 768.098, 464.524 )
+scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 7 )
 
 [node name="Button" type="Button" parent="."]

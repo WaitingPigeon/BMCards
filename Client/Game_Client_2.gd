@@ -82,7 +82,7 @@ func move_item():
 	if ((activeItemSlot == draggedItemSlot and activeItemArea == "hand1") or (activeItemArea in ["hand2","red_heros2","blue_heros2","green_heros2","red_spells2","blue_spells2","green_spells2"])):
 		update_hand_cards()
 		return
-	if activeItemArea == "hand1":
+	if activeItemArea == "hand1" and !(is_beta_busy):
 		swap_hand_cards(draggedItemSlot, activeItemSlot)
 		return
 	if is_beta_busy:
