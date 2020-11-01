@@ -718,7 +718,7 @@ var card_list_dict = {
 		"nome" : "Mano destra di Bonny",
 		"tipo" : "spell",
 		"effetti": ["end_turn"],
-		"vita" : 0,
+		"vita" : 3,
 		"attacco" : 0,
 		"quantità": 3,
 		"colori" : ["green"],
