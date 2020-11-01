@@ -41,7 +41,6 @@ func return_to_lobby():
 	get_tree().change_scene('res://Lobby.tscn')
 func return_to_home():
 	get_tree().change_scene('res://Login.tscn')
-	
 func connect_to_server():
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_client(SERVER_IP, DEFAULT_PORT)

@@ -111,10 +111,10 @@ texture = ExtResource( 6 )
 region_rect = Rect2( 0, 0, 200, 100 )
 
 [node name="Cards_left" type="Label" parent="Board_Stuff"]
-margin_left = 11.551
-margin_top = 83.4719
-margin_right = 59.551
-margin_bottom = 108.472
+margin_left = 16.551
+margin_top = 71.4719
+margin_right = 64.551
+margin_bottom = 96.472
 text = "12"
 align = 1
 valign = 1
@@ -1497,9 +1497,10 @@ __meta__ = {
 }
 
 [node name="Points" type="Control" parent="Player_2"]
-margin_top = 1.10803
-margin_right = 40.0
-margin_bottom = 41.108
+margin_left = -1.0
+margin_top = 0.10803
+margin_right = 39.0
+margin_bottom = 40.108
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1572,6 +1573,26 @@ scale = Vector2( 0.631764, 0.625054 )
 z_index = 10
 texture = ExtResource( 3 )
 
+[node name="History_node" type="Node2D" parent="Settings"]
+position = Vector2( -1209.78, -611.118 )
+scale = Vector2( 1.58287, 1.59986 )
+z_index = 2
+
+[node name="History_text" type="TextEdit" parent="Settings/History_node"]
+visible = false
+light_mask = -2147483647
+margin_left = 16.0
+margin_top = 109.0
+margin_right = 615.0
+margin_bottom = 547.0
+rect_clip_content = true
+text = "QUI DEVE APPARIRE LA CRONOLOGIA DEGLI EVENTI DELLA PARTITA"
+readonly = true
+wrap_enabled = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="HSlider" type="HSlider" parent="Settings"]
 margin_left = 3.19192
 margin_top = -288.348
@@ -1630,10 +1651,11 @@ __meta__ = {
 }
 
 [node name="Button" type="Button" parent="Settings"]
-margin_left = -82.7593
-margin_top = 16.5606
-margin_right = 83.2407
-margin_bottom = 56.5606
+margin_left = -81.0
+margin_top = -2.0
+margin_right = 85.0
+margin_bottom = 78.0
+
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "RESA"
 __meta__ = {
@@ -1650,12 +1672,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+
+[node name="Button3" type="Button" parent="Settings"]
+margin_left = -176.0
+margin_top = 99.0
+margin_right = 183.0
+margin_bottom = 139.0
+text = "CRONOLOGIA PARTITA"
+
 [node name="CheckBox" type="CheckBox" parent="Settings"]
 margin_left = 30.4414
 margin_top = -92.9158
 margin_right = 54.4414
 margin_bottom = -68.9158
 pressed = true
+
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1668,4 +1699,6 @@ __meta__ = {
 [connection signal="value_changed" from="Settings/HSlider2" to="." method="_on_HSlider2_value_changed"]
 [connection signal="pressed" from="Settings/Button" to="." method="_on_Resa_pressed"]
 [connection signal="pressed" from="Settings/Button2" to="." method="_on_Button2_pressed"]
+[connection signal="pressed" from="Settings/Button3" to="." method="_on_Button3_pressed"]
 [connection signal="gui_input" from="Settings/CheckBox" to="." method="_on_CheckBox_gui_input"]
+

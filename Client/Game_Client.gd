@@ -1,5 +1,6 @@
 extends Node
 
+
 const DEFAULT_WAIT_TIME = 0.5
 
 var sound_volume = 0.1
@@ -95,16 +96,13 @@ func is_alpha_turn():
 #Funzioni di modifica fondamentali
 func change_beta_points(color, operation, value):
 	if operation == "+":
-		
 		if color == "blue":
 			meta_rset_id(Network.opponent, "beta_blue_points", beta_blue_points + value)
-			
 		elif color == "red":
 			meta_rset_id(Network.opponent, "beta_red_points", beta_red_points + value)
 			
 		elif color == "green":
 			meta_rset_id(Network.opponent, "beta_green_points", beta_green_points + value)
-			
 	elif operation == "-":
 		
 		if color == "blue":
@@ -982,6 +980,7 @@ func update_mana():
 #Funzioni di meccanica gioco 
 func _ready():
 #warning-ignore:unused_variable
+	history_create()
 	var my_name = ""
 	var opp_name = ""
 	if Network.username.length() <= 5:
@@ -1071,7 +1070,8 @@ func shuffle_deck():
 	meta_rset_id(Network.opponent, "cards_deck", cards_deck)
 remote func draw_cards(numOfCards):
 	yield(get_tree(), "idle_frame")
-	var switch = yield(get_unique_id(), "completed")
+  var switch = yield(get_unique_id(), "completed")
+	history_write("%s pesca %d carta/e\n" % [Network.opponent_user, numOfCards])
 	if cards_deck.size() == 0:
 		lose_game()
 		yield(get_tree().create_timer(5.0), "timeout")
@@ -1093,6 +1093,7 @@ remote func draw_cards(numOfCards):
 			
 remote func begin_turn():
 	meta_rset_id(Network.opponent, "is_beta_busy", true)
+	history_write("Inizia il turno di %s\n" % Network.username)
 	set_player1_turn()
 	$Board_Stuff/Turn_light.texture = load("res://Resources/green_light.png")
 	yield(check_objectives("begin_turn"), "completed")
@@ -1129,6 +1130,7 @@ remote func attack(color, pos):
 		yield(get_tree().create_timer(DEFAULT_WAIT_TIME/2), "timeout")
 		show_hero_attack(1, color, pos, false)
 		return(false)
+	history_write("%s di %s in posizione %c%d attacca %s\n" % [ load_card(attacking_card)["nome"], Network.username, color[0].to_upper(), pos,  load_card(attacked_card)["nome"] ])
 	yield(get_tree().create_timer(0.2),"timeout")
 	if attacked_card == 0:
 		yield(activate_effect(attacking_card, "tease", "heros", color, pos),"completed")
@@ -1141,6 +1143,8 @@ remote func attack(color, pos):
 		yield(trigger_effects("hero_attacked", "heros", 1, color, pos),"completed")
 		return (true)
 func end_turn():
+  meta_rset_id(Network.opponent, "is_beta_busy", true)
+	history_write("Fine del turno di %s\n" % Network.username)
 	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	$Board_Stuff/Button.disabled = true
 	rpc_id(Network.opponent, "play_sound", "passturn")
@@ -1191,6 +1195,7 @@ func play_hero(hand_pos, color, board_pos):
 		update_hand_cards()
 		meta_rset_id(Network.opponent, "is_beta_busy", false)
 		return
+	history_write("Viene giocato l'eroe %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
 	mana_left -= 1
 	update_mana()
 	show_bolt(1, "heros", color, board_pos, true)
@@ -1223,6 +1228,10 @@ func play_spell(hand_pos, color, board_pos):
 		update_hand_cards()
 		meta_rset_id(Network.opponent, "is_beta_busy", false)
 		return
+	if load_card(played_card)["tipo"]=="spell":
+		history_write("Viene giocato l'oggetto magico %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
+	elif load_card(played_card)["tipo"]=="event":
+		history_write("Viene giocato l'evento %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
 	mana_left -= 1
 	update_mana()
 	show_bolt(1, "spells", color, board_pos, true)
@@ -1257,6 +1266,7 @@ remote func summon_hero(num, color, board_pos):
 	var board_card = get_player1_heros_cards()[color][board_pos]
 	if !((load_card(played_card)["tipo"] == "hero") and (color in load_card(played_card)["colori"]) and (board_card == 0)):
 		return
+	history_write("Viene evocato l'eroe %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
 	show_bolt(1, "heros", color, board_pos, true)
 	change_player_1_heros_card(color, board_pos, played_card)
 	change_player_1_heros_life(color, board_pos, "=", load_card(played_card)["vita"])
@@ -1281,6 +1291,10 @@ remote func summon_spell(num, color, board_pos):
 	var board_card = get_player1_spells_cards()[color][board_pos]
 	if  !((load_card(played_card)["tipo"] in ["spell", "event"]) and (color in load_card(played_card)["colori"]) and (board_card == 0)):
 		return
+	if load_card(played_card)["tipo"]=="spell":
+		history_write("Viene evocato l'oggetto magico %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
+	if load_card(played_card)["tipo"]=="event":
+		history_write("Viene evocato l'evento %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
 	show_bolt(1, "spells", color, board_pos, true)
 	change_player_1_spells_card(color, board_pos, played_card)
 	change_player_1_spells_life(color, board_pos, "=", load_card(played_card)["vita"])
@@ -1310,6 +1324,7 @@ remote func activate_effect(num, type_of_effect, zone_activating, color_activati
 	if num == 0:
 		remove_switch(switch)
 		return
+	history_write("%s di %s attiva l'effetto %s dalla posizione %c%d\n" % [load_card(num)["nome"], Network.username, type_of_effect, color_activating[0].to_upper(), pos_activating])
 	yield(call("effect_" + str(num), type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger), "completed")
 	remove_switch(switch)
 func trigger_effects(type_of_effect, zone_trigger = null, player_trigger = null, color_trigger = null , pos_trigger = null):
@@ -1401,6 +1416,7 @@ func check_objectives(trigger):
 		var flag = call("objective_" + str(objective_numbers[color]))
 		print(flag)
 		if flag:
+			history_write("Il giocatore %s ha completato l'obiettivo %s" % [Network.username, $Board_Stuff.objective_list_dict[objective_numbers[color]]["nome"] ])
 			add_objective(color)
 			rpc_id(Network.opponent,"load_objective_cards")
 			play_sound("objective_completed")
@@ -1423,7 +1439,7 @@ remote func lose_game():
 	get_tree().change_scene('res://Lose.tscn')
 
 
-#Funzioni di caricamento e grafica
+#Funzioni di caricamento, grafica e suono
 func load_card(num):
 	return($Board_Stuff.card_list_dict[num])
 func load_card_img(num):
@@ -1534,8 +1550,6 @@ remote func play_played_card_sound(num):
 		$Board_Stuff.remove_child(player2)
 		if not $Board_Stuff/Background_music.volume_db == -INF:
 			$Board_Stuff/Background_music.volume_db = linear2db($Settings/HSlider.value)
-	
-
 remote func play_sound(sound, volume = null):
 	var player = AudioStreamPlayer.new()
 	if volume == null:
@@ -1548,6 +1562,28 @@ remote func play_sound(sound, volume = null):
 	yield(player, "finished")
 	$Board_Stuff.remove_child(player)
 
+#Funzioni di cronologia
+remotesync var history
+remote func history_create():
+	history = File.new()
+	history.open("user://history.txt", File.WRITE)
+	history.store_line("CRONOLOGIA DELLA PARTITA")
+	history.close()
+remote func history_write(content, flag=true):
+	history = File.new()
+	history.open("user://history.txt", File.READ_WRITE)
+	history.seek_end()
+	history.store_string(content)
+	history.close()
+	if flag:
+		rpc_id(Network.opponent,"history_write", content, false)
+	
+remote func history_read():
+	history = File.new()
+	history.open("user://history.txt", File.READ)
+	var content = history.get_as_text()
+	history.close()
+	return content
 
 #Altre funzioni utili
 func _on_Button_pressed():
@@ -1699,6 +1735,7 @@ func kill_hero(player, color, index):
 		yield(trigger_effects("killing_hero","heros", 1, color, index), "completed")
 		if kill_confirmation_flag == false:
 			return(false)
+		history_write("L'eroe %s di %s in posizione %c%d è morto\n" % [load_card(dying_card)["nome"], Network.username, color[0].to_upper(), index])
 		rpc_id(Network.opponent, "play_sound", "death")
 		play_sound("death")
 		show_skull(1, "heros", color, index, true)
@@ -1729,6 +1766,7 @@ func kill_hero(player, color, index):
 		yield(trigger_effects("killing_hero","heros", 2, color, index), "completed")
 		if kill_confirmation_flag == false:
 			return(false)
+		history_write("L'eroe %s di %s in posizione %c%d è morto\n" % [load_card(dying_card)["nome"], Network.opponent_user, color[0].to_upper(), index])
 		rpc_id(Network.opponent, "play_sound", "death")
 		play_sound("death")
 		show_skull(2, "heros", color, index, true)
@@ -1765,6 +1803,7 @@ func kill_spell(player, color, index):
 		yield(trigger_effects("killing_spell","spells", 1, color, index), "completed")
 		if kill_confirmation_flag == false:
 			return(false)
+		history_write("L'oggetto magico %s di %s in posizione %c%d è stato distrutto\n" % [load_card(dying_card)["nome"], Network.username, color[0].to_upper(), index])
 		rpc_id(Network.opponent, "play_sound", "death")
 		play_sound("death")
 		show_skull(1, "spells", color, index, true)
@@ -1795,6 +1834,7 @@ func kill_spell(player, color, index):
 		yield(trigger_effects("killing_spell","spells", 2, color, index), "completed")
 		if kill_confirmation_flag == false:
 			return(false)
+		history_write("L'oggetto magico %s di %s in posizione %c%d è stato distrutto\n" % [load_card(dying_card)["nome"], Network.opponent_user, color[0].to_upper(), index])
 		rpc_id(Network.opponent, "play_sound", "death")
 		play_sound("death")
 		show_skull(2, "spells", color, index, true)
@@ -1831,6 +1871,7 @@ func damage_spell(player, color, index, amount):
 		yield(trigger_effects("damaging_spell","heros", 1, color, index), "completed")
 		if damage_hero_confirmation_flag == false:
 			return(false)
+		history_write("L'oggetto magico %s di %s in posizione %c%d subisce %d danni\n" % [load_card(damaged_card)["nome"], Network.username, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "damage")
 		play_sound("damage")
 		show_damage_card(player, "spells", color, index, true)
@@ -1853,6 +1894,7 @@ func damage_spell(player, color, index, amount):
 		yield(trigger_effects("damaging_spell","heros", 2, color, index), "completed")
 		if damage_hero_confirmation_flag == false:
 			return(false)
+		history_write("L'oggetto magico %s di %s in posizione %c%d subisce %d danni\n" % [load_card(damaged_card)["nome"], Network.opponent_user, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "damage")
 		play_sound("damage")
 		show_damage_card(player,"spells", color, index, true)
@@ -1879,6 +1921,7 @@ func damage_hero(player, color, index, amount):
 		yield(trigger_effects("damaging_hero","heros", 1, color, index), "completed")
 		if damage_hero_confirmation_flag == false:
 			return(false)
+		history_write("L'eroe %s di %s in posizione %c%d subisce %d danni\n" % [load_card(damaged_card)["nome"], Network.username, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "damage")
 		play_sound("damage")
 		show_damage_card(player, "heros", color, index, true)
@@ -1899,6 +1942,7 @@ func damage_hero(player, color, index, amount):
 		yield(trigger_effects("damaging_hero","heros", 2, color, index), "completed")
 		if damage_hero_confirmation_flag == false:
 			return(false)
+		history_write("L'eroe %s di %s in posizione %c%d subisce %d danni\n" % [load_card(damaged_card)["nome"], Network.opponent_user, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "damage")
 		play_sound("damage")
 		show_damage_card(player,"heros", color, index, true)
@@ -1921,6 +1965,7 @@ func heal_spell(player, color, index, amount):
 		var healed_card = get_player1_spells_cards()[color][index]
 		if healed_card == 0 or load_card(healed_card)["tipo"] == "event":
 			return
+		history_write("L'oggetto magico %s di %s in posizione %c%d guadagna %d di durabilità\n" % [load_card(healed_card)["nome"], Network.username, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "heal")
 		play_sound("heal")
 		show_heal_card(player, "spells", color, index, true)
@@ -1938,6 +1983,7 @@ func heal_spell(player, color, index, amount):
 		var healed_card = get_player2_spells_cards()[color][index]
 		if healed_card == 0:
 			return
+		history_write("L'oggetto magico %s di %s in posizione %c%d guadagna %d di durabilità\n" % [load_card(healed_card)["nome"], Network.opponent_user, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "heal")
 		play_sound("heal")
 		show_heal_card(player,"spells", color, index, true)
@@ -1959,6 +2005,7 @@ func heal_hero(player, color, index, amount):
 		var healed_card = get_player1_heros_cards()[color][index]
 		if healed_card == 0:
 			return
+		history_write("L'eroe %s di %s in posizione %c%d guadagna %d di vita\n" % [load_card(healed_card)["nome"], Network.username, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "heal")
 		play_sound("heal")
 		show_heal_card(player, "heros", color, index, true)
@@ -1974,6 +2021,7 @@ func heal_hero(player, color, index, amount):
 		var healed_card = get_player2_heros_cards()[color][index]
 		if healed_card == 0:
 			return
+		history_write("L'eroe %s di %s in posizione %c%d guadagna %d di vita\n" % [load_card(healed_card)["nome"], Network.opponent_user, color[0].to_upper(), index, amount])
 		rpc_id(Network.opponent, "play_sound", "heal")
 		play_sound("heal")
 		show_heal_card(player,"heros", color, index, true)
@@ -2010,6 +2058,7 @@ func set_spell(player, color, index, amount):
 func damage_player(player, color, amount):
 	yield(get_tree(), "idle_frame")
 	if player == 1:
+		history_write("Il giocatore %s ha perso %d di %s\n" % [Network.username, amount, {"red":"libido", "blue":"intelligenza", "green":"follia"}[color] ])
 		show_damage_player(player, color, true)
 		change_player1_points(color,"-", amount)
 		if get_player1_points()[color] < 0:
@@ -2020,6 +2069,7 @@ func damage_player(player, color, amount):
 		show_damage_player(player, color, false)
 		yield(trigger_effects("damaged_player",null, 1, color), "completed")
 	else:
+		history_write("Il giocatore %s ha perso %d di %s\n" % [Network.opponent_user, amount, {"red":"libido", "blue":"intelligenza", "green":"follia"}[color] ])
 		show_damage_player(player, color, true)
 		change_player2_points(color,"-", amount)
 		if get_player2_points()[color] < 0:
@@ -2036,6 +2086,7 @@ func heal_player(player, color, amount):
 		yield(trigger_effects("healing_player", amount, 1, color), "completed")
 		if heal_player_confirmation_flag == false:
 			return(false)
+		history_write("Il giocatore %s ha guadagnato %d di %s\n" % [Network.username, amount, {"red":"libido", "blue":"intelligenza", "green":"follia"}[color] ])
 		show_heal_player(player, color, true)
 		change_player1_points(color,"+", amount)
 		yield(get_tree().create_timer(DEFAULT_WAIT_TIME),"timeout")
@@ -2049,6 +2100,7 @@ func heal_player(player, color, amount):
 		yield(trigger_effects("healing_player", amount, 2, color), "completed")
 		if heal_player_confirmation_flag == false:
 			return(false)
+		history_write("Il giocatore %s ha guadagnato %d di %s\n" % [Network.username, amount, {"red":"libido", "blue":"intelligenza", "green":"follia"}[color] ])
 		show_heal_player(player, color, true)
 		change_player2_points(color,"+", amount)
 		yield(get_tree().create_timer(DEFAULT_WAIT_TIME),"timeout")
@@ -2063,42 +2115,20 @@ func set_player(player, color, amount):
 		if get_player1_points()[color] == amount:
 			return
 		if get_player1_points()[color] > amount:
-			show_damage_player(player, color, true)
-			change_player1_points(color,"=", amount)
-			yield(get_tree().create_timer(DEFAULT_WAIT_TIME),"timeout")
-			rpc_id(Network.opponent,"update_points")
-			update_points()
-			show_damage_player(player, color, false)
-			yield(trigger_effects("damaged_player", diff, 1, color), "completed")
+			yield(damage_player(player, color, diff), "completed")
 		else:
-			show_heal_player(player, color, true)
-			change_player1_points(color,"=", amount)
-			yield(get_tree().create_timer(DEFAULT_WAIT_TIME),"timeout")
-			rpc_id(Network.opponent,"update_points")
-			update_points()
-			show_heal_player(player, color, false)
-			yield(trigger_effects("healed_player", diff, 1, color), "completed")
+			yield(heal_player(player, color, diff), "completed")
 		
 	else:
 		var diff = abs(get_player2_points()[color] - amount)
 		if get_player2_points()[color] == amount:
 			return
 		if get_player2_points()[color] > amount:
-			show_damage_player(player, color, true)
-			change_player2_points(color,"=", amount)
-			yield(get_tree().create_timer(DEFAULT_WAIT_TIME),"timeout")
-			rpc_id(Network.opponent,"update_points")
-			update_points()
-			show_damage_player(player, color, false)
-			yield(trigger_effects("damaged_player", diff, 2, color), "completed")
+			yield(damage_player(player, color, diff), "completed")
 		else:
-			show_heal_player(player, color, true)
-			change_player2_points(color,"=", amount)
-			yield(get_tree().create_timer(DEFAULT_WAIT_TIME),"timeout")
-			rpc_id(Network.opponent,"update_points")
-			update_points()
-			show_heal_player(player, color, false)
-			yield(trigger_effects("healed_player", diff, 2, color), "completed")
+			yield(heal_player(player, color, diff), "completed")
+		
+
 remote func random_summon_hero(num, color = null):
 	yield(get_tree(), "idle_frame")
 	var switch = yield(get_unique_id(), "completed")
@@ -2174,6 +2204,7 @@ remote func random_summon_card(num):
 func no_triggers_heal_player(player, color, amount):
 	yield(get_tree(), "idle_frame")
 	if player == 1:
+		history_write("Il giocatore %s ha guadagnato %d di %s\n" % [Network.username, amount, {"red":"libido", "blue":"intelligenza", "green":"follia"}[color] ])
 		show_heal_player(player, color, true)
 		change_player1_points(color,"+", amount)
 		yield(get_tree().create_timer(DEFAULT_WAIT_TIME),"timeout")
@@ -2181,6 +2212,7 @@ func no_triggers_heal_player(player, color, amount):
 		update_points()
 		show_heal_player(player, color, false)
 	else:
+		history_write("Il giocatore %s ha guadagnato %d di %s\n" % [Network.username, amount, {"red":"libido", "blue":"intelligenza", "green":"follia"}[color] ])
 		show_heal_player(player, color, true)
 		change_player2_points(color,"+", amount)
 		yield(get_tree().create_timer(DEFAULT_WAIT_TIME),"timeout")
@@ -2214,6 +2246,7 @@ func add_to_hand(player, num):
 		var index = hand.find(0)
 		if index == -1:
 			return
+		history_write("Il giocatore %s aggiunge alla mano una carta\n" % Network.username)
 		change_player1_hand_card(index, num)
 		update_hand_cards()
 		rpc_id(Network.opponent,"update_hand_cards")
@@ -2223,6 +2256,7 @@ func add_to_hand(player, num):
 		var index = hand.find(0)
 		if index == -1:
 			return
+		history_write("Il giocatore %s aggiunge alla mano una carta\n" % Network.opponent_user)
 		change_player2_hand_card(index, num)
 		update_hand_cards()
 		rpc_id(Network.opponent,"update_hand_cards")
