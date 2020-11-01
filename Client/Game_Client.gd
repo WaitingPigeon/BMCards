@@ -1089,7 +1089,7 @@ remote func draw_cards(numOfCards):
 			rpc_id(Network.opponent, "play_sound", "draw")
 			play_sound("draw")
 			yield(trigger_effects("drawn_card"),"completed")
-      remove_switch(switch)
+	remove_switch(switch)
 
 remote func discard_cards(numOfCards):
 	yield(get_tree(), "idle_frame")
