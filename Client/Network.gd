@@ -3,8 +3,12 @@ extends Node
 const DEFAULT_PORT = 10001
 var SERVER_IP = ''
 
+remote var SERVER_VERSION = ""
+const CLIENT_VERSION = "alpha_1.2"
+
 signal connection_success
 signal connection_fail
+signal different_version
 signal existing_username
 signal registration_successful
 signal non_existing_username
@@ -37,7 +41,6 @@ func return_to_lobby():
 	get_tree().change_scene('res://Lobby.tscn')
 func return_to_home():
 	get_tree().change_scene('res://Login.tscn')
-	
 func connect_to_server():
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_client(SERVER_IP, DEFAULT_PORT)
@@ -50,9 +53,11 @@ func _connected_to_server():
 	emit_signal('connection_success')
 func server_access(state, username, password):
 	if state == 'register':
-		rpc_id(1, 'register_account', username, password)
+		rpc_id(1, 'register_account', username, password, CLIENT_VERSION)
 	elif state == 'login':
-		rpc_id(1, 'login_account', username, password)
+		rpc_id(1, 'login_account', username, password, CLIENT_VERSION)
+remote func different_version():
+	emit_signal("different_version")
 remote func existing_username():
 	emit_signal("existing_username")
 remote func registration_successful():

@@ -109,7 +109,7 @@ var card_list_dict = {
 	0:{
 		"tipo" : null,
 		"quantità": 0,
-		"nome" : "null",
+		"nome" : "il nulla",
 		"effetti": [],
 		"vita" : 0,
 		"colori": [],
