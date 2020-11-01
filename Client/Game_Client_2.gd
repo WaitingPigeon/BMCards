@@ -130,13 +130,14 @@ func _on_Button3_pressed():
 	if $Settings/History_node/History_text.visible == false:
 		$Settings/History_node/History_text.text = history_read()
 		$Settings/History_node/History_text.visible = true
+		$Settings/History_node/History_text.scroll_vertical = INF
 		$Settings/Button3.text = "CHIUDI CRONOLOGIA"
 	elif $Settings/History_node/History_text.visible == true:
 		$Settings/History_node/History_text.visible = false
 		$Settings/Button3.text = "CRONOLOGIA PARTITA"
 	else:
 		 $Settings/Button3.text = "!!!ERRORE!!!"
-     
+	 
 func _on_CheckBox_gui_input(event):
 	OS.window_fullscreen = $Settings/CheckBox.pressed
 

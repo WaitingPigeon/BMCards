@@ -1655,7 +1655,6 @@ margin_left = -81.0
 margin_top = -2.0
 margin_right = 85.0
 margin_bottom = 78.0
-
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "RESA"
 __meta__ = {
@@ -1672,7 +1671,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-
 [node name="Button3" type="Button" parent="Settings"]
 margin_left = -176.0
 margin_top = 99.0
@@ -1686,7 +1684,6 @@ margin_top = -92.9158
 margin_right = 54.4414
 margin_bottom = -68.9158
 pressed = true
-
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1701,4 +1698,3 @@ __meta__ = {
 [connection signal="pressed" from="Settings/Button2" to="." method="_on_Button2_pressed"]
 [connection signal="pressed" from="Settings/Button3" to="." method="_on_Button3_pressed"]
 [connection signal="gui_input" from="Settings/CheckBox" to="." method="_on_CheckBox_gui_input"]
-

@@ -1070,7 +1070,7 @@ func shuffle_deck():
 	meta_rset_id(Network.opponent, "cards_deck", cards_deck)
 remote func draw_cards(numOfCards):
 	yield(get_tree(), "idle_frame")
-  var switch = yield(get_unique_id(), "completed")
+	var switch = yield(get_unique_id(), "completed")
 	history_write("%s pesca %d carta/e\n" % [Network.opponent_user, numOfCards])
 	if cards_deck.size() == 0:
 		lose_game()
@@ -1143,7 +1143,7 @@ remote func attack(color, pos):
 		yield(trigger_effects("hero_attacked", "heros", 1, color, pos),"completed")
 		return (true)
 func end_turn():
-  meta_rset_id(Network.opponent, "is_beta_busy", true)
+	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	history_write("Fine del turno di %s\n" % Network.username)
 	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	$Board_Stuff/Button.disabled = true
