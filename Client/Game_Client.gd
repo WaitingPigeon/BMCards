@@ -43,6 +43,7 @@ remotesync var beta_green_spells_life = [0,0,0]
 var mana_left = 1
 var maximum_mana = 1
 var kills_this_turn = 0
+var turns_passed = 1
 
 remotesync var unique_id = 1
 remotesync var active_switches = []
@@ -980,7 +981,19 @@ func update_mana():
 func _ready():
 #warning-ignore:unused_variable
 	history_create()
-	$Player_2/Hand_area/Label.text = Network.opponent_user
+	var my_name = ""
+	var opp_name = ""
+	if Network.username.length() <= 5:
+		my_name = Network.username
+	else:
+		my_name = Network.username.left(5) + "."
+	if Network.opponent_user.length() <= 5:
+		opp_name = Network.opponent_user
+	else:
+		opp_name = Network.opponent_user.left(5) + "."
+	$Player_1/Hand_area/Label.text = my_name
+	$Player_2/Hand_area/Label.text = opp_name
+	$Settings/CheckBox.pressed = OS.window_fullscreen
 	Network.connect("disconnected_opponent", self, "win_game")
 	randomize()
 	$Board_Stuff/Background_music.volume_db = linear2db(0.1)
@@ -1025,6 +1038,7 @@ func _ready():
 	if Network.letter == 'b':
 		start_game()
 func start_game():
+	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	randomize()
 	var colors = ["blue", "green", "red"]
 	for i in range(3):
@@ -1040,10 +1054,11 @@ func start_game():
 			cards_deck.append(card)
 	shuffle_deck()
 	yield(draw_cards(6),"completed")
+	var switch = yield(get_unique_id(), "completed")
+	yield(add_switch(switch + 1), "completed")
 	rpc_id(Network.opponent,"draw_cards", 6)
-	meta_rset_id(Network.opponent, "is_beta_busy", true)
-	while is_beta_busy:
-		yield(get_tree().create_timer(1.0), "timeout")
+	while (switch + 1) in active_switches:
+		yield(get_tree().create_timer(0.01), "timeout")
 	if coin_flip() == 1:
 		begin_turn()
 	else:
@@ -1055,10 +1070,11 @@ func shuffle_deck():
 	meta_rset_id(Network.opponent, "cards_deck", cards_deck)
 remote func draw_cards(numOfCards):
 	yield(get_tree(), "idle_frame")
+  var switch = yield(get_unique_id(), "completed")
 	history_write("%s pesca %d carta/e\n" % [Network.opponent_user, numOfCards])
 	if cards_deck.size() == 0:
 		lose_game()
-	meta_rset_id(Network.opponent, "is_beta_busy", true)
+		yield(get_tree().create_timer(5.0), "timeout")
 	for i in range(numOfCards):
 		var empty_space = get_hand1_empty_space()
 		if !empty_space == -1:
@@ -1073,7 +1089,8 @@ remote func draw_cards(numOfCards):
 			rpc_id(Network.opponent, "play_sound", "draw")
 			play_sound("draw")
 			yield(trigger_effects("drawn_card"),"completed")
-	meta_rset_id(Network.opponent, "is_beta_busy", false)
+	remove_switch(switch)
+			
 remote func begin_turn():
 	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	history_write("Inizia il turno di %s\n" % Network.username)
@@ -1093,6 +1110,7 @@ remote func begin_turn():
 	if maximum_mana >= 5:
 		yield(draw_cards(1), "completed")
 	$Board_Stuff/Button.disabled = false
+	meta_rset_id(Network.opponent, "is_beta_busy", false)
 remote func attack(color, pos):
 	yield(get_tree(), "idle_frame")
 	var attacking_card = get_player1_heros_cards()[color][pos]
@@ -1125,11 +1143,12 @@ remote func attack(color, pos):
 		yield(trigger_effects("hero_attacked", "heros", 1, color, pos),"completed")
 		return (true)
 func end_turn():
+  meta_rset_id(Network.opponent, "is_beta_busy", true)
 	history_write("Fine del turno di %s\n" % Network.username)
+	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	$Board_Stuff/Button.disabled = true
 	rpc_id(Network.opponent, "play_sound", "passturn")
 	play_sound("passturn")
-	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	for color in ["blue","green","red"]:
 		for index in [0,1,2]:
 			yield(attack(color, index), "completed")
@@ -1160,6 +1179,8 @@ func end_turn():
 	update_points()
 	if maximum_mana < 5:
 		maximum_mana += 1
+	turns_passed += 1
+	$Board_Stuff/Button.text = "Passa il turno (" + str(turns_passed) + ")"
 	for effect in ["frozen_pos", "frozen_hero"]:
 		remove_all_effect(1, effect)
 	$Board_Stuff/Turn_light.texture = load("res://Resources/red_light.png")
@@ -1167,12 +1188,13 @@ func end_turn():
 	rpc_id(Network.opponent,"begin_turn")
 	meta_rset_id(Network.opponent, "is_beta_busy", false)
 func play_hero(hand_pos, color, board_pos):
+	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	var played_card = get_player1_hand_cards()[hand_pos]
 	var board_card = get_player1_heros_cards()[color][board_pos]
 	if !((is_player1_turn()) and (load_card(played_card)["tipo"] == "hero") and (color in load_card(played_card)["colori"]) and (board_card == 0) and mana_left > 0):
 		update_hand_cards()
+		meta_rset_id(Network.opponent, "is_beta_busy", false)
 		return
-	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	history_write("Viene giocato l'eroe %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
 	mana_left -= 1
 	update_mana()
@@ -1199,12 +1221,13 @@ func play_hero(hand_pos, color, board_pos):
 	yield(trigger_effects("hero_played", "heros", 1, color, board_pos),"completed")
 	meta_rset_id(Network.opponent, "is_beta_busy", false)
 func play_spell(hand_pos, color, board_pos):
+	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	var played_card = get_player1_hand_cards()[hand_pos]
 	var board_card = get_player1_spells_cards()[color][board_pos]
 	if !((is_player1_turn()) and (load_card(played_card)["tipo"] in ["spell", "event"]) and (color in load_card(played_card)["colori"]) and (board_card == 0) and mana_left > 0):
 		update_hand_cards()
+		meta_rset_id(Network.opponent, "is_beta_busy", false)
 		return
-	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	if load_card(played_card)["tipo"]=="spell":
 		history_write("Viene giocato l'oggetto magico %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
 	elif load_card(played_card)["tipo"]=="event":
@@ -1243,7 +1266,6 @@ remote func summon_hero(num, color, board_pos):
 	var board_card = get_player1_heros_cards()[color][board_pos]
 	if !((load_card(played_card)["tipo"] == "hero") and (color in load_card(played_card)["colori"]) and (board_card == 0)):
 		return
-	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	history_write("Viene evocato l'eroe %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
 	show_bolt(1, "heros", color, board_pos, true)
 	change_player_1_heros_card(color, board_pos, played_card)
@@ -1263,14 +1285,12 @@ remote func summon_hero(num, color, board_pos):
 		yield((activate_effect(played_card,  "played", "heros", color, board_pos)),"completed")
 	show_bolt(1,"heros", color, board_pos, false)
 	yield(trigger_effects("hero_played", "heros", 1, color, board_pos),"completed")
-	meta_rset_id(Network.opponent, "is_beta_busy", false)
 remote func summon_spell(num, color, board_pos):
 	yield(get_tree(), "idle_frame")
 	var played_card = num
 	var board_card = get_player1_spells_cards()[color][board_pos]
 	if  !((load_card(played_card)["tipo"] in ["spell", "event"]) and (color in load_card(played_card)["colori"]) and (board_card == 0)):
 		return
-	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	if load_card(played_card)["tipo"]=="spell":
 		history_write("Viene evocato l'oggetto magico %s in posizione %c%d\n" % [load_card(played_card)["nome"], color[0].to_upper(), board_pos])
 	if load_card(played_card)["tipo"]=="event":
@@ -1297,8 +1317,6 @@ remote func summon_spell(num, color, board_pos):
 		yield(trigger_effects("event_played", "spells", 1, color, board_pos),"completed")
 	elif load_card(played_card)["tipo"] == "spell":
 		yield(trigger_effects("spell_played", "spells", 1, color, board_pos),"completed")
-	meta_rset_id(Network.opponent, "is_beta_busy", false)
-
 
 remote func activate_effect(num, type_of_effect, zone_activating, color_activating, pos_activating, player_trigger = null, zone_trigger = null, color_trigger = null , pos_trigger = null):
 	yield(get_tree(), "idle_frame")
@@ -1311,7 +1329,6 @@ remote func activate_effect(num, type_of_effect, zone_activating, color_activati
 	remove_switch(switch)
 func trigger_effects(type_of_effect, zone_trigger = null, player_trigger = null, color_trigger = null , pos_trigger = null):
 	yield(get_tree(), "idle_frame")
-	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	yield(trigger_board_effects(type_of_effect, zone_trigger, player_trigger, color_trigger, pos_trigger), "completed")
 	var switch = yield(get_unique_id(), "completed")
 	yield(add_switch(switch + 1), "completed")
@@ -1321,7 +1338,6 @@ func trigger_effects(type_of_effect, zone_trigger = null, player_trigger = null,
 remote func trigger_board_effects(type_of_effect, zone_trigger, player_trigger, color_trigger, pos_trigger):
 	yield(get_tree(),"idle_frame")
 	var switch = yield(get_unique_id(), "completed")
-	meta_rset_id(Network.opponent, "is_beta_busy", true)
 	for zone in ["heros","spells"]:
 		for color in ["blue","green","red"]:
 			for pos in [0,1,2]:
@@ -1415,10 +1431,11 @@ func check_objectives(trigger):
 
 remote func win_game():
 	rpc_id(Network.opponent,"lose_game")
-	yield(get_tree().create_timer(1.0),"timeout")
+	yield(get_tree().create_timer(0.5),"timeout")
 	get_tree().change_scene('res://Win.tscn')
 remote func lose_game():
-	yield(get_tree().create_timer(1.0),"timeout")
+	rpc_id(Network.opponent,"win_game")
+	yield(get_tree().create_timer(0.5),"timeout")
 	get_tree().change_scene('res://Lose.tscn')
 
 
@@ -2597,7 +2614,7 @@ func effect_23(type_of_effect, zone_activating, color_activating, pos_activating
 			var a = yield(random_summon_hero(hero), "completed")
 			if a == null:
 				return
-			var str_that = pos2str({"player":1, "zone": "heros",  "color": a["color"], "pos": a["pos"]})
+			var str_that = pos2str({"player": 1, "zone": "heros",  "color": a["color"], "pos": a["pos"]})
 			add_effect(1, "pal" + str_this, str_that)
 		"dead":
 			cards_effects.erase("pal" + str_this)
@@ -2825,7 +2842,6 @@ func effect_41(type_of_effect, zone_activating, color_activating, pos_activating
 	match type_of_effect:
 		"played":
 			for i in range (10):
-				meta_rset_id(Network.opponent, "is_beta_busy", true)
 				var random_card = $Board_Stuff.get_all_events()[randi()%$Board_Stuff.get_all_events().size()]
 				yield(random_summon_spell(random_card), "completed")
 		"tease":
@@ -2975,7 +2991,10 @@ func effect_51(type_of_effect, zone_activating, color_activating, pos_activating
 			while cards_deck.size() > 0 and counter < 3:
 				var card = cards_deck[index]
 				if load_card(card)["tipo"] == "hero":
+					rpc_id(Network.opponent, "play_sound", "draw")
+					play_sound("draw")
 					cards_deck.remove(index)
+					meta_rset_id(Network.opponent, "cards_deck", cards_deck)
 					yield(random_summon_hero(card), "completed")
 					counter += 1
 				else:
@@ -3272,7 +3291,7 @@ func effect_76(type_of_effect, zone_activating, color_activating, pos_activating
 				yield(damage_hero(2, color_activating, pos_activating, 4), "completed")
 				return
 			if not get_player2_spells_cards()[color_activating][pos_activating] == 0:
-				yield(damage_spell(1, color_activating, pos_activating, 4), "completed")
+				yield(damage_spell(2, color_activating, pos_activating, 4), "completed")
 				return
 func effect_77(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
 	yield(get_tree(), "idle_frame")

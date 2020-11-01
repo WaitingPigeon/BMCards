@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/11.jpg-94b6bb21ed035d4bf6aaaee2bf745205.stex"
+path="res://.import/mana.png-15a0f292ef3ebc9bb005885882475ede.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Gif frames/11.jpg"
-dest_files=[ "res://.import/11.jpg-94b6bb21ed035d4bf6aaaee2bf745205.stex" ]
+source_file="res://Resources/mana.png"
+dest_files=[ "res://.import/mana.png-15a0f292ef3ebc9bb005885882475ede.stex" ]
 
 [params]
 

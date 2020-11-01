@@ -2,6 +2,7 @@ extends Node
 
 const DEFAULT_PORT = 10001
 const MAX_PLAYERS = 20
+const SERVER_VERSION = "alpha_1.2"
 var players_online = {}
 var registred_players = {}
 var playing_players = {}
@@ -21,7 +22,7 @@ func _ready():
 	file_handler.close()
 	create_server()
 	while true:
-		yield(get_tree().create_timer(3.0), "timeout")
+		yield(get_tree().create_timer(1.0), "timeout")
 		check_online()
 		rpc("update_online_players", players_online, playing_players)
 		
@@ -42,8 +43,12 @@ func peer_disconnected(id):
 func peer_connected(id):
 	pass
 
-remote func register_account(username, password):
+remote func register_account(username, password, version):
 	var id = get_tree().get_rpc_sender_id()
+	if not version == SERVER_VERSION:
+		rset_id(id, "SERVER_VERSION", SERVER_VERSION)
+		rpc_id(id, "different_version")
+		return
 	if username in registred_players:
 		rpc_id(id, "existing_username")
 		return
@@ -54,8 +59,12 @@ remote func register_account(username, password):
 	file_handler3.close()
 	rpc_id(id, "registration_successful")
 
-remote func login_account(username, password):
+remote func login_account(username, password, version):
 	var id = get_tree().get_rpc_sender_id()
+	if not version == SERVER_VERSION:
+		rset_id(id, "SERVER_VERSION", SERVER_VERSION)
+		rpc_id(id, "different_version")
+		return
 	if not username in registred_players:
 		rpc_id(id, "non_existing_username")
 		return

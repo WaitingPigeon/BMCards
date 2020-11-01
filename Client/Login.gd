@@ -6,6 +6,7 @@ var Server_IP = ""
 func _ready():
 	Network.connect("connection_success", self, "on_connection_success")
 	Network.connect("connection_fail", self, "on_connection_failure")
+	Network.connect("different_version", self, "different_version")
 	Network.connect("existing_username", self, "existing_username")
 	Network.connect("registration_successful",self, "registration_successful")
 	Network.connect("non_existing_username", self, "non_existing_username")
@@ -76,6 +77,11 @@ func on_connection_failure():
 func existing_username():
 	reactivate()
 	$Status.text = "L'username è già in uso"
+
+func different_version():
+	reactivate()
+	print("Lol")
+	$Status.text = "Il server sta usando una versione diversa del gioco. (Server: " + Network.SERVER_VERSION + ", Tu: " + Network.CLIENT_VERSION + ")"
 
 func registration_successful():
 	reactivate()

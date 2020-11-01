@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://Game_Client_2.gd" type="Script" id=1]
 [ext_resource path="res://Cards_list_client.gd" type="Script" id=2]
@@ -13,7 +13,8 @@
 [ext_resource path="res://Resources/smile.png" type="Texture" id=11]
 [ext_resource path="res://Resources/kiss.png" type="Texture" id=12]
 [ext_resource path="res://Resources/green_check.png" type="Texture" id=13]
-[ext_resource path="res://Resources/Comic_Sans2.tres" type="DynamicFont" id=14]
+[ext_resource path="res://Resources/mana.png" type="Texture" id=15]
+[ext_resource path="res://Resources/Comic_Sans.tres" type="DynamicFont" id=16]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -86,12 +87,13 @@ scale = Vector2( 0.135643, 0.123305 )
 z_index = 1
 
 [node name="Button" type="Button" parent="Board_Stuff"]
-margin_left = 17.6174
-margin_top = 562.719
-margin_right = 202.617
-margin_bottom = 605.719
+margin_left = 26.7277
+margin_top = 559.26
+margin_right = 209.728
+margin_bottom = 601.26
+custom_fonts/font = ExtResource( 16 )
 disabled = true
-text = "Passa il turno"
+text = "Passa il turno (1)"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -102,8 +104,8 @@ scale = Vector2( 0.250212, 0.24273 )
 texture = ExtResource( 5 )
 
 [node name="Deck" type="Sprite" parent="Board_Stuff"]
-position = Vector2( 34.3482, 40.9421 )
-scale = Vector2( 0.164211, 0.261588 )
+position = Vector2( 42.3663, 44.9511 )
+scale = Vector2( 0.247733, 0.303349 )
 z_index = -2
 texture = ExtResource( 6 )
 region_rect = Rect2( 0, 0, 200, 100 )
@@ -122,10 +124,10 @@ __meta__ = {
 
 [node name="Objective_Panel_1" type="Panel" parent="Board_Stuff"]
 show_behind_parent = true
-margin_left = 801.977
-margin_top = 156.468
-margin_right = 868.977
-margin_bottom = 254.469
+margin_left = 798.72
+margin_top = 99.6529
+margin_right = 865.72
+margin_bottom = 197.654
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -148,10 +150,10 @@ texture = ExtResource( 13 )
 
 [node name="Objective_Panel_2" type="Panel" parent="Board_Stuff"]
 show_behind_parent = true
-margin_left = 802.921
-margin_top = 266.902
-margin_right = 869.921
-margin_bottom = 364.902
+margin_left = 799.664
+margin_top = 210.087
+margin_right = 866.664
+margin_bottom = 308.087
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -174,10 +176,10 @@ texture = ExtResource( 4 )
 
 [node name="Objective_Panel_3" type="Panel" parent="Board_Stuff"]
 show_behind_parent = true
-margin_left = 804.809
-margin_top = 381.111
-margin_right = 871.809
-margin_bottom = 479.111
+margin_left = 801.552
+margin_top = 324.296
+margin_right = 868.552
+margin_bottom = 422.296
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -205,23 +207,13 @@ volume_db = -70.761
 autoplay = true
 
 [node name="Mana_left" type="Label" parent="Board_Stuff"]
-margin_left = 811.755
-margin_top = 526.091
-margin_right = 851.755
-margin_bottom = 540.091
+margin_left = 814.506
+margin_top = 477.998
+margin_right = 854.506
+margin_bottom = 491.998
 text = "0"
 align = 1
 valign = 1
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Mana_left_description" type="Label" parent="Board_Stuff"]
-margin_left = 775.169
-margin_top = 497.113
-margin_right = 894.169
-margin_bottom = 511.113
-text = "Giocate rimanenti:"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -235,6 +227,11 @@ text = "Impostazioni"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="mana" type="Sprite" parent="Board_Stuff"]
+position = Vector2( 836.083, 502.231 )
+scale = Vector2( 0.131308, 0.117498 )
+texture = ExtResource( 15 )
 
 [node name="Player_1" type="Node" parent="."]
 
@@ -266,6 +263,22 @@ max_columns = 10
 same_column_width = true
 fixed_column_width = 60
 fixed_icon_size = Vector2( 60, 60 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Player_1/Hand_area"]
+margin_left = 645.572
+margin_top = 7.04742
+margin_right = 780.572
+margin_bottom = 62.0474
+custom_fonts/font = ExtResource( 16 )
+custom_colors/font_color = Color( 1, 0, 0, 1 )
+custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "AVVER."
+align = 1
+valign = 1
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1441,6 +1454,9 @@ margin_left = 104.396
 margin_top = 10.4987
 margin_right = 881.396
 margin_bottom = 81.4987
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Cards" type="ItemList" parent="Player_2/Hand_area"]
 margin_left = 5.71175
@@ -1465,15 +1481,15 @@ __meta__ = {
 }
 
 [node name="Label" type="Label" parent="Player_2/Hand_area"]
-margin_left = 6.2973
-margin_top = 0.821609
-margin_right = 781.297
-margin_bottom = 64.8216
-custom_fonts/font = ExtResource( 14 )
+margin_left = 651.472
+margin_top = 4.39149
+margin_right = 786.472
+margin_bottom = 59.3915
+custom_fonts/font = ExtResource( 16 )
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 custom_colors/font_outline_modulate = Color( 0, 0, 0, 1 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
-text = "AVVERSARIO"
+text = "AVVER."
 align = 1
 valign = 1
 __meta__ = {
@@ -1550,8 +1566,9 @@ z_index = 2
 texture = ExtResource( 9 )
 
 [node name="Settings" type="Sprite" parent="."]
+visible = false
 self_modulate = Color( 0.407843, 0.219608, 0.219608, 1 )
-position = Vector2( 764.293, 381.982 )
+position = Vector2( 764.293, 381.387 )
 scale = Vector2( 0.631764, 0.625054 )
 z_index = 10
 texture = ExtResource( 3 )
@@ -1577,11 +1594,11 @@ __meta__ = {
 }
 
 [node name="HSlider" type="HSlider" parent="Settings"]
-margin_left = 11.6625
-margin_top = -234.125
-margin_right = 172.662
-margin_bottom = -94.1247
-max_value = 1.0
+margin_left = 3.19192
+margin_top = -288.348
+margin_right = 164.191
+margin_bottom = -148.348
+max_value = 0.5
 step = 0.01
 value = 0.1
 __meta__ = {
@@ -1589,10 +1606,10 @@ __meta__ = {
 }
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Settings"]
-margin_left = -156.661
-margin_top = -171.746
-margin_right = -30.6615
-margin_bottom = -98.7457
+margin_left = -162.308
+margin_top = -225.018
+margin_right = -36.3086
+margin_bottom = -152.018
 text = "Volume musica:"
 scroll_active = false
 __meta__ = {
@@ -1600,11 +1617,11 @@ __meta__ = {
 }
 
 [node name="HSlider2" type="HSlider" parent="Settings"]
-margin_left = 11.6625
-margin_top = -115.601
-margin_right = 172.662
-margin_bottom = 24.3988
-max_value = 1.0
+margin_left = 5.07424
+margin_top = -217.388
+margin_right = 166.074
+margin_bottom = -77.3885
+max_value = 0.5
 step = 0.01
 value = 0.1
 __meta__ = {
@@ -1612,11 +1629,22 @@ __meta__ = {
 }
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="Settings"]
-margin_left = -150.885
-margin_top = -52.1543
-margin_right = -24.8846
-margin_bottom = 20.8457
+margin_left = -155.591
+margin_top = -155.844
+margin_right = -29.5905
+margin_bottom = -82.8442
 text = "Volume effetti:"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="Settings"]
+margin_left = -177.534
+margin_top = -88.1279
+margin_right = -0.533691
+margin_bottom = -15.1279
+text = "Modalità schermo intero:"
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
@@ -1627,6 +1655,7 @@ margin_left = -81.0
 margin_top = -2.0
 margin_right = 85.0
 margin_bottom = 78.0
+
 custom_colors/font_color = Color( 1, 0, 0, 1 )
 text = "RESA"
 __meta__ = {
@@ -1643,12 +1672,21 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+
 [node name="Button3" type="Button" parent="Settings"]
 margin_left = -176.0
 margin_top = 99.0
 margin_right = 183.0
 margin_bottom = 139.0
 text = "CRONOLOGIA PARTITA"
+
+[node name="CheckBox" type="CheckBox" parent="Settings"]
+margin_left = 30.4414
+margin_top = -92.9158
+margin_right = 54.4414
+margin_bottom = -68.9158
+pressed = true
+
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -1662,3 +1700,5 @@ __meta__ = {
 [connection signal="pressed" from="Settings/Button" to="." method="_on_Resa_pressed"]
 [connection signal="pressed" from="Settings/Button2" to="." method="_on_Button2_pressed"]
 [connection signal="pressed" from="Settings/Button3" to="." method="_on_Button3_pressed"]
+[connection signal="gui_input" from="Settings/CheckBox" to="." method="_on_CheckBox_gui_input"]
+
