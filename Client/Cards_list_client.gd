@@ -1064,7 +1064,7 @@ var card_list_dict = {
 	86:{
 		"nome" : "Veronica, la vincitrice",
 		"tipo" : "hero",
-		"effetti": ["begin_turn", "end_turn"],
+		"effetti": ["begin_turn"],
 		"vita" : 10,
 		"attacco" : 10,
 		"quantità": 1,
@@ -1075,7 +1075,7 @@ var card_list_dict = {
 	87:{
 		"nome" : "Jacopo, il fotografo",
 		"tipo" : "hero",
-		"effetti": ["begin_turn", "enemy_begin_turn"],
+		"effetti": [],
 		"vita" : 9,
 		"attacco" : 6,
 		"quantità": 1,

@@ -2520,10 +2520,11 @@ func effect_13(type_of_effect, zone_activating, color_activating, pos_activating
 	yield(get_tree(), "idle_frame")
 	match type_of_effect:
 		"hero_teased":
-			var rand_pos = randi() % 3
-			var tmp_color_list = ["blue", "red", "green"]
-			if player_trigger == 1:
-				yield(damage_player(2, tmp_color_list[rand_pos], get_player2_points()[tmp_color_list[rand_pos]]/2), "completed")
+			if color_trigger == color_activating and pos_trigger == pos_activating and player_trigger == 1:
+				var rand_pos = randi() % 3
+				var tmp_color_list = ["blue", "red", "green"]
+				if player_trigger == 1:
+					yield(damage_player(2, tmp_color_list[rand_pos], get_player2_points()[tmp_color_list[rand_pos]]/2), "completed")
 
 #GIOCO DELLA CHIAVE
 func effect_14(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
@@ -2981,7 +2982,7 @@ func effect_47(type_of_effect, zone_activating, color_activating, pos_activating
 			for card in get_spells_spots(1):
 				var num = get_player1_spells_cards()[card["color"]][card["pos"]]
 				counter += load_card(num)["nome"].count("s")
-			yield(heal_player(2, "green", counter * 10), "completed")
+			yield(heal_player(1, "green", counter * 10), "completed")
 
 #MARCO MURO, IL PALADINO
 func effect_48(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
@@ -3099,7 +3100,7 @@ func effect_55(type_of_effect, zone_activating, color_activating, pos_activating
 				yield(damage_hero(2, color, 0, 3), "completed")
 				yield(damage_hero(2, color, 1, 3), "completed")
 				yield(damage_hero(2, color, 2, 3), "completed")
-			yield(damage_player(1, "blue", 30) , "completed")
+			yield(damage_player(2, "blue", 30) , "completed")
 
 #PEPERONCINI CALABRESI
 func effect_56(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
@@ -3360,7 +3361,7 @@ func effect_75(type_of_effect, zone_activating, color_activating, pos_activating
 	yield(get_tree(), "idle_frame")
 	match type_of_effect:
 		"hero_teased":
-			if color_trigger == color_activating and pos_trigger == pos_activating and player_trigger == 2:
+			if color_trigger == color_activating and pos_trigger == pos_activating and player_trigger == 1:
 				var spots = get_heros_spots(2) #tutti i posti in cui c'è un eroe, 2 è l' avversario
 				if spots.size() > 0:
 					var spot = spots[randi()%spots.size()] #seleziona a caso...
