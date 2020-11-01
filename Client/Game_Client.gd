@@ -2224,7 +2224,7 @@ func no_triggers_heal_player(player, color, amount):
 		update_points()
 		show_heal_player(player, color, false)
 	else:
-		history_write("Il giocatore %s ha guadagnato %d di %s\n" % [Network.username, amount, {"red":"libido", "blue":"intelligenza", "green":"follia"}[color] ])
+		history_write("Il giocatore %s ha guadagnato %d di %s\n" % [Network.opponent_user, amount, {"red":"libido", "blue":"intelligenza", "green":"follia"}[color] ])
 		show_heal_player(player, color, true)
 		change_player2_points(color,"+", amount)
 		yield(get_tree().create_timer(DEFAULT_WAIT_TIME),"timeout")
@@ -2991,7 +2991,7 @@ func effect_48(type_of_effect, zone_activating, color_activating, pos_activating
 		"healing_player":
 			if not color_trigger == "blue":
 				meta_rset_id(Network.opponent, "heal_player_confirmation_flag", false) #non li annullerebbe così? li deve solo dimezzare...
-				yield(no_triggers_heal_player(player_trigger, color_trigger, zone_activating / 2), "completed") #"ZONE_ACTIVATING, in questo caso, viene usata per la quantità"
+				yield(no_triggers_heal_player(player_trigger, color_trigger, zone_trigger/2), "completed") #"ZONE_ACTIVATING, in questo caso, viene usata per la quantità"
 		"tease":
 			yield(heal_player(1, "blue", 80), "completed")
 
