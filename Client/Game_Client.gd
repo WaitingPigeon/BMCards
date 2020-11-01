@@ -1071,7 +1071,7 @@ func shuffle_deck():
 remote func draw_cards(numOfCards):
 	yield(get_tree(), "idle_frame")
 	var switch = yield(get_unique_id(), "completed")
-	history_write("%s pesca %d carta/e\n" % [Network.opponent_user, numOfCards])
+	history_write("%s pesca %d carta/e\n" % [Network.username, numOfCards])
 	if cards_deck.size() == 0:
 		lose_game()
 		yield(get_tree().create_timer(5.0), "timeout")
@@ -2430,8 +2430,8 @@ func effect_6(type_of_effect, zone_activating, color_activating, pos_activating,
 						yield(kill_spell(1, color, index), "completed")
 			for color in ["blue","green","red"]:
 				for index in [0,1,2]:
-					if get_player2_heros_cards()[color][index] == 1:
-						yield(kill_hero(2, color, index), "completed")
+					if get_player2_spells_cards()[color][index] == 1:
+						yield(kill_spell(2, color, index), "completed")
 			meta_rset_id(Network.opponent, "polenta_flag", true)
 
 #CODA AL SUPERMERCATO
@@ -2989,7 +2989,7 @@ func effect_48(type_of_effect, zone_activating, color_activating, pos_activating
 	yield(get_tree(), "idle_frame")
 	match type_of_effect:
 		"healing_player":
-			if not color_trigger == "blue":
+			if not color_trigger == "blue" and (heal_player_confirmation_flag == true):
 				meta_rset_id(Network.opponent, "heal_player_confirmation_flag", false) #non li annullerebbe così? li deve solo dimezzare...
 				yield(no_triggers_heal_player(player_trigger, color_trigger, zone_trigger/2), "completed") #"ZONE_ACTIVATING, in questo caso, viene usata per la quantità"
 		"tease":
