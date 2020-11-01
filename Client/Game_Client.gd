@@ -2991,7 +2991,7 @@ func effect_48(type_of_effect, zone_activating, color_activating, pos_activating
 		"healing_player":
 			if not color_trigger == "blue":
 				meta_rset_id(Network.opponent, "heal_player_confirmation_flag", false) #non li annullerebbe così? li deve solo dimezzare...
-				yield(heal_player(player_trigger, color_trigger, zone_activating / 2), "completed") #"ZONE_ACTIVATING, in questo caso, viene usata per la quantità"
+				yield(no_triggers_heal_player(player_trigger, color_trigger, zone_activating / 2), "completed") #"ZONE_ACTIVATING, in questo caso, viene usata per la quantità"
 		"tease":
 			yield(heal_player(1, "blue", 80), "completed")
 
