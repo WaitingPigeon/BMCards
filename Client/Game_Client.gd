@@ -1720,7 +1720,7 @@ func logBase(value, base):
 
 #Funzioni per le carte
 func is_on_board(num):
-	for color in ["red","blue","green"]:
+	for color in ["blue","green","red"]:
 		if (num in get_player1_heros_cards()[color]) or (num in get_player1_spells_cards()[color]):
 			return(true)
 		if (num in get_player2_heros_cards()[color]) or (num in get_player2_spells_cards()[color]):
@@ -2704,12 +2704,12 @@ func effect_29(type_of_effect, zone_activating, color_activating, pos_activating
 	yield(get_tree(), "idle_frame")
 	match type_of_effect:
 		"played":
-			for color in ["red", "green", "blue"]:
+			for color in ["blue", "green", "red"]:
 				for pos in [0,1,2]:
 					var card = get_player1_heros_cards()[color][pos] #ritorna una carta in x,y
 					if !(card == 0) and get_player1_heros_life()[color][pos] < load_card(card)["vita"]: #setta solo se hai la vita < del max
 						yield(set_hero(1, color, pos, load_card(card)["vita"]), "completed") #setter per oggetto eroe
-			for color in ["red", "green", "blue"]:
+			for color in ["blue", "green", "red"]:
 				for pos in [0,1,2]:
 					yield(damage_hero(2, color, pos, 3), "completed") #stessa roba, ma per danneggiare
 		"tease":
@@ -3542,7 +3542,7 @@ func effect_90(type_of_effect, zone_activating, color_activating, pos_activating
 	yield(get_tree(), "idle_frame")
 	match type_of_effect:
 		"attacking_hero":
-			if player_trigger == 2:
+			if player_trigger == 2 and attacking_confirmation_flag == true:
 				meta_rset_id(Network.opponent, "attacking_confirmation_flag", false)
 				yield(damage_hero(1, color_activating, pos_activating, attacking_value), "completed")
 		"tease":
