@@ -361,7 +361,8 @@ var card_list_dict = {
 	23:{
 		"nome" : "Partita a Lupus",
 		"tipo" : "spell",
-		"effetti": ["played", "end_turn", "dead"],
+		"effetti": ["played", "end_turn", "dead", "dead_hero"],
+		"silenzia": ["dead_hero"],
 		"vita" : 3,
 		"attacco" : 0,
 		"quantità": 3,
@@ -428,7 +429,8 @@ var card_list_dict = {
 	29:{
 		"nome" : "The power of music",
 		"tipo" : "hero",
-		"effetti": ["played"],
+		"effetti": ["played", "dead"],
+		"silenzia": ["dead"],
 		"vita" : 9,
 		"attacco" : 9,
 		"quantità": 3,
@@ -1088,7 +1090,7 @@ var card_list_dict = {
 		"tipo" : "spell",
 		"effetti": ["hero_played", "event_played", "spell_played"],
 		"silenzia": ["hero_played", "event_played", "spell_played"],
-		"vita" : 5,
+		"vita" : 3,
 		"attacco" : 0,
 		"quantità": 3,
 		"colori" : ["blue"],

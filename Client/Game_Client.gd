@@ -1068,48 +1068,64 @@ func shuffle_deck():
 	play_sound("shuffle")
 	cards_deck.shuffle()
 	meta_rset_id(Network.opponent, "cards_deck", cards_deck)
-remote func draw_cards(numOfCards):
+remote func draw_cards(numOfCards, player = 1):
 	yield(get_tree(), "idle_frame")
 	var switch = yield(get_unique_id(), "completed")
-	history_write("%s pesca %d carta/e\n" % [Network.username, numOfCards])
-	if cards_deck.size() == 0:
-		lose_game()
-		yield(get_tree().create_timer(5.0), "timeout")
-	for i in range(numOfCards):
-		var empty_space = get_hand1_empty_space()
-		if !empty_space == -1:
+	if player == 1:
+		history_write("%s pesca %d carta/e\n" % [Network.username, numOfCards])
+		if cards_deck.size() == 0:
+			lose_game()
+			yield(get_tree().create_timer(5.0), "timeout")
+		for i in range(numOfCards):
+			var empty_space = get_hand1_empty_space()
+			if !empty_space == -1:
+				yield(get_tree().create_timer(DEFAULT_WAIT_TIME/2),"timeout")
+				var drawn_card = cards_deck.pop_front()
+				change_player1_hand_card(empty_space, drawn_card)
+				meta_rset_id(Network.opponent, "cards_deck", cards_deck)
+				rpc_id(Network.opponent,"update_deck")
+				rpc_id(Network.opponent,"update_hand_cards")
+				update_deck()
+				update_hand_cards()
+				rpc_id(Network.opponent, "play_sound", "draw")
+				play_sound("draw")
+				yield(trigger_effects("drawn_card"),"completed")
+		remove_switch(switch)
+	else:
+		yield(add_switch(switch + 1), "completed")
+		rpc_id(Network.opponent, "draw_cards", numOfCards)
+		while (switch + 1) in active_switches:
+			yield(get_tree().create_timer(0.01), "timeout")
+
+remote func discard_cards(numOfCards, player = 1):
+	yield(get_tree(), "idle_frame")
+	var switch = yield(get_unique_id(), "completed")
+	if player == 1:
+		history_write("%s scarta %d carta/e\n" % [Network.username, numOfCards])
+		for i in range(numOfCards):
+			var hand1 = get_player1_hand_cards() #ritorna una lista
+			var temp_hand1 = hand1.duplicate(true) #gli oggetti sono mutabili !, crea un duplicato
+			while 0 in temp_hand1:
+				temp_hand1.erase(0)
+			if temp_hand1.size() == 0:
+				remove_switch(switch)
+				return
+			var randint = randi()%temp_hand1.size()
+			var temp_card = temp_hand1[randint]
+			var index1 = get_player1_hand_cards().find(temp_card)
+			change_player1_hand_card(index1, 0)
 			yield(get_tree().create_timer(DEFAULT_WAIT_TIME/2),"timeout")
-			var drawn_card = cards_deck.pop_front()
-			change_player1_hand_card(empty_space, drawn_card)
-			meta_rset_id(Network.opponent, "cards_deck", cards_deck)
-			rpc_id(Network.opponent,"update_deck")
+			update_hand_cards() #update visivo
 			rpc_id(Network.opponent,"update_hand_cards")
-			update_deck()
-			update_hand_cards()
 			rpc_id(Network.opponent, "play_sound", "draw")
 			play_sound("draw")
-			yield(trigger_effects("drawn_card"),"completed")
-	remove_switch(switch)
-
-remote func discard_cards(numOfCards):
-	yield(get_tree(), "idle_frame")
-	for i in range(numOfCards):
-		var hand1 = get_player1_hand_cards() #ritorna una lista
-		var temp_hand1 = hand1.duplicate(true) #gli oggetti sono mutabili !, crea un duplicato
-		while 0 in temp_hand1:
-			temp_hand1.erase(0)
-		if temp_hand1.size() == 0:
-			return
-		var randint = randi()%temp_hand1.size()
-		var temp_card = temp_hand1[randint]
-		var index1 = get_player1_hand_cards().find(temp_card)
-		change_player1_hand_card(index1, 0)
-		yield(get_tree().create_timer(DEFAULT_WAIT_TIME),"timeout")
-		update_hand_cards() #update visivo
-		rpc_id(Network.opponent,"update_hand_cards")
-		rpc_id(Network.opponent, "play_sound", "draw")
-		play_sound("draw")
-		yield(trigger_effects("discarded_card"),"completed")
+			yield(trigger_effects("discarded_card"),"completed")
+		remove_switch(switch)
+	else:
+		yield(add_switch(switch + 1), "completed")
+		rpc_id(Network.opponent, "discard_cards", numOfCards)
+		while (switch + 1) in active_switches:
+			yield(get_tree().create_timer(0.01), "timeout")
 
 remote func begin_turn():
 	meta_rset_id(Network.opponent, "is_beta_busy", true)
@@ -2623,9 +2639,16 @@ func effect_23(type_of_effect, zone_activating, color_activating, pos_activating
 		"dead":
 			cards_effects.erase("pal" + str_this)
 		"end_turn":
+			if not ("pal" + str_this) in cards_effects:
+				return
 			for card in cards_effects["pal" + str_this]:
 				var hero_dict = str2pos(card)
 				yield(damage_hero(hero_dict["player"], hero_dict["color"], hero_dict["pos"], 3) , "completed")
+		"dead_hero":
+			var str_that = pos2str({"player": player_trigger, "zone": zone_trigger, "color": color_trigger, "pos": pos_trigger})
+			if str_that in cards_effects["pal" + str_this]:
+				cards_effects.erase("pal" + str_this)
+			
 
 #LUPO
 func effect_24(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
@@ -2714,6 +2737,8 @@ func effect_29(type_of_effect, zone_activating, color_activating, pos_activating
 					yield(damage_hero(2, color, pos, 3), "completed") #stessa roba, ma per danneggiare
 		"tease":
 			yield(heal_player(1, color_activating, 80), "completed")
+		"dead":
+			yield(check_deaths(), "completed")
 
 #ZONA STUDIO
 func effect_30(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
@@ -2844,7 +2869,7 @@ func effect_39(type_of_effect, zone_activating, color_activating, pos_activating
 			elif color_activating == "red":
 				yield(heal_player(1, "red", 15), "completed")
 		"damaging_hero":
-			if player_trigger == 1 and color_trigger == "red" and pos_activating == pos_trigger:
+			if player_trigger == 1 and color_trigger == "red" and color_activating == "red" and pos_activating == pos_trigger:
 				meta_rset_id(Network.opponent, "damage_hero_confirmation_flag", false)
 				yield(get_tree().create_timer(0.1), "timeout")
 
@@ -3276,11 +3301,10 @@ func effect_67(type_of_effect, zone_activating, color_activating, pos_activating
 				if !(item in get_player1_hand_cards()):
 					#print("ti manca una carta")
 					yield(discard_cards(10), "completed")
-					rpc_id(Network.opponent, "discard_cards", 10)
-					yield(get_tree().create_timer(5.0), "timeout")
+					yield(discard_cards(10, 2), "completed")
 					return
-			yield(get_tree().create_timer(10.0), "timeout")
 			win_game() #se sì, vince
+			yield(get_tree().create_timer(10.0), "timeout")
 		"dead":
 			yield(add_to_deck(68), "completed") #rimescolalo nel mazzo
 		"tease": #
@@ -3374,12 +3398,10 @@ func effect_76(type_of_effect, zone_activating, color_activating, pos_activating
 		"begin_turn":
 			match pos_activating: #seleziona l' effetto in base alla posizione di attivazione
 				0:
-					rpc_id(Network.opponent,"discard_cards", 3)
-					yield(get_tree().create_timer(DEFAULT_WAIT_TIME * 3), "timeout")
+					yield(discard_cards(3, 2), "completed")
 					#i rimanenti sono praticamente uguali
 				1:
-					rpc_id(Network.opponent,"discard_cards", 3)
-					yield(get_tree().create_timer(DEFAULT_WAIT_TIME * 3), "timeout")
+					yield(discard_cards(3, 2), "completed")
 					yield(discard_cards(3), "completed")
 				2:
 					yield(discard_cards(3), "completed")
@@ -3413,8 +3435,7 @@ func effect_79(type_of_effect, zone_activating, color_activating, pos_activating
 		"healed_player":
 			if color_trigger == "blue":
 				show_bolt(1, zone_activating, color_activating, pos_activating, true)
-				rpc_id(Network.opponent, "draw_cards", 1)
-				yield(get_tree().create_timer(0.5), "timeout")
+				yield(draw_cards(1, 2), "completed")
 				yield(draw_cards(1), "completed")
 				show_bolt(1, zone_activating, color_activating, pos_activating, false)
 func effect_80(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
