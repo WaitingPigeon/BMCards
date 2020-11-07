@@ -4,7 +4,7 @@ const DEFAULT_PORT = 10001
 var SERVER_IP = ''
 
 remote var SERVER_VERSION = ""
-const CLIENT_VERSION = "alpha_1.2"
+const CLIENT_VERSION = "alpha_1.3"
 
 signal connection_success
 signal connection_fail
@@ -27,6 +27,8 @@ var last_chat_line = ''
 var chat_text = ''
 var players_online = {}
 var playing_players = {}
+var sound_volume = 0
+var music_volume = 0
 
 func revert_dict(dict):
 	var new_dict = {}
