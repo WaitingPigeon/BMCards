@@ -2602,6 +2602,7 @@ func effect_15(type_of_effect, zone_activating, color_activating, pos_activating
 				rpc_id(Network.opponent, "update_deck")
 				yield(add_to_hand(1, 17), "completed")
 		"tease":
+			yield(heal_player(1, "blue", 20), "completed")
 			for color in ["blue", "green", "red"]:
 				for pos in [0,1,2]:
 					yield(damage_hero(1, color, pos, 1), "completed")
@@ -2624,6 +2625,7 @@ func effect_16(type_of_effect, zone_activating, color_activating, pos_activating
 				rpc_id(Network.opponent, "update_deck")
 				yield(add_to_hand(1, 17), "completed")
 		"tease":
+			yield(heal_player(1, "blue", 20), "completed")
 			for color in ["blue", "green", "red"]:
 				for pos in [0,1,2]:
 					yield(damage_hero(1, color, pos, 1), "completed")
@@ -2653,6 +2655,7 @@ func effect_18(type_of_effect, zone_activating, color_activating, pos_activating
 				rpc_id(Network.opponent, "update_deck")
 				yield(add_to_hand(1, 17), "completed")
 		"tease":
+			yield(heal_player(1, "blue", 20), "completed")
 			for color in ["blue", "green", "red"]:
 				for pos in [0,1,2]:
 					yield(damage_hero(1, color, pos, 1), "completed")
@@ -3147,7 +3150,7 @@ func effect_51(type_of_effect, zone_activating, color_activating, pos_activating
 				else:
 					index += 1
 		"tease":
-			yield(heal_player(1, "red", 20 * get_heros_spots(1, "red").size()), "completed") #get_heroes ritorna una lista
+			yield(heal_player(1, "red", 20 * get_heros_spots(1).size()), "completed") #get_heroes ritorna un dict
 
 #PILLOLA ROSSA O PILLOLA BLU?
 func effect_52(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):

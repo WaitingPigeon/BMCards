@@ -674,7 +674,7 @@ var card_list_dict = {
 		"sound" : preload("res://Resources/50.wav")
 		},
 	51:{
-		"nome" : "Alessandro G., il sexy lavapiatti",
+		"nome" : "Ganins, il sexy lavapiatti",
 		"tipo" : "hero",
 		"effetti": ["played"],
 		"vita" : 8,
