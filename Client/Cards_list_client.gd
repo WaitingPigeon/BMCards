@@ -36,7 +36,7 @@ func get_libri():
 func get_bevande():
 	var list = [12, 13, 58]
 	return list
-remote func get_card_list_size():
+func get_card_list_size():
 	var size = card_list_dict.size()
 	return size
 
