@@ -54,3 +54,7 @@ func _on_Button2_pressed():
 
 func _on_Button3_pressed():
 	OS.window_fullscreen = !OS.window_fullscreen
+
+
+func _on_Galleria_pressed():
+	get_tree().change_scene("res://Gallery.tscn")

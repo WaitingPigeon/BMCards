@@ -19,9 +19,9 @@ __meta__ = {
 
 [node name="Gioca" type="Button" parent="."]
 margin_left = 652.142
-margin_top = 120.503
+margin_top = 34.503
 margin_right = 846.142
-margin_bottom = 239.504
+margin_bottom = 153.504
 custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color_disabled = Color( 0, 1, 0.133333, 1 )
 custom_colors/font_color = Color( 0, 1, 0.133333, 1 )
@@ -30,11 +30,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Galleria" type="Button" parent="."]
+margin_left = 657.142
+margin_top = 347.503
+margin_right = 851.142
+margin_bottom = 466.504
+custom_fonts/font = ExtResource( 3 )
+custom_colors/font_color_disabled = Color( 0, 0.929412, 1, 1 )
+custom_colors/font_color = Color( 0, 0.929412, 1, 1 )
+text = "Galleria"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Annulla" type="Button" parent="."]
-margin_left = 651.817
-margin_top = 269.401
-margin_right = 846.817
-margin_bottom = 391.401
+margin_left = 656.817
+margin_top = 188.401
+margin_right = 851.817
+margin_bottom = 310.401
 custom_fonts/font = ExtResource( 3 )
 custom_colors/font_color_disabled = Color( 0.921569, 0.0313726, 0.0313726, 1 )
 custom_colors/font_color = Color( 0.921569, 0.0313726, 0.0313726, 1 )
@@ -110,6 +123,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 [connection signal="pressed" from="Gioca" to="." method="_on_Gioca_pressed"]
+[connection signal="pressed" from="Galleria" to="." method="_on_Galleria_pressed"]
 [connection signal="pressed" from="Annulla" to="." method="_on_Annulla_pressed"]
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
 [connection signal="pressed" from="Button2" to="." method="_on_Button2_pressed"]
