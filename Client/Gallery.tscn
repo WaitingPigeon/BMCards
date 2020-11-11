@@ -6,7 +6,7 @@
 [ext_resource path="res://Resources/NextArrow.png" type="Texture" id=4]
 [ext_resource path="res://Resources/Comic_Sans.tres" type="DynamicFont" id=5]
 
-[node name="Gallery" type="Node2D"]
+[node name="Gallery" type="Node"]
 script = ExtResource( 2 )
 
 [node name="Card_sprite" type="Sprite" parent="."]
@@ -25,10 +25,10 @@ __meta__ = {
 }
 
 [node name="Previous_button" type="Button" parent="Card_sprite"]
-margin_left = 342.096
-margin_top = 56.1414
-margin_right = 866.096
-margin_bottom = 574.141
+margin_left = 239.824
+margin_top = -173.375
+margin_right = 763.824
+margin_bottom = 344.625
 rect_scale = Vector2( 0.25, 0.25 )
 icon = ExtResource( 3 )
 __meta__ = {
@@ -36,10 +36,10 @@ __meta__ = {
 }
 
 [node name="Next_button" type="Button" parent="Card_sprite"]
-margin_left = 337.958
-margin_top = -127.24
-margin_right = 861.958
-margin_bottom = 390.76
+margin_left = 407.443
+margin_top = -173.051
+margin_right = 931.443
+margin_bottom = 344.949
 rect_scale = Vector2( 0.25, 0.25 )
 icon = ExtResource( 4 )
 __meta__ = {
@@ -56,6 +56,41 @@ text = "TORNA ALLA LOBBY"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="HSlider" type="HSlider" parent="."]
+margin_left = 667.145
+margin_top = 547.036
+margin_right = 859.145
+margin_bottom = 655.036
+max_value = 10.0
+value = 5.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="Label" parent="HSlider"]
+margin_left = -132.002
+margin_top = 46.3792
+margin_right = 60.9981
+margin_bottom = 151.379
+text = "VOLUME EFFETTI"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+margin_left = 532.432
+margin_top = 497.57
+margin_right = 850.432
+margin_bottom = 554.57
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 0, 0.788235, 1, 1 )
+text = "Ascolta audio"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Card_sprite/Previous_button" to="." method="_on_Previous_button_pressed"]
 [connection signal="pressed" from="Card_sprite/Next_button" to="." method="_on_Next_button_pressed"]
 [connection signal="pressed" from="Exit" to="." method="_on_Exit_pressed"]
+[connection signal="value_changed" from="HSlider" to="." method="_on_HSlider_value_changed"]
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]

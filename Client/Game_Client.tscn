@@ -175,6 +175,7 @@ z_as_relative = false
 texture = ExtResource( 4 )
 
 [node name="Objective_Panel_3" type="Panel" parent="Board_Stuff"]
+visible = false
 show_behind_parent = true
 margin_left = 801.552
 margin_top = 324.296
@@ -1566,7 +1567,6 @@ z_index = 2
 texture = ExtResource( 9 )
 
 [node name="Settings" type="Sprite" parent="."]
-visible = false
 self_modulate = Color( 0.407843, 0.219608, 0.219608, 1 )
 position = Vector2( 764.293, 381.387 )
 scale = Vector2( 0.631764, 0.625054 )
