@@ -78,7 +78,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Button" type="Button" parent="."]
+[node name="Audio_player" type="Button" parent="."]
 margin_left = 532.432
 margin_top = 497.57
 margin_right = 850.432
@@ -93,4 +93,4 @@ __meta__ = {
 [connection signal="pressed" from="Card_sprite/Next_button" to="." method="_on_Next_button_pressed"]
 [connection signal="pressed" from="Exit" to="." method="_on_Exit_pressed"]
 [connection signal="value_changed" from="HSlider" to="." method="_on_HSlider_value_changed"]
-[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Audio_player" to="." method="_on_Audio_player_pressed"]

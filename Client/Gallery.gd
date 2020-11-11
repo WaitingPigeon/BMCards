@@ -55,5 +55,6 @@ func _on_HSlider_value_changed(value):
 	sound_volume = linear2db(value)
 
 
-func _on_Button_pressed():
+
+func _on_Audio_player_pressed():
 	play_sound(current_card)

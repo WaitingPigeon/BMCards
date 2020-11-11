@@ -57,4 +57,5 @@ func _on_Button3_pressed():
 
 
 func _on_Galleria_pressed():
+	Network.leave_queue()
 	get_tree().change_scene("res://Gallery.tscn")
