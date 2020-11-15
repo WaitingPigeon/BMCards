@@ -1584,7 +1584,6 @@ z_index = 2
 texture = ExtResource( 9 )
 
 [node name="Settings" type="Sprite" parent="."]
-visible = false
 self_modulate = Color( 0.407843, 0.219608, 0.219608, 1 )
 position = Vector2( 764.293, 381.387 )
 scale = Vector2( 0.631764, 0.625054 )

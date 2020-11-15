@@ -116,3 +116,7 @@ func login_success():
 
 func _on_Button_pressed():
 	get_tree().quit()
+
+
+func _on_Tutorial_pressed():
+	get_tree().change_scene("res://Tutorial.tscn")
