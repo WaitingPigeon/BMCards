@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Tabellone.png-4dd45cbfc69b2fbbd9cb617c3eefdc7f.stex"
+path="res://.import/kisspng-line-angle-font-square-bracket-5b46d048bd7420.311155851531367496776-removebg-preview.png-690ff698e9c3c73cd0a18ef667179b87.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Tabellone.png"
-dest_files=[ "res://.import/Tabellone.png-4dd45cbfc69b2fbbd9cb617c3eefdc7f.stex" ]
+source_file="res://Resources/kisspng-line-angle-font-square-bracket-5b46d048bd7420.311155851531367496776-removebg-preview.png"
+dest_files=[ "res://.import/kisspng-line-angle-font-square-bracket-5b46d048bd7420.311155851531367496776-removebg-preview.png-690ff698e9c3c73cd0a18ef667179b87.stex" ]
 
 [params]
 
