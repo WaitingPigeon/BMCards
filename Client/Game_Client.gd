@@ -1071,7 +1071,7 @@ func shuffle_deck():
 remote func draw_cards(numOfCards):
 	yield(get_tree(), "idle_frame")
 	var switch = yield(get_unique_id(), "completed")
-	history_write("%s pesca %d carta/e\n" % [Network.opponent_user, numOfCards])
+	history_write("%s pesca %d carta/e\n" % [Network.username, numOfCards])
 	if cards_deck.size() == 0:
 		lose_game()
 		yield(get_tree().create_timer(5.0), "timeout")
@@ -1720,7 +1720,7 @@ func logBase(value, base):
 
 #Funzioni per le carte
 func is_on_board(num):
-	for color in ["red","blue","green"]:
+	for color in ["blue","green","red"]:
 		if (num in get_player1_heros_cards()[color]) or (num in get_player1_spells_cards()[color]):
 			return(true)
 		if (num in get_player2_heros_cards()[color]) or (num in get_player2_spells_cards()[color]):
@@ -2224,7 +2224,7 @@ func no_triggers_heal_player(player, color, amount):
 		update_points()
 		show_heal_player(player, color, false)
 	else:
-		history_write("Il giocatore %s ha guadagnato %d di %s\n" % [Network.username, amount, {"red":"libido", "blue":"intelligenza", "green":"follia"}[color] ])
+		history_write("Il giocatore %s ha guadagnato %d di %s\n" % [Network.opponent_user, amount, {"red":"libido", "blue":"intelligenza", "green":"follia"}[color] ])
 		show_heal_player(player, color, true)
 		change_player2_points(color,"+", amount)
 		yield(get_tree().create_timer(DEFAULT_WAIT_TIME),"timeout")
@@ -2430,8 +2430,8 @@ func effect_6(type_of_effect, zone_activating, color_activating, pos_activating,
 						yield(kill_spell(1, color, index), "completed")
 			for color in ["blue","green","red"]:
 				for index in [0,1,2]:
-					if get_player2_heros_cards()[color][index] == 1:
-						yield(kill_hero(2, color, index), "completed")
+					if get_player2_spells_cards()[color][index] == 1:
+						yield(kill_spell(2, color, index), "completed")
 			meta_rset_id(Network.opponent, "polenta_flag", true)
 
 #CODA AL SUPERMERCATO
@@ -2704,12 +2704,12 @@ func effect_29(type_of_effect, zone_activating, color_activating, pos_activating
 	yield(get_tree(), "idle_frame")
 	match type_of_effect:
 		"played":
-			for color in ["red", "green", "blue"]:
+			for color in ["blue", "green", "red"]:
 				for pos in [0,1,2]:
 					var card = get_player1_heros_cards()[color][pos] #ritorna una carta in x,y
 					if !(card == 0) and get_player1_heros_life()[color][pos] < load_card(card)["vita"]: #setta solo se hai la vita < del max
 						yield(set_hero(1, color, pos, load_card(card)["vita"]), "completed") #setter per oggetto eroe
-			for color in ["red", "green", "blue"]:
+			for color in ["blue", "green", "red"]:
 				for pos in [0,1,2]:
 					yield(damage_hero(2, color, pos, 3), "completed") #stessa roba, ma per danneggiare
 		"tease":
@@ -2989,9 +2989,9 @@ func effect_48(type_of_effect, zone_activating, color_activating, pos_activating
 	yield(get_tree(), "idle_frame")
 	match type_of_effect:
 		"healing_player":
-			if not color_trigger == "blue":
+			if not color_trigger == "blue" and (heal_player_confirmation_flag == true):
 				meta_rset_id(Network.opponent, "heal_player_confirmation_flag", false) #non li annullerebbe così? li deve solo dimezzare...
-				yield(heal_player(player_trigger, color_trigger, zone_activating / 2), "completed") #"ZONE_ACTIVATING, in questo caso, viene usata per la quantità"
+				yield(no_triggers_heal_player(player_trigger, color_trigger, zone_trigger/2), "completed") #"ZONE_ACTIVATING, in questo caso, viene usata per la quantità"
 		"tease":
 			yield(heal_player(1, "blue", 80), "completed")
 
@@ -3237,7 +3237,7 @@ func effect_65(type_of_effect, zone_activating, color_activating, pos_activating
 		"tease":
 			yield(get_tree().create_timer(DEFAULT_WAIT_TIME), "timeout")
 
-#L' UOMO SENZA IDENTITÀ <<
+#L' UOMO SENZA IDENTITÀ
 func effect_66(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
 	yield(get_tree(), "idle_frame")
 	match type_of_effect:
@@ -3267,14 +3267,13 @@ func effect_66(type_of_effect, zone_activating, color_activating, pos_activating
 				spots2 = get_heros_spots(2, color_activating)
 				size = spots1.size() + spots2.size()
 
-#BONNY, L' ESSENZA DEL BMC-------------------------------------------------- da finire
+#BONNY, L' ESSENZA DEL BMC
 func effect_67(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
 	yield(get_tree(), "idle_frame")
 	match type_of_effect:
 		"played":
 			for item in [22, 54, 55, 75, 76]: #check se il player 1 ha tutte le parti
 				if !(item in get_player1_hand_cards()):
-					#print("ti manca una carta")
 					yield(discard_cards(10), "completed")
 					rpc_id(Network.opponent, "discard_cards", 10)
 					yield(get_tree().create_timer(5.0), "timeout")
@@ -3538,11 +3537,12 @@ func effect_89(type_of_effect, zone_activating, color_activating, pos_activating
 					yield(kill_spell(2, card["color"], card["pos"]), "completed")
 		"tease":
 			yield(random_summon_spell(74), "completed") #evoca un "brindisi rischioso"
+
 func effect_90(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
 	yield(get_tree(), "idle_frame")
 	match type_of_effect:
 		"attacking_hero":
-			if player_trigger == 2:
+			if player_trigger == 2 and attacking_confirmation_flag == true:
 				meta_rset_id(Network.opponent, "attacking_confirmation_flag", false)
 				yield(damage_hero(1, color_activating, pos_activating, attacking_value), "completed")
 		"tease":
@@ -3553,33 +3553,210 @@ func effect_90(type_of_effect, zone_activating, color_activating, pos_activating
 
 
 
+#TRADITORE
+func effect_91(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
+	yield(get_tree(), "idle_frame")
+	match type_of_effect:
+		"played":
+			var spots = get_spells_spots(1)
+			if spots.size() > 0:
+				var target = spots[randi() % spots.size()]
+				yield(kill_spell(1, target["color"], target["pos"]), "completed")
+			yield(damage_player(1, "blue", 50), "completed")
+		"dead":
+			for color in ["blue", "green", "red"]:
+					for pos in [0,1,2]:
+						yield(kill_spell(1, color, pos), "completed")
+		"tease": #come jacopo, solo con le magie
+			var spots = get_spells_spots(2)
+			if spots.size() > 0:
+				var spot = spots[randi()%spots.size()]
+				var target_spell = get_player2_spells_cards()[spot["color"]][spot["pos"]]
+				yield(kill_spell(2, spot["color"], spot["pos"]), "completed")
+				yield(random_summon_spell(target_spell), "completed")
 
+#VODKA
+func effect_92(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
+	yield(get_tree(), "idle_frame")
+	match type_of_effect:
+		"played":
+			yield(heal_player(1, "green", 80), "completed")
+			yield(damage_player(1, "red", 50), "completed")
+		"end_turn":
+			yield(heal_player(1, "red", 20), "completed")
 
+#AAA ALCOLISTI ANONIMI
+func effect_93(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
+	yield(get_tree(), "idle_frame")
+	match type_of_effect:
+		"played":
+			for i in $Board_Stuff.get_alcolici():
+				for kek in find_on_board(i):
+					yield(kill_spell(kek["player"], kek["color"], kek["pos"]), "completed")
+		"end_turn":
+			for i in $Board_Stuff.get_alcolici():
+				for kek in find_on_board(i):
+					if (kek["player"] == 1):
+						yield(kill_spell(kek["player"], kek["color"], kek["pos"]), "completed")
+						var list = get_heros_spots(2)
+						var target = list[randi() % list.size()]
+						yield(kill_hero(2, target["color"], target["pos"]), "completed")
+		"enemy_end_turn":
+			for i in $Board_Stuff.get_alcolici():
+				for kek in find_on_board(i):
+					if (kek["player"] == 2):
+						yield(kill_spell(kek["player"], kek["color"], kek["pos"]), "completed")
+						var list = get_heros_spots(1)
+						var target = list[randi() % list.size()]
+						yield(kill_hero(1, target["color"], target["pos"]), "completed")
 
+#NASCONDI LA TESSERA
+func effect_94(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
+	yield(get_tree(), "idle_frame")
+	match type_of_effect:
+		"played":
+			yield(heal_player(1, color_activating, 40), "completed")
+				
+#I FILMATI PERDUTI
+func effect_95(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
+	yield(get_tree(), "idle_frame")
+	match type_of_effect:
+		"end_turn":
+			for i in range(3):
+				if(get_player1_heros_cards()["red"][i] != 0):
+					yield(heal_spell(1, "red", pos_activating, 1), "completed")
+					break
+			yield(heal_player(1, "red", 20), "completed")
+			
+#SPUMANTE ANALCOLICO
+func effect_96(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
+	yield(get_tree(), "idle_frame")
+	match type_of_effect:
+		"played":
+			var spots1 = get_heros_spots(1) # ritorna un dizionario di posizioni occupate da eroi del player 1
+			var spots2 = get_heros_spots(2)
+			var size = spots1.size() + spots2.size() #merge
+			if size > 0: #se entrambi i giocatori non hanno zone eroe completamente vuote
+				var num = randi()%size
+				if num < spots1.size():
+					var spot = spots1[num]
+					yield(kill_hero(1, spot["color"], spot["pos"]), "completed")
+				else:
+					var spot = spots2[num - spots1.size()]
+					yield(kill_hero(2, spot["color"], spot["pos"]), "completed")
+		"end_turn":
+			var select = ["blue", "green", "red"]
+			yield(heal_player(1, "green", 20), "completed")
+			yield(heal_player(1, select[randi()%select.size()], 30), "completed")
 
+#JUMPSCARE
+func effect_97(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
+	yield(get_tree(), "idle_frame")
+	match type_of_effect:
+		"played":
+			for i in range(3):
+				var spots1 = get_heros_spots(1) # ritorna un dizionario di posizioni occupate da eroi del player 1
+				var spots2 = get_heros_spots(2)
+				var spots3 = get_spells_spots(1)
+				var spots4 = get_spells_spots(2)
+				var size = spots1.size() + spots2.size() + spots3.size() + spots4.size() #merge
+				if size > 0: #se entrambi i giocatori non hanno zone eroe completamente vuote
+					var num = randi()%size
+					if num < spots1.size():
+						var spot = spots1[num]
+						yield(kill_hero(1, spot["color"], spot["pos"]), "completed")
+					elif (num < spots1.size() + spots2.size()):
+						var spot = spots2[num - spots1.size()]
+						yield(kill_hero(2, spot["color"], spot["pos"]), "completed")
+					elif(num < spots1.size() + spots2.size() + spots3.size()):
+						var spot = spots3[num - spots1.size() - spots2.size()]
+						yield(kill_spell(1, spot["color"], spot["pos"]), "completed")
+					else:
+						var spot = spots4[num - spots1.size() - spots2.size() - spots3.size()]
+						yield(kill_spell(2, spot["color"], spot["pos"]), "completed")
 
+#BEVI PER DIMENTICARE
+func effect_98(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
+	yield(get_tree(), "idle_frame")
+	match type_of_effect:
+		"played":
+			yield(discard_cards(10), "completed")
+			yield(draw_cards(1), "completed")
+			var number_of_cards = 0
+			for color in ["blue", "green", "red"]:
+				for index in range(3):
+					if(get_player1_cards()[color][index] in $Board_Stuff.get_alcolici()):
+						number_of_cards += 1
+			for color in ["blue", "green", "red"]:
+				for index in range(3):
+					if(get_player2_cards()[color][index] in $Board_Stuff.get_alcolici()):
+						number_of_cards += 1
+			yield(draw_cards(number_of_cards), "completed")
 
+#GIOCO DELLE CARTE
+func effect_99(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
+	yield(get_tree(), "idle_frame")
+	match type_of_effect:
+		"end_turn":
+			var number_of_cards = (randi() % 5) + 1
+			yield(discard_cards(number_of_cards), "completed")
+			yield(draw_cards(number_of_cards), "completed")
 
+#ELEZIONI CONGOLESI
+func effect_100(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
+	yield(get_tree(), "idle_frame")
+	match type_of_effect:
+		"played":
+			yield(add_to_hand(1, 65), "completed")
+		"dead":
+			var player1_num_eroi = get_heros_spots(1)
+			var player2_num_eroi = get_heros_spots(2)
+			if(player1_num_eroi.size() > player2_num_eroi.size()):
+				yield(random_summon_hero(8), "completed")
+				yield(random_summon_hero(9), "completed")
+			elif(player1_num_eroi.size() < player2_num_eroi.size()):
+				yield(random_summon_enemy_hero(8), "completed")
+				yield(random_summon_enemy_hero(9), "completed")
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#PULIZIE DELL' ULTIMO MINUTO
+func effect_101(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):
+	#colore delle carte da scartare
+	yield(get_tree(), "idle_frame")
+	match type_of_effect:
+		"played":
+			if color_activating == "blue":
+				yield(heal_spell(1, "blue", pos_activating, 2), "completed")
+				$Player_1/Hand_area/Cards.set_item_custom_bg_color(8,Color(1, 0, 0, 1))
+			else:
+				$Player_1/Hand_area/Cards.set_item_custom_bg_color(8,Color(1, 0, 0, 1))
+				$Player_1/Hand_area/Cards.set_item_custom_bg_color(7,Color(1, 0, 0, 1))
+		"end_turn":
+			if color_activating == "blue":
+				if not get_player1_hand_cards()[8] == 0:
+					change_player1_hand_card(8, 0)
+					yield(draw_cards(1), "completed")
+			elif color_activating == "red":
+				if not get_player1_hand_cards()[8] == 0:
+					change_player1_hand_card(8, 0)
+					yield(draw_cards(1), "completed")
+				if not get_player1_hand_cards()[7] == 0:
+					change_player1_hand_card(7, 0)
+					yield(draw_cards(1), "completed")
+		"dead":
+			var flag = 0
+			for spot in find_on_board(101):
+				if spot["player"] == 2:
+					continue
+				if (spot["color"] == "red"):
+					flag = 2
+					break
+				else:
+					flag = 1
+			match flag:
+				0:
+					$Player_1/Hand_area/Cards.set_item_custom_bg_color(7,Color(0, 0, 0, 0))
+					$Player_1/Hand_area/Cards.set_item_custom_bg_color(8,Color(0, 0, 0, 0))
+				1:
+					$Player_1/Hand_area/Cards.set_item_custom_bg_color(7,Color(0, 0, 0, 0))
+				2:
+					return
