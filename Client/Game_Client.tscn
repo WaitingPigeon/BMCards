@@ -175,7 +175,6 @@ z_as_relative = false
 texture = ExtResource( 4 )
 
 [node name="Objective_Panel_3" type="Panel" parent="Board_Stuff"]
-visible = false
 show_behind_parent = true
 margin_left = 801.552
 margin_top = 324.296

@@ -1,0 +1,76 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Resources/Comic_Sans.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Resources/Small Comic Sans.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Tutorial.gd" type="Script" id=3]
+[ext_resource path="res://Resources/40.png" type="Texture" id=4]
+[ext_resource path="res://icon.png" type="Texture" id=5]
+
+[node name="Tutorial" type="Node"]
+script = ExtResource( 3 )
+
+[node name="Back_to_login" type="Button" parent="."]
+margin_left = 718.0
+margin_top = 51.0
+margin_right = 844.0
+margin_bottom = 106.0
+custom_fonts/font = ExtResource( 2 )
+text = "Torna al login"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Chapters" type="ItemList" parent="."]
+margin_left = 692.0
+margin_top = 141.0
+margin_right = 877.0
+margin_bottom = 600.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Chapter0" type="Node2D" parent="."]
+visible = false
+position = Vector2( 692, 141 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Chapter0"]
+margin_left = -669.0
+margin_top = 11.0
+margin_right = -33.0
+margin_bottom = 443.0
+custom_fonts/normal_font = ExtResource( 1 )
+text = "EHILA', BENVENUTO SUL PRIMO GIOCO UFFICIALE DEL BONNY MYSTERY CLUB!
+
+Preparati a combattere i tuoi (non più) amici con l'ignoranza e la furbizia che contraddistinguono questo gruppo. Beh, forse solo la prima.
+
+In questo gioco di carte dovrai sfruttare tutto il materiale memico d"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Chapter1" type="Node2D" parent="."]
+visible = false
+
+[node name="Sprite" type="Sprite" parent="Chapter1"]
+position = Vector2( 305.47, 196.576 )
+texture = ExtResource( 5 )
+
+[node name="Chapter2" type="Node2D" parent="."]
+visible = false
+
+[node name="Sprite" type="Sprite" parent="Chapter2"]
+position = Vector2( 391.737, 302.642 )
+texture = ExtResource( 4 )
+
+[node name="Chapter3" type="Node2D" parent="."]
+visible = false
+
+[node name="Chapter4" type="Node2D" parent="."]
+visible = false
+
+[node name="Chapter5" type="Node2D" parent="."]
+visible = false
+[connection signal="pressed" from="Back_to_login" to="." method="_on_Back_to_login_pressed"]
+[connection signal="item_selected" from="Chapters" to="." method="_on_Chapters_item_selected"]
+[connection signal="ready" from="Chapters" to="." method="_on_Chapters_ready"]

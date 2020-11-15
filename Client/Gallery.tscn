@@ -113,7 +113,6 @@ __meta__ = {
 }
 
 [node name="PopupMenu2" type="PopupMenu" parent="Search_bar"]
-visible = true
 margin_left = 548.224
 margin_top = 201.462
 margin_right = 794.224
