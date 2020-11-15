@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Resources/Comic_Sans.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Resources/Small Comic Sans.tres" type="DynamicFont" id=2]
@@ -368,9 +368,9 @@ texture = ExtResource( 4 )
 visible = false
 
 [node name="4" type="Sprite" parent="Chapter3"]
-position = Vector2( 570.854, 544.445 )
+position = Vector2( 570.854, 545.568 )
 scale = Vector2( 0.523367, 0.532299 )
-texture = ExtResource( 6 )
+texture = ExtResource( 9 )
 
 [node name="RichTextLabel4" type="RichTextLabel" parent="Chapter3"]
 margin_left = 36.4677
@@ -423,7 +423,7 @@ __meta__ = {
 [node name="12" type="Sprite" parent="Chapter3"]
 position = Vector2( 125.562, 227.357 )
 scale = Vector2( 0.506999, 0.553191 )
-texture = ExtResource( 7 )
+texture = ExtResource( 10 )
 
 [node name="Chapter4" type="Node2D" parent="."]
 visible = false
@@ -520,11 +520,12 @@ __meta__ = {
 }
 
 [node name="RichTextLabel5" type="RichTextLabel" parent="Chapter5"]
-margin_left = 41.5455
-margin_top = 398.763
-margin_right = 709.545
-margin_bottom = 593.763
-custom_fonts/normal_font = ExtResource( 8 )
+margin_left = 39.2449
+margin_top = 395.244
+margin_right = 707.245
+margin_bottom = 608.244
+custom_fonts/mono_font = ExtResource( 11 )
+custom_fonts/normal_font = ExtResource( 11 )
 bbcode_enabled = true
 bbcode_text = "[rainbow freq=0.2 sat=10 val=20][tornado radius=5 freq=10] ORA SEI PRONTO!
 BUTTATI NELLA MISCHIA![shake rate=10 level=10][/shake][/tornado][/rainbow]"

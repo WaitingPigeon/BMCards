@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Tabellone.png-4dd45cbfc69b2fbbd9cb617c3eefdc7f.stex"
+path="res://.import/Tabellone.PNG-725e23da3a12df548d0ea192b1f5bdfa.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/Tabellone.png"
-dest_files=[ "res://.import/Tabellone.png-4dd45cbfc69b2fbbd9cb617c3eefdc7f.stex" ]
+source_file="res://Resources/Tabellone.PNG"
+dest_files=[ "res://.import/Tabellone.PNG-725e23da3a12df548d0ea192b1f5bdfa.stex" ]
 
 [params]
 
