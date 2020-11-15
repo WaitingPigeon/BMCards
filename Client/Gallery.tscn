@@ -1,0 +1,130 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Resources/0.png" type="Texture" id=1]
+[ext_resource path="res://Gallery.gd" type="Script" id=2]
+[ext_resource path="res://Resources/PreviousArrow.png" type="Texture" id=3]
+[ext_resource path="res://Resources/NextArrow.png" type="Texture" id=4]
+[ext_resource path="res://Resources/Comic_Sans.tres" type="DynamicFont" id=5]
+
+[node name="Gallery" type="Node"]
+script = ExtResource( 2 )
+
+[node name="Card_sprite" type="Sprite" parent="."]
+position = Vector2( 297.36, 342.256 )
+texture = ExtResource( 1 )
+
+[node name="Card_number" type="RichTextLabel" parent="Card_sprite"]
+margin_left = -20.049
+margin_top = 299.723
+margin_right = 18.951
+margin_bottom = 321.723
+rect_scale = Vector2( 2, 2 )
+text = "0/0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Previous_button" type="Button" parent="Card_sprite"]
+margin_left = 245.77
+margin_top = -4.50745
+margin_right = 769.77
+margin_bottom = 513.493
+rect_scale = Vector2( 0.25, 0.25 )
+icon = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Next_button" type="Button" parent="Card_sprite"]
+margin_left = 400.308
+margin_top = -5.37268
+margin_right = 924.308
+margin_bottom = 512.627
+rect_scale = Vector2( 0.25, 0.25 )
+icon = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Exit" type="Button" parent="."]
+margin_left = 613.566
+margin_top = 49.3245
+margin_right = 802.566
+margin_bottom = 132.324
+custom_fonts/font = ExtResource( 5 )
+text = "TORNA ALLA LOBBY"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HSlider" type="HSlider" parent="."]
+margin_left = 667.145
+margin_top = 547.036
+margin_right = 859.145
+margin_bottom = 655.036
+max_value = 10.0
+value = 5.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextEdit" type="Label" parent="HSlider"]
+margin_left = -132.002
+margin_top = 46.3792
+margin_right = 60.9981
+margin_bottom = 151.379
+text = "VOLUME EFFETTI"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Audio_player" type="Button" parent="."]
+margin_left = 532.432
+margin_top = 497.57
+margin_right = 850.432
+margin_bottom = 554.57
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 0, 0.788235, 1, 1 )
+text = "Ascolta audio"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Search_bar" type="LineEdit" parent="."]
+margin_left = 545.703
+margin_top = 151.915
+margin_right = 792.703
+margin_bottom = 206.915
+placeholder_text = "Ricerca per nome"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Search_confirm" type="Button" parent="Search_bar"]
+margin_left = 247.0
+margin_top = 1.0
+margin_right = 313.0
+margin_bottom = 55.0
+custom_fonts/font = ExtResource( 5 )
+custom_colors/font_color = Color( 0.141176, 0.8, 0.290196, 1 )
+text = "VAI"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PopupMenu2" type="PopupMenu" parent="Search_bar"]
+margin_left = 548.224
+margin_top = 201.462
+margin_right = 794.224
+margin_bottom = 333.462
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Card_sprite/Previous_button" to="." method="_on_Previous_button_pressed"]
+[connection signal="pressed" from="Card_sprite/Next_button" to="." method="_on_Next_button_pressed"]
+[connection signal="pressed" from="Exit" to="." method="_on_Exit_pressed"]
+[connection signal="value_changed" from="HSlider" to="." method="_on_HSlider_value_changed"]
+[connection signal="pressed" from="Audio_player" to="." method="_on_Audio_player_pressed"]
+[connection signal="pressed" from="Search_bar/Search_confirm" to="." method="_on_Search_confirm_pressed"]
+[connection signal="index_pressed" from="Search_bar/PopupMenu2" to="." method="_on_PopupMenu2_index_pressed"]
+[connection signal="popup_hide" from="Search_bar/PopupMenu2" to="." method="_on_PopupMenu2_popup_hide"]

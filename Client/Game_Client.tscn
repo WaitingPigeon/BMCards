@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=29 format=2]
 
 [ext_resource path="res://Game_Client_2.gd" type="Script" id=1]
 [ext_resource path="res://Cards_list_client.gd" type="Script" id=2]
@@ -13,6 +13,7 @@
 [ext_resource path="res://Resources/smile.png" type="Texture" id=11]
 [ext_resource path="res://Resources/kiss.png" type="Texture" id=12]
 [ext_resource path="res://Resources/green_check.png" type="Texture" id=13]
+[ext_resource path="res://Resources/time.png" type="Texture" id=14]
 [ext_resource path="res://Resources/mana.png" type="Texture" id=15]
 [ext_resource path="res://Resources/Comic_Sans.tres" type="DynamicFont" id=16]
 
@@ -207,10 +208,10 @@ volume_db = -70.761
 autoplay = true
 
 [node name="Mana_left" type="Label" parent="Board_Stuff"]
-margin_left = 814.506
-margin_top = 477.998
-margin_right = 854.506
-margin_bottom = 491.998
+margin_left = 817.681
+margin_top = 501.809
+margin_right = 857.681
+margin_bottom = 515.809
 text = "0"
 align = 1
 valign = 1
@@ -229,9 +230,26 @@ __meta__ = {
 }
 
 [node name="mana" type="Sprite" parent="Board_Stuff"]
-position = Vector2( 836.083, 502.231 )
+position = Vector2( 839.258, 526.042 )
 scale = Vector2( 0.131308, 0.117498 )
 texture = ExtResource( 15 )
+
+[node name="Time_left" type="Label" parent="Board_Stuff"]
+margin_left = 831.311
+margin_top = 451.283
+margin_right = 871.311
+margin_bottom = 465.283
+text = "40 s"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="time" type="Sprite" parent="Board_Stuff"]
+position = Vector2( 814.888, 457.547 )
+scale = Vector2( 0.138149, 0.164813 )
+texture = ExtResource( 14 )
 
 [node name="Player_1" type="Node" parent="."]
 
@@ -1566,7 +1584,6 @@ z_index = 2
 texture = ExtResource( 9 )
 
 [node name="Settings" type="Sprite" parent="."]
-visible = false
 self_modulate = Color( 0.407843, 0.219608, 0.219608, 1 )
 position = Vector2( 764.293, 381.387 )
 scale = Vector2( 0.631764, 0.625054 )

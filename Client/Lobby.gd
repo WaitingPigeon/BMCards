@@ -1,10 +1,17 @@
 extends Node
 
+const data_file = "user://savegame_music_settings.save"
+
 func _ready():
 	randomize()
 	Network.connect("update_online_players", self, "update_online_players")
 	Network.connect("new_line_chat", self, "new_line_chat")
 	$Match_history.append_bbcode(Network.chat_text)
+	var file_handler = File.new()
+	file_handler.open(data_file, File.WRITE)
+	file_handler.store_line(to_json(db2linear(Network.sound_volume)))
+	file_handler.store_line(to_json(db2linear(Network.music_volume)))
+	file_handler.close()
 func _input(ev):
 	if ev is InputEventKey and ev.scancode == KEY_ENTER:
 		var string = $LineEdit.text
@@ -54,3 +61,8 @@ func _on_Button2_pressed():
 
 func _on_Button3_pressed():
 	OS.window_fullscreen = !OS.window_fullscreen
+
+
+func _on_Galleria_pressed():
+	Network.leave_queue()
+	get_tree().change_scene("res://Gallery.tscn")

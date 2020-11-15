@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://Login.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
@@ -9,6 +9,7 @@
 [ext_resource path="res://Resources/49.png" type="Texture" id=7]
 [ext_resource path="res://Resources/44.png" type="Texture" id=8]
 [ext_resource path="res://Resources/51.png" type="Texture" id=9]
+[ext_resource path="res://Resources/42.png" type="Texture" id=10]
 
 [node name="Node" type="Node"]
 script = ExtResource( 1 )
@@ -57,18 +58,18 @@ __meta__ = {
 anchor_top = -0.00113386
 anchor_bottom = -0.00113386
 margin_left = 11.479
-margin_top = 662.066
+margin_top = 660.877
 margin_right = 311.479
-margin_bottom = 713.066
+margin_bottom = 711.877
 custom_fonts/mono_font = ExtResource( 3 )
 custom_fonts/bold_italics_font = ExtResource( 3 )
 custom_fonts/italics_font = ExtResource( 3 )
 custom_fonts/bold_font = ExtResource( 3 )
 custom_fonts/normal_font = ExtResource( 3 )
 bbcode_enabled = true
-bbcode_text = "[color=#ff4136]alpha_1.2[/color]
+bbcode_text = "[color=#ff4136]alpha_1.3[/color]
 "
-text = "alpha_1.2
+text = "alpha_1.3
 "
 scroll_active = false
 __meta__ = {
@@ -134,10 +135,10 @@ __meta__ = {
 }
 
 [node name="Text4" type="Label" parent="."]
-margin_left = 487.208
-margin_top = 523.056
-margin_right = 707.208
-margin_bottom = 611.056
+margin_left = 497.075
+margin_top = 526.125
+margin_right = 717.075
+margin_bottom = 614.125
 text = "Per l'aiuto nella 
 creazione delle carte"
 align = 1
@@ -147,10 +148,10 @@ __meta__ = {
 }
 
 [node name="Text5" type="Label" parent="."]
-margin_left = 650.527
-margin_top = 518.54
-margin_right = 887.527
-margin_bottom = 614.54
+margin_left = 699.799
+margin_top = 524.085
+margin_right = 936.799
+margin_bottom = 620.085
 text = "Per le musiche
  del gioco"
 align = 1
@@ -190,10 +191,10 @@ scale = Vector2( 0.750183, 0.731121 )
 texture = ExtResource( 4 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="."]
-margin_left = 475.495
-margin_top = 111.977
-margin_right = 1005.5
-margin_bottom = 155.977
+margin_left = 483.427
+margin_top = 114.74
+margin_right = 1013.43
+margin_bottom = 158.74
 custom_fonts/normal_font = ExtResource( 3 )
 bbcode_enabled = true
 bbcode_text = "[shake rate=5 level=10][rainbow freq=0.5 sat=50 val=10]Programmato con tanto amore dal BMCards Team:[/rainbow][/shake]"
@@ -204,10 +205,10 @@ __meta__ = {
 }
 
 [node name="RichTextLabel2" type="RichTextLabel" parent="."]
-margin_left = 612.819
-margin_top = 356.412
-margin_right = 880.819
-margin_bottom = 455.412
+margin_left = 620.387
+margin_top = 369.866
+margin_right = 888.387
+margin_bottom = 468.866
 bbcode_enabled = true
 bbcode_text = "[shake rate=5 level=10][rainbow freq=0.2 sat=10 val=20]Si ringraziano anche:[/rainbow][/shake]"
 text = "Si ringraziano anche:"
@@ -216,27 +217,32 @@ __meta__ = {
 }
 
 [node name="28" type="Sprite" parent="."]
-position = Vector2( 679.343, 251.904 )
-scale = Vector2( 0.35, 0.35 )
+position = Vector2( 681.388, 251.388 )
+scale = Vector2( 0.38, 0.38 )
 texture = ExtResource( 6 )
 
 [node name="44" type="Sprite" parent="."]
-position = Vector2( 535.16, 253.358 )
-scale = Vector2( 0.35, 0.35 )
+position = Vector2( 532.304, 251.016 )
+scale = Vector2( 0.38, 0.38 )
 texture = ExtResource( 8 )
 
 [node name="30" type="Sprite" parent="."]
-position = Vector2( 822.504, 253.417 )
-scale = Vector2( 0.35, 0.35 )
+position = Vector2( 825.535, 253.598 )
+scale = Vector2( 0.38, 0.38 )
 texture = ExtResource( 9 )
 
 [node name="27" type="Sprite" parent="."]
-position = Vector2( 595.884, 464.162 )
+position = Vector2( 661.624, 468.816 )
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 5 )
 
+[node name="42" type="Sprite" parent="."]
+position = Vector2( 546.595, 468.548 )
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 10 )
+
 [node name="49" type="Sprite" parent="."]
-position = Vector2( 768.098, 464.524 )
+position = Vector2( 816.079, 469.278 )
 scale = Vector2( 0.3, 0.3 )
 texture = ExtResource( 7 )
 
@@ -251,6 +257,18 @@ text = "CHIUDI IL GIOCO"
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="Tutorial" type="Button" parent="."]
+margin_left = 526.0
+margin_top = 606.0
+margin_right = 686.0
+margin_bottom = 683.0
+custom_fonts/font = ExtResource( 3 )
+text = "Come si gioca?"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Login_Button" to="." method="_on_Login_Button_pressed"]
 [connection signal="pressed" from="Register_Button" to="." method="_on_Register_Button_pressed"]
 [connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Tutorial" to="." method="_on_Tutorial_pressed"]

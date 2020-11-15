@@ -36,6 +36,9 @@ func get_libri():
 func get_bevande():
 	var list = [12, 13, 58, 92, 96]
 	return list
+func get_card_list_size():
+	var size = card_list_dict.size()
+	return size
 
 var objective_list_dict = {
 	1:{
@@ -174,6 +177,7 @@ var card_list_dict = {
 		"nome" : "Il grande libro della polenta",
 		"tipo" : "spell",
 		"effetti": ["hero_played", "dead"],
+		"silenzia": ["hero_played"],
 		"vita" : 6,
 		"attacco" : 0,
 		"quantità": 3,
@@ -263,19 +267,19 @@ var card_list_dict = {
 		"nome" : "Gioco della chiave",
 		"tipo" : "spell",
 		"effetti": ["played"],
-		"vita" : 3,
+		"vita" : 2,
 		"attacco" : 0,
 		"quantità": 3,
-		"colori" : ["green"],
+		"colori" : ["blue"],
 		"img" : preload("res://Resources/14.png"),
 		"sound" : preload("res://Resources/14.wav")
 		},
 	15:{
 		"nome" : "Quello bendato",
-		"tipo" : "spell",
-		"effetti": ["end_turn"],
-		"vita" : 2,
-		"attacco" : 0,
+		"tipo" : "hero",
+		"effetti": ["played"],
+		"vita" : 1,
+		"attacco" : 1,
 		"quantità": 0,
 		"colori" : ["blue"],
 		"img" : preload("res://Resources/15.png"),
@@ -283,10 +287,10 @@ var card_list_dict = {
 		},
 	16:{
 		"nome" : "Quello seduto 1",
-		"tipo" : "spell",
-		"effetti": ["end_turn"],
-		"vita" : 2,
-		"attacco" : 0,
+		"tipo" : "hero",
+		"effetti": ["played"],
+		"vita" : 1,
+		"attacco" : 1,
 		"quantità": 0,
 		"colori" : ["blue"],
 		"img" : preload("res://Resources/16.png"),
@@ -305,10 +309,10 @@ var card_list_dict = {
 		},
 	18:{
 		"nome" : "Quello seduto 2",
-		"tipo" : "spell",
-		"effetti": ["end_turn"],
-		"vita" : 2,
-		"attacco" : 0,
+		"tipo" : "hero",
+		"effetti": ["played"],
+		"vita" : 1,
+		"attacco" : 1,
 		"quantità": 0,
 		"colori" : ["blue"],
 		"img" : preload("res://Resources/18.png"),
@@ -361,7 +365,8 @@ var card_list_dict = {
 	23:{
 		"nome" : "Partita a Lupus",
 		"tipo" : "spell",
-		"effetti": ["played", "end_turn", "dead"],
+		"effetti": ["played", "end_turn", "dead", "dead_hero"],
+		"silenzia": ["dead_hero"],
 		"vita" : 3,
 		"attacco" : 0,
 		"quantità": 3,
@@ -384,7 +389,7 @@ var card_list_dict = {
 		"nome" : "Bresciano",
 		"tipo" : "hero",
 		"effetti": [],
-		"vita" : 6,
+		"vita" : 10,
 		"attacco" : 3,
 		"quantità": 0,
 		"colori" : ["green"],
@@ -428,7 +433,8 @@ var card_list_dict = {
 	29:{
 		"nome" : "The power of music",
 		"tipo" : "hero",
-		"effetti": ["played"],
+		"effetti": ["played", "dead"],
+		"silenzia": ["dead"],
 		"vita" : 9,
 		"attacco" : 9,
 		"quantità": 3,
@@ -671,7 +677,7 @@ var card_list_dict = {
 		"sound" : preload("res://Resources/50.wav")
 		},
 	51:{
-		"nome" : "Alessandro G., il sexy lavapiatti",
+		"nome" : "Ganins, il sexy lavapiatti",
 		"tipo" : "hero",
 		"effetti": ["played"],
 		"vita" : 8,
@@ -941,7 +947,7 @@ var card_list_dict = {
 		"tipo" : "spell",
 		"effetti": ["hero_teased"],
 		"silenzia" : ["hero_teased"],
-		"vita" : 5,
+		"vita" : 3,
 		"attacco" : 0,
 		"quantità": 3,
 		"colori" : ["green"],
@@ -974,8 +980,8 @@ var card_list_dict = {
 	78:{
 		"nome" : "Informazioni non molto precise",
 		"tipo" : "spell",
-		"effetti": ["healed_player"],
-		"silenzia": ["healed_player"],
+		"effetti": ["healed_player", "notrigger_healed_player"],
+		"silenzia": ["healed_player", "notrigger_healed_player"],
 		"vita" : 5,
 		"attacco" : 0,
 		"quantità": 3,
@@ -988,7 +994,7 @@ var card_list_dict = {
 		"tipo" : "spell",
 		"effetti": ["healed_player"],
 		"silenzia": ["healed_player"],
-		"vita" : 5,
+		"vita" : 2,
 		"attacco" : 0,
 		"quantità": 3,
 		"colori" : ["blue"],
@@ -1088,7 +1094,7 @@ var card_list_dict = {
 		"tipo" : "spell",
 		"effetti": ["hero_played", "event_played", "spell_played"],
 		"silenzia": ["hero_played", "event_played", "spell_played"],
-		"vita" : 5,
+		"vita" : 3,
 		"attacco" : 0,
 		"quantità": 3,
 		"colori" : ["blue"],
