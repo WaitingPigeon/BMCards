@@ -8,9 +8,9 @@
 [ext_resource path="res://Resources/Tabellone.png" type="Texture" id=6]
 [ext_resource path="res://Resources/frecciasin.png" type="Texture" id=7]
 [ext_resource path="res://Resources/kisspng-line-angle-font-square-bracket-5b46d048bd7420.311155851531367496776-removebg-preview.png" type="Texture" id=8]
-[ext_resource path="res://Resources/4.png" type="Texture" id=6]
-[ext_resource path="res://Resources/12.png" type="Texture" id=7]
-[ext_resource path="res://Resources/Comic_Sans2.tres" type="DynamicFont" id=8]
+[ext_resource path="res://Resources/4.png" type="Texture" id=9]
+[ext_resource path="res://Resources/12.png" type="Texture" id=10]
+[ext_resource path="res://Resources/Comic_Sans2.tres" type="DynamicFont" id=11]
 
 [node name="Tutorial" type="Node"]
 script = ExtResource( 3 )
