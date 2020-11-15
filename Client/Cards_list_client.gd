@@ -25,16 +25,16 @@ func get_girls():
 	var list = [42, 45, 46, 50, 70, 86, 89] 
 	return list
 func get_alcolici():
-	var list = [12, 13, 58]
+	var list = [12, 13, 58, 92, 96]
 	return list
 func get_giochi():
-	var list = [14, 35, 39, 43, 88]
+	var list = [14, 35, 39, 43, 88, 99]
 	return list
 func get_libri():
 	var list = [6, 72, 84, 85]
 	return list
 func get_bevande():
-	var list = [12, 13, 58]
+	var list = [12, 13, 58, 92, 96]
 	return list
 func get_card_list_size():
 	var size = card_list_dict.size()
@@ -177,6 +177,7 @@ var card_list_dict = {
 		"nome" : "Il grande libro della polenta",
 		"tipo" : "spell",
 		"effetti": ["hero_played", "dead"],
+		"silenzia": ["hero_played"],
 		"vita" : 6,
 		"attacco" : 0,
 		"quantità": 3,
@@ -266,19 +267,19 @@ var card_list_dict = {
 		"nome" : "Gioco della chiave",
 		"tipo" : "spell",
 		"effetti": ["played"],
-		"vita" : 3,
+		"vita" : 2,
 		"attacco" : 0,
 		"quantità": 3,
-		"colori" : ["green"],
+		"colori" : ["blue"],
 		"img" : preload("res://Resources/14.png"),
 		"sound" : preload("res://Resources/14.wav")
 		},
 	15:{
 		"nome" : "Quello bendato",
-		"tipo" : "spell",
-		"effetti": ["end_turn"],
-		"vita" : 2,
-		"attacco" : 0,
+		"tipo" : "hero",
+		"effetti": ["played"],
+		"vita" : 1,
+		"attacco" : 1,
 		"quantità": 0,
 		"colori" : ["blue"],
 		"img" : preload("res://Resources/15.png"),
@@ -286,10 +287,10 @@ var card_list_dict = {
 		},
 	16:{
 		"nome" : "Quello seduto 1",
-		"tipo" : "spell",
-		"effetti": ["end_turn"],
-		"vita" : 2,
-		"attacco" : 0,
+		"tipo" : "hero",
+		"effetti": ["played"],
+		"vita" : 1,
+		"attacco" : 1,
 		"quantità": 0,
 		"colori" : ["blue"],
 		"img" : preload("res://Resources/16.png"),
@@ -308,10 +309,10 @@ var card_list_dict = {
 		},
 	18:{
 		"nome" : "Quello seduto 2",
-		"tipo" : "spell",
-		"effetti": ["end_turn"],
-		"vita" : 2,
-		"attacco" : 0,
+		"tipo" : "hero",
+		"effetti": ["played"],
+		"vita" : 1,
+		"attacco" : 1,
 		"quantità": 0,
 		"colori" : ["blue"],
 		"img" : preload("res://Resources/18.png"),
@@ -388,7 +389,7 @@ var card_list_dict = {
 		"nome" : "Bresciano",
 		"tipo" : "hero",
 		"effetti": [],
-		"vita" : 6,
+		"vita" : 10,
 		"attacco" : 3,
 		"quantità": 0,
 		"colori" : ["green"],
@@ -676,7 +677,7 @@ var card_list_dict = {
 		"sound" : preload("res://Resources/50.wav")
 		},
 	51:{
-		"nome" : "Alessandro G., il sexy lavapiatti",
+		"nome" : "Ganins, il sexy lavapiatti",
 		"tipo" : "hero",
 		"effetti": ["played"],
 		"vita" : 8,
@@ -946,7 +947,7 @@ var card_list_dict = {
 		"tipo" : "spell",
 		"effetti": ["hero_teased"],
 		"silenzia" : ["hero_teased"],
-		"vita" : 5,
+		"vita" : 3,
 		"attacco" : 0,
 		"quantità": 3,
 		"colori" : ["green"],
@@ -979,8 +980,8 @@ var card_list_dict = {
 	78:{
 		"nome" : "Informazioni non molto precise",
 		"tipo" : "spell",
-		"effetti": ["healed_player"],
-		"silenzia": ["healed_player"],
+		"effetti": ["healed_player", "notrigger_healed_player"],
+		"silenzia": ["healed_player", "notrigger_healed_player"],
 		"vita" : 5,
 		"attacco" : 0,
 		"quantità": 3,
@@ -993,7 +994,7 @@ var card_list_dict = {
 		"tipo" : "spell",
 		"effetti": ["healed_player"],
 		"silenzia": ["healed_player"],
-		"vita" : 5,
+		"vita" : 2,
 		"attacco" : 0,
 		"quantità": 3,
 		"colori" : ["blue"],
@@ -1123,5 +1124,146 @@ var card_list_dict = {
 		"img" : preload("res://Resources/90.png"),
 		"sound" : preload("res://Resources/90.wav")
 		},
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	91:{
+		"nome" : "Traditore",
+		"tipo" : "hero",
+		"effetti": ["played", "dead"],
+		#silenzia...
+		"vita" : 8,
+		"attacco" : 5,
+		"quantità" : 3,
+		"colori" : ["blue", "red"],
+		"img" : preload("res://Resources/91.png"),
+		"sound" : preload("res://Resources/91.wav")
+		},
+	92:{
+		"nome" : "Vodka",
+		"tipo" : "spell",
+		"effetti" : ["played", "end_turn"],
+		#silenzia...
+		"vita" : 3,
+		"attacco" : 0,
+		"quantità" : 3,
+		"colori" : ["green", "red"],
+		"img" : preload("res://Resources/92.png"),
+		"sound" : preload("res://Resources/92.wav")
+		},
+	93:{
+		"nome" : "Alcolisti anonimi",
+		"tipo" : "spell",
+		"effetti" : ["played", "end_turn", "end_enemy_turn"],
+		#silenzia
+		"vita" : 3,
+		"attacco" : 0,
+		"quantità" : 3,
+		"colori" : ["blue"],
+		"img" : preload("res://Resources/93.png"),
+		"sound" : preload("res://Resources/93.wav")
+		},
+	94:{
+		"nome" : "Nascondi la tessera",
+		"tipo" : "event",
+		"effetti" : ["played"],
+		#silenzia...
+		"vita" : 0,
+		"attacco" : 0,
+		"quantità" : 3,
+		"colori" : ["blue", "green", "red"],
+		"img" : preload("res://Resources/94.png"),
+		"sound" : preload("res://Resources/94.wav")
+		},
+	95:{
+		"nome" : "I filmati perduti",
+		"tipo" : "spell",
+		"effetti" : ["end_turn"],
+		#silenzia...
+		"vita" : 1,
+		"attacco": 0,
+		"quantità" : 3,
+		"colori" : ["red"],
+		"img" : preload("res://Resources/95.png"),
+		"sound" : preload("res://Resources/95.wav")
+		},
+	96:{
+		"nome" : "Spumante analcolico",
+		"tipo" : "spell",
+		"effetti" : ["played", "end_turn"],
+		#silenzia...
+		"vita" : 3,
+		"attacco" : 0,
+		"quantità" : 3,
+		"colori" : ["blue"],
+		"img" : preload("res://Resources/96.png"),
+		"sound" : preload("res://Resources/96.wav")
+		},
+	97:{
+		"nome" : "Jumpscare",
+		"tipo" : "event",
+		"effetti" : ["played"],
+		#silenzia...
+		"vita" : 0,
+		"attacco" : 0,
+		"quantità" : 3,
+		"colori" : ["green"],
+		"img" : preload("res://Resources/97.png"),
+		"sound" : preload("res://Resources/97.wav")
+		},
+	98:{
+		"nome" : "Bevi per dimenticare",
+		"tipo" : "event",
+		"effetti" : ["played"],
+		#silenzia...
+		"vita" : 0,
+		"attacco" : 0,
+		"quantità" : 3,
+		"colori" : ["red"],
+		"img" : preload("res://Resources/98.png"),
+		"sound" : preload("res://Resources/98.wav")
+		},
+	99:{
+		"nome" : "Gioco delle carte",
+		"tipo" : "spell",
+		"effetti" : ["end_turn"],
+		#silenzia...
+		"vita" : 3,
+		"attacco" : 0,
+		"quantità" : 3,
+		"colori" : ["blue"],
+		"img" : preload("res://Resources/99.png"),
+		"sound" : preload("res://Resources/99.wav")
+		},
+	100:{
+		"nome" : "Elezioni congolesi",
+		"tipo" : "spell",
+		"effetti" : ["played", "end_turn"],
+		#silenzia...
+		"vita" : 3,
+		"attacco" : 0,
+		"quantità" : 3,
+		"colori" : ["red"],
+		"img" : preload("res://Resources/100.png"),
+		"sound" : preload("res://Resources/100.wav")
+		},
+	101:{
+		"nome" : "Pulizie dell' ultimo minuto",
+		"tipo" : "spell",
+		"effetti" : ["played", "dead", "end_turn"],
+		"silenzia" : ["dead"],
+		"vita" : 1,
+		"attacco" : 0,
+		"quantità" : 3,
+		"colori" : ["blue", "red"],
+		"img" : preload("res://Resources/101.png"),
+		"sound" : preload("res://Resources/101.wav")
+		}
 	}
 

@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Resources/Comic_Sans.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Resources/Small Comic Sans.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Tutorial.gd" type="Script" id=3]
 [ext_resource path="res://Resources/40.png" type="Texture" id=4]
 [ext_resource path="res://icon.png" type="Texture" id=5]
+[ext_resource path="res://Resources/Tabellone.png" type="Texture" id=6]
+[ext_resource path="res://Resources/frecciasin.png" type="Texture" id=7]
+[ext_resource path="res://Resources/kisspng-line-angle-font-square-bracket-5b46d048bd7420.311155851531367496776-removebg-preview.png" type="Texture" id=8]
 
 [node name="Tutorial" type="Node"]
 script = ExtResource( 3 )
@@ -34,27 +37,283 @@ visible = false
 position = Vector2( 692, 141 )
 
 [node name="RichTextLabel" type="RichTextLabel" parent="Chapter0"]
-margin_left = -669.0
-margin_top = 11.0
-margin_right = -33.0
-margin_bottom = 443.0
+margin_left = -655.0
+margin_top = 152.218
+margin_right = -19.0
+margin_bottom = 504.218
 custom_fonts/normal_font = ExtResource( 1 )
-text = "EHILA', BENVENUTO SUL PRIMO GIOCO UFFICIALE DEL BONNY MYSTERY CLUB!
+text = "EHILA', BENVENUTO SUL PRIMO GIOCO DI CARTE UFFICIALE DEL BONNY MYSTERY CLUB!
 
 Preparati a combattere i tuoi (non più) amici con l'ignoranza e la furbizia che contraddistinguono questo gruppo. Beh, forse solo la prima.
 
-In questo gioco di carte dovrai sfruttare tutto il materiale memico d"
+In questo gioco di carte dovrai sfruttare tutto il materiale memico a tua disposizione per mostrare la tua supremazia in Intelligenza, Follia e Libido.
+Non avere paura di osare! Ogni Eroe, Oggetto Magico ed Evento nella tua mano saranno fondamentali per sbaragliare il tuo avversario!
+E allora che aspetti? Impara a giocare e buttati nella mischia!"
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Sprite" type="Sprite" parent="Chapter0"]
+position = Vector2( -350.811, 17.9128 )
+texture = ExtResource( 5 )
+
 [node name="Chapter1" type="Node2D" parent="."]
 visible = false
 
 [node name="Sprite" type="Sprite" parent="Chapter1"]
-position = Vector2( 305.47, 196.576 )
-texture = ExtResource( 5 )
+position = Vector2( 284.824, 372.795 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 6 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Chapter1"]
+margin_left = 591.737
+margin_top = 154.236
+margin_right = 691.737
+margin_bottom = 194.236
+custom_fonts/normal_font = ExtResource( 2 )
+text = "Obiettivi"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel2" type="RichTextLabel" parent="Chapter1"]
+margin_left = 591.737
+margin_top = 600.0
+margin_right = 710.737
+margin_bottom = 655.0
+custom_fonts/normal_font = ExtResource( 2 )
+text = "Tempo rimanente per il turno"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="Chapter1"]
+margin_left = 437.189
+margin_top = 619.0
+margin_right = 556.189
+margin_bottom = 692.0
+custom_fonts/normal_font = ExtResource( 2 )
+text = "carte ancora da giocare nel turno"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="Chapter1"]
+margin_left = 577.438
+margin_top = 434.806
+margin_right = 676.438
+margin_bottom = 500.806
+custom_fonts/normal_font = ExtResource( 2 )
+text = "Zona oggetti/eventi"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="Chapter1"]
+margin_left = 5.32419
+margin_top = 627.485
+margin_right = 84.3242
+margin_bottom = 681.485
+custom_fonts/normal_font = ExtResource( 2 )
+text = "Indicatore del turno"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel6" type="RichTextLabel" parent="Chapter1"]
+margin_left = 359.0
+margin_top = 106.0
+margin_right = 527.0
+margin_bottom = 146.0
+custom_fonts/normal_font = ExtResource( 2 )
+text = "Mano del giocatore 2"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel7" type="RichTextLabel" parent="Chapter1"]
+margin_left = 564.324
+margin_top = 396.239
+margin_right = 706.324
+margin_bottom = 436.239
+custom_fonts/normal_font = ExtResource( 2 )
+text = "Zona eroi"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel8" type="RichTextLabel" parent="Chapter1"]
+margin_left = 544.189
+margin_top = 51.0
+margin_right = 698.189
+margin_bottom = 91.0
+custom_fonts/normal_font = ExtResource( 2 )
+text = "Nome giocatore"
+__meta__ = {
+"_edit_use_anchors_": false,
+"_editor_description_": ""
+}
+
+[node name="RichTextLabel9" type="RichTextLabel" parent="Chapter1"]
+margin_left = 117.0
+margin_top = 619.0
+margin_right = 233.0
+margin_bottom = 692.0
+custom_fonts/normal_font = ExtResource( 2 )
+text = "Termina il tuo turno (numero turno)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel10" type="RichTextLabel" parent="Chapter1"]
+margin_left = 592.0
+margin_top = 268.0
+margin_right = 691.0
+margin_bottom = 325.0
+custom_fonts/normal_font = ExtResource( 2 )
+text = "Campo avversario"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel11" type="RichTextLabel" parent="Chapter1"]
+margin_left = 5.32419
+margin_top = 17.3559
+margin_right = 105.324
+margin_bottom = 136.356
+custom_fonts/normal_font = ExtResource( 2 )
+text = "Mazzo (con numero carte rimanenti)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel12" type="RichTextLabel" parent="Chapter1"]
+margin_left = 245.189
+margin_top = 645.0
+margin_right = 437.189
+margin_bottom = 699.0
+custom_fonts/normal_font = ExtResource( 2 )
+bbcode_enabled = true
+bbcode_text = "Punti per caratteristica
+([color=#0000ff]intelligenza[/color], [color=#6aa84f]follia[/color] e [color=#ff0000]libido[/color])"
+text = "Punti per caratteristica
+(intelligenza, follia e libido)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel13" type="RichTextLabel" parent="Chapter1"]
+margin_left = 163.773
+margin_top = 31.142
+margin_right = 372.773
+margin_bottom = 114.142
+custom_fonts/normal_font = ExtResource( 2 )
+text = "Passa su una carta con dito/mouse per vedere qui lo zoom"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="frecciasin" type="Sprite" parent="Chapter1"]
+position = Vector2( 37, 607.686 )
+rotation = 1.57079
+scale = Vector2( 0.0390476, 0.134842 )
+texture = ExtResource( 7 )
+
+[node name="frecciasin2" type="Sprite" parent="Chapter1"]
+position = Vector2( 112.472, 576.165 )
+rotation = 1.0472
+scale = Vector2( 0.108338, 0.169924 )
+texture = ExtResource( 7 )
+
+[node name="frecciasin3" type="Sprite" parent="Chapter1"]
+position = Vector2( 247.772, 593.246 )
+rotation = 1.0472
+scale = Vector2( 0.118049, 0.211071 )
+texture = ExtResource( 7 )
+
+[node name="frecciasin4" type="Sprite" parent="Chapter1"]
+position = Vector2( 319.766, 593.191 )
+rotation = 1.57079
+scale = Vector2( 0.0986788, 0.164424 )
+texture = ExtResource( 7 )
+
+[node name="frecciasin5" type="Sprite" parent="Chapter1"]
+position = Vector2( 391.723, 595 )
+rotation = 2.09439
+scale = Vector2( 0.111202, 0.232495 )
+texture = ExtResource( 7 )
+
+[node name="frecciasin6" type="Sprite" parent="Chapter1"]
+position = Vector2( 504.712, 561.968 )
+rotation = 1.83259
+scale = Vector2( 0.10895, 0.191353 )
+texture = ExtResource( 7 )
+
+[node name="frecciasin7" type="Sprite" parent="Chapter1"]
+position = Vector2( 585.135, 528.465 )
+rotation = 1.0472
+scale = Vector2( 0.177624, 0.151471 )
+texture = ExtResource( 7 )
+
+[node name="kisspng-line-angle-font-square-bracket-5b46d048bd7420311155851531367496776-removebg-preview" type="Sprite" parent="Chapter1"]
+position = Vector2( 482.269, 476.219 )
+scale = Vector2( 0.113612, 0.146018 )
+texture = ExtResource( 8 )
+
+[node name="kisspng-line-angle-font-square-bracket-5b46d048bd7420311155851531367496776-removebg-preview" type="Sprite" parent="Chapter1/kisspng-line-angle-font-square-bracket-5b46d048bd7420311155851531367496776-removebg-preview"]
+position = Vector2( -6.3877, -481.176 )
+texture = ExtResource( 8 )
+
+[node name="kisspng-line-angle-font-square-bracket-5b46d048bd7420311155851531367496776-removebg-preview" type="Sprite" parent="Chapter1/kisspng-line-angle-font-square-bracket-5b46d048bd7420311155851531367496776-removebg-preview/kisspng-line-angle-font-square-bracket-5b46d048bd7420311155851531367496776-removebg-preview"]
+position = Vector2( -0.000976563, -745.169 )
+scale = Vector2( 1, 1.96192 )
+texture = ExtResource( 8 )
+
+[node name="frecciasin8" type="Sprite" parent="Chapter1"]
+position = Vector2( 583.996, 213.095 )
+rotation = -0.523598
+scale = Vector2( 0.0923332, 0.213141 )
+texture = ExtResource( 7 )
+
+[node name="frecciasin9" type="Sprite" parent="Chapter1"]
+position = Vector2( 537.784, 279.652 )
+scale = Vector2( 0.112401, 0.163908 )
+texture = ExtResource( 7 )
+
+[node name="frecciasin10" type="Sprite" parent="Chapter1"]
+position = Vector2( 522.642, 418.368 )
+scale = Vector2( 0.0868379, 0.172157 )
+texture = ExtResource( 7 )
+
+[node name="frecciasin11" type="Sprite" parent="Chapter1"]
+position = Vector2( 530.635, 459.686 )
+scale = Vector2( 0.097506, 0.103666 )
+texture = ExtResource( 7 )
+
+[node name="frecciasin12" type="Sprite" parent="Chapter1"]
+position = Vector2( 37.0002, 122.96 )
+rotation = -1.57079
+scale = Vector2( 0.0751774, 0.220468 )
+texture = ExtResource( 7 )
+
+[node name="frecciasin13" type="Sprite" parent="Chapter1"]
+position = Vector2( 171.111, 155.295 )
+rotation = -0.785397
+scale = Vector2( 0.218546, 0.205258 )
+texture = ExtResource( 7 )
+
+[node name="frecciasin14" type="Sprite" parent="Chapter1"]
+position = Vector2( 544.189, 114 )
+rotation = -1.0472
+scale = Vector2( 0.094861, 0.109275 )
+texture = ExtResource( 7 )
+
+[node name="frecciasin15" type="Sprite" parent="Chapter1"]
+position = Vector2( 332.705, 136.356 )
+rotation = -0.785397
+scale = Vector2( 0.039414, 0.116231 )
+texture = ExtResource( 7 )
 
 [node name="Chapter2" type="Node2D" parent="."]
 visible = false

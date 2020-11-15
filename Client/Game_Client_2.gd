@@ -101,16 +101,16 @@ func _on_Objective_Panel_mouse_entered():
 
 func _on_HSlider_value_changed(value):
 	$Board_Stuff/Background_music.volume_db = linear2db(value)
+	Network.music_volume = linear2db(value)
 
 func _on_HSlider2_value_changed(value):
-	sound_volume = linear2db(value)
+	Network.sound_volume = linear2db(value)
 
 func _on_Objective_Panel_2_mouse_entered():
 	if objective_numbers.size() > 0:
 		$Board_Stuff/Card_Container/Selected_card.texture = $Board_Stuff/Objective_Panel_2/Objective_2.texture
 
 func _on_Objective_Panel_3_mouse_entered():
-	print("3")
 	if objective_numbers.size() > 0:
 		$Board_Stuff/Card_Container/Selected_card.texture = $Board_Stuff/Objective_Panel_3/Objective_3.texture
 
@@ -130,6 +130,7 @@ func _on_Button3_pressed():
 	if $Settings/History_node/History_text.visible == false:
 		$Settings/History_node/History_text.text = history_read()
 		$Settings/History_node/History_text.visible = true
+		yield(get_tree().create_timer(0.01), "timeout")
 		$Settings/History_node/History_text.scroll_vertical = INF
 		$Settings/Button3.text = "CHIUDI CRONOLOGIA"
 	elif $Settings/History_node/History_text.visible == true:

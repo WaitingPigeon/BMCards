@@ -2,7 +2,7 @@ extends Node
 
 const DEFAULT_PORT = 10001
 const MAX_PLAYERS = 20
-const SERVER_VERSION = "alpha_1.2"
+const SERVER_VERSION = "alpha_1.3"
 var players_online = {}
 var registred_players = {}
 var playing_players = {}
