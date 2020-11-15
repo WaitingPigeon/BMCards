@@ -3,11 +3,14 @@
 [ext_resource path="res://Resources/Comic_Sans.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Resources/Small Comic Sans.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Tutorial.gd" type="Script" id=3]
-[ext_resource path="res://Resources/40.png" type="Texture" id=4]
+[ext_resource path="res://Resources/11.png" type="Texture" id=4]
 [ext_resource path="res://icon.png" type="Texture" id=5]
 [ext_resource path="res://Resources/Tabellone.png" type="Texture" id=6]
 [ext_resource path="res://Resources/frecciasin.png" type="Texture" id=7]
 [ext_resource path="res://Resources/kisspng-line-angle-font-square-bracket-5b46d048bd7420.311155851531367496776-removebg-preview.png" type="Texture" id=8]
+[ext_resource path="res://Resources/4.png" type="Texture" id=6]
+[ext_resource path="res://Resources/12.png" type="Texture" id=7]
+[ext_resource path="res://Resources/Comic_Sans2.tres" type="DynamicFont" id=8]
 
 [node name="Tutorial" type="Node"]
 script = ExtResource( 3 )
@@ -318,18 +321,219 @@ texture = ExtResource( 7 )
 [node name="Chapter2" type="Node2D" parent="."]
 visible = false
 
-[node name="Sprite" type="Sprite" parent="Chapter2"]
-position = Vector2( 391.737, 302.642 )
+[node name="RichTextLabel7" type="RichTextLabel" parent="Chapter2"]
+margin_left = 261.137
+margin_top = 30.7817
+margin_right = 667.137
+margin_bottom = 454.782
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Gli eroi sono i validi combattenti che ti aiuteranno ad accumulare punti [color=#0000ff]intelligenza[/color], [color=#6aa84f]follia[/color] e [color=#ff0000]libido[/color]. Sono caratterizzati da:
+[color=#ff0000] - Attacco:[/color] (indicato in basso a sinistra): quando l'eroe attacca se è presente un eroe nemico davanti quest'ultimo subisce danni pari a questo valore.
+[color=#ff0000] - Vita[/color] (indicata in basso a destra): quando la vita di un eroe scende a 0 o meno questo viene immediatamente distrutto. La vita di un eroe può scendere a causa di attacchi da parte di eroi nemici o per effetti di altre carte."
+text = "Gli eroi sono i validi combattenti che ti aiuteranno ad accumulare punti intelligenza, follia e libido. Sono caratterizzati da:
+ - Attacco: (indicato in basso a sinistra): quando l'eroe attacca se è presente un eroe nemico davanti quest'ultimo subisce danni pari a questo valore.
+ - Vita (indicata in basso a destra): quando la vita di un eroe scende a 0 o meno questo viene immediatamente distrutto. La vita di un eroe può scendere a causa di attacchi da parte di eroi nemici o per effetti di altre carte."
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel8" type="RichTextLabel" parent="Chapter2"]
+margin_left = 35.8216
+margin_top = 396.476
+margin_right = 683.822
+margin_bottom = 688.476
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "[color=#ff0000] - Colore:[/color] gli eroi possono essere giocati solo in alcuni colori (corrispondenti ai colori di sfondo). Una carta con sfondo bianco può essere giocata in ogni colore. In base al colore in cui viene giocato un eroe può avere dei poteri diversi. 
+[color=#ff0000]- Dispetto:[/color] oltre ad eventuali altri effetti ogni eroe ha un dispetto. Questo è l'effetto specifico degli eroi che si attiva quando questi attaccano una zona dove non è presente un eroe nemico. 
+
+Alla fine di ogni turno ogni tuo eroe (che non sia stato giocato in questo turno) attacca la zona davanti a sè."
+text = " - Colore: gli eroi possono essere giocati solo in alcuni colori (corrispondenti ai colori di sfondo). Una carta con sfondo bianco può essere giocata in ogni colore. In base al colore in cui viene giocato un eroe può avere dei poteri diversi. 
+- Dispetto: oltre ad eventuali altri effetti ogni eroe ha un dispetto. Questo è l'effetto specifico degli eroi che si attiva quando questi attaccano una zona dove non è presente un eroe nemico. 
+
+Alla fine di ogni turno ogni tuo eroe (che non sia stato giocato in questo turno) attacca la zona davanti a sè."
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="11" type="Sprite" parent="Chapter2"]
+position = Vector2( 123.077, 204.612 )
+scale = Vector2( 0.596986, 0.666631 )
 texture = ExtResource( 4 )
 
 [node name="Chapter3" type="Node2D" parent="."]
 visible = false
 
+[node name="4" type="Sprite" parent="Chapter3"]
+position = Vector2( 570.854, 544.445 )
+scale = Vector2( 0.523367, 0.532299 )
+texture = ExtResource( 6 )
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="Chapter3"]
+margin_left = 36.4677
+margin_top = 15.03
+margin_right = 703.468
+margin_bottom = 178.03
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Gli altri due tipi di carte che incontrerai saranno gli oggetti magici e gli eventi. Entrambi i tipi di carte vanno giocate nella stessa zona del campo."
+text = "Gli altri due tipi di carte che incontrerai saranno gli oggetti magici e gli eventi. Entrambi i tipi di carte vanno giocate nella stessa zona del campo."
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="Chapter3"]
+margin_left = 245.414
+margin_top = 69.8284
+margin_right = 698.414
+margin_bottom = 417.828
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Un [color=#ff0000]oggetto magico[/color] è caratterizzato da:
+[color=#ff0000] - Durabilità[/color] (indicata in alto a sinistra): corrisponde alla vita degli eroi. Gli oggetti magici perdono durabilità alla fine del turno o se un effetto li danneggia. Un oggetto con durabilità 0 o meno viene distrutto.
+[color=#ff0000] - Colore[/color]: come gli eroi possono essere giocati in una o più colori e l'effetto può variare a seconda di dove vengono posizionati.
+[color=#ff0000] - Effetto[/color]: ogni ogg. magico ha un effetto diverso. Molti prevedono azioni all'inizio e alla fine del turno, altri si attivano solo sotto particolari circostanze."
+text = "Un oggetto magico è caratterizzato da:
+ - Durabilità (indicata in alto a sinistra): corrisponde alla vita degli eroi. Gli oggetti magici perdono durabilità alla fine del turno o se un effetto li danneggia. Un oggetto con durabilità 0 o meno viene distrutto.
+ - Colore: come gli eroi possono essere giocati in una o più colori e l'effetto può variare a seconda di dove vengono posizionati.
+ - Effetto: ogni ogg. magico ha un effetto diverso. Molti prevedono azioni all'inizio e alla fine del turno, altri si attivano solo sotto particolari circostanze."
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel6" type="RichTextLabel" parent="Chapter3"]
+margin_left = 16.4139
+margin_top = 394.827
+margin_right = 462.414
+margin_bottom = 688.827
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Gli [color=#ff0000]eventi[/color] sono come gli oggetti magici, ma con durabilità 0 (come abbiamo prontamente riportato in alto a sinistra in tutti gli eventi). Questo vuol dire che l'effetto degli eventi si attiva non appena questi vengono giocati. Risolto l'effetto l'evento scompare (non conta come carta distrutta). Come gli ogg. magici possono essere giocati su uno o più colori (e l'effetto spesso cambia in base a questo). Dato che vengono giocati nella stessa zona degli ogg. magici non possono essere giocati in un colore dove siano già presenti 3 ogg. magici."
+text = "Gli eventi sono come gli oggetti magici, ma con durabilità 0 (come abbiamo prontamente riportato in alto a sinistra in tutti gli eventi). Questo vuol dire che l'effetto degli eventi si attiva non appena questi vengono giocati. Risolto l'effetto l'evento scompare (non conta come carta distrutta). Come gli ogg. magici possono essere giocati su uno o più colori (e l'effetto spesso cambia in base a questo). Dato che vengono giocati nella stessa zona degli ogg. magici non possono essere giocati in un colore dove siano già presenti 3 ogg. magici."
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="12" type="Sprite" parent="Chapter3"]
+position = Vector2( 125.562, 227.357 )
+scale = Vector2( 0.506999, 0.553191 )
+texture = ExtResource( 7 )
+
 [node name="Chapter4" type="Node2D" parent="."]
 visible = false
 
+[node name="RichTextLabel2" type="RichTextLabel" parent="Chapter4"]
+margin_left = 32.0
+margin_top = 77.0
+margin_right = 682.0
+margin_bottom = 702.0
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Il turno di ogni giocatore è diviso in: 
+[color=#ff0000]- Inizio turno:[/color] il giocatore pesca 1 carta (2 dal quinto turno in poi). Il mazzo di carte è lo stesso per entrambi i giocatori.
+[color=#ff0000]- Giocate[/color]: il giocatore può usare carte dalla mano fino all'esaurimento delle giocate disponibili per quel turno. Il numero di carte che è possibile giocare aumenta al passare dei turni.
+[color=#ff0000]- Attacco e fine turno:[/color] quando il giocatore termina il tempo o clicca il bottone di fine turno ogni suo eroe (da sinistra a destra) attacca la casella eroi davanti; se è presente un eroe nemico questo subisce danni pari al valore di attacco, altrimenti l'eroe attiva il proprio dispetto. Terminati gli attacchi (e terminati gli effetti di fine turno di eroi e ogg. magici) ogni ogg. magico del giocatore che sta concludendo il turno si usura perdendo 1 di durabilità. Al termine di tutto ciò, se il giocatore ha lasciato una delle carte in mano nella casella più a destra (colorata di rosso), questa viene scartata per essere sostituita con una carta casuale del mazzo. 
+
+
+Il ciclo quindi si ripete finchè uno dei due giocatori non vince. Oppure qualcuno se ne va perchè si è annoiato. O magari un calo di connessione. Comunque non ti resta che scoprire come vincere! (E la nostra grande lungimranza ci ha fatto aggiungere una sezione anche su questo)."
+text = "Il turno di ogni giocatore è diviso in: 
+- Inizio turno: il giocatore pesca 1 carta (2 dal quinto turno in poi). Il mazzo di carte è lo stesso per entrambi i giocatori.
+- Giocate: il giocatore può usare carte dalla mano fino all'esaurimento delle giocate disponibili per quel turno. Il numero di carte che è possibile giocare aumenta al passare dei turni.
+- Attacco e fine turno: quando il giocatore termina il tempo o clicca il bottone di fine turno ogni suo eroe (da sinistra a destra) attacca la casella eroi davanti; se è presente un eroe nemico questo subisce danni pari al valore di attacco, altrimenti l'eroe attiva il proprio dispetto. Terminati gli attacchi (e terminati gli effetti di fine turno di eroi e ogg. magici) ogni ogg. magico del giocatore che sta concludendo il turno si usura perdendo 1 di durabilità. Al termine di tutto ciò, se il giocatore ha lasciato una delle carte in mano nella casella più a destra (colorata di rosso), questa viene scartata per essere sostituita con una carta casuale del mazzo. 
+
+
+Il ciclo quindi si ripete finchè uno dei due giocatori non vince. Oppure qualcuno se ne va perchè si è annoiato. O magari un calo di connessione. Comunque non ti resta che scoprire come vincere! (E la nostra grande lungimranza ci ha fatto aggiungere una sezione anche su questo)."
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="Chapter5" type="Node2D" parent="."]
 visible = false
+
+[node name="RichTextLabel3" type="RichTextLabel" parent="Chapter5"]
+margin_left = 41.0
+margin_top = 52.0
+margin_right = 664.0
+margin_bottom = 395.0
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "\"Non ti preoccupare, l'importante è partecipare\". Ecco se la pensi così non leggere questa sezione. Se stai leggendo vuol dire che sei come me, avvilito e frustrato dalla vita e hai tutta l'intenzione di sfogare tutta la tua rabbia devastando il tuo avversario. Ecco come fare:
+
+All'inizio della partita vengono scelti (casualmente) tre obiettivi, uno per categoria ([color=#0000ff]intelligenza[/color], [color=#6aa84f]follia[/color] e [color=#ff0000]libido[/color]). Per vincere devi completarne 2 prima che lo faccia il tuo avversario.  
+
+[color=#ff00ff]Achtung! [/color]Se un giocatore completa un obiettivo questo non potrà più essere completato dall'altra persona.
+
+
+
+
+
+
+
+
+
+
+"
+text = "\"Non ti preoccupare, l'importante è partecipare\". Ecco se la pensi così non leggere questa sezione. Se stai leggendo vuol dire che sei come me, avvilito e frustrato dalla vita e hai tutta l'intenzione di sfogare tutta la tua rabbia devastando il tuo avversario. Ecco come fare:
+
+All'inizio della partita vengono scelti (casualmente) tre obiettivi, uno per categoria (intelligenza, follia e libido). Per vincere devi completarne 2 prima che lo faccia il tuo avversario.  
+
+Achtung! Se un giocatore completa un obiettivo questo non potrà più essere completato dall'altra persona.
+
+
+
+
+
+
+
+
+
+
+"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel4" type="RichTextLabel" parent="Chapter5"]
+margin_left = 34.8559
+margin_top = 635.908
+margin_right = 669.856
+margin_bottom = 674.908
+custom_fonts/normal_font = ExtResource( 1 )
+bbcode_enabled = true
+bbcode_text = "Disclaimer: se non c'è nessuno online non puoi buttarti nella mischia.  
+
+"
+text = "Disclaimer: se non c'è nessuno online non puoi buttarti nella mischia.  
+
+"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RichTextLabel5" type="RichTextLabel" parent="Chapter5"]
+margin_left = 41.5455
+margin_top = 398.763
+margin_right = 709.545
+margin_bottom = 593.763
+custom_fonts/normal_font = ExtResource( 8 )
+bbcode_enabled = true
+bbcode_text = "[rainbow freq=0.2 sat=10 val=20][tornado radius=5 freq=10] ORA SEI PRONTO!
+BUTTATI NELLA MISCHIA![shake rate=10 level=10][/shake][/tornado][/rainbow]"
+text = " ORA SEI PRONTO!
+BUTTATI NELLA MISCHIA!"
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
 [connection signal="pressed" from="Back_to_login" to="." method="_on_Back_to_login_pressed"]
 [connection signal="item_selected" from="Chapters" to="." method="_on_Chapters_item_selected"]
 [connection signal="ready" from="Chapters" to="." method="_on_Chapters_ready"]
