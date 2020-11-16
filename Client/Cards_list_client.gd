@@ -1201,7 +1201,7 @@ var card_list_dict = {
 		"vita" : 3,
 		"attacco" : 0,
 		"quantità" : 3,
-		"colori" : ["blue"],
+		"colori" : ["blue", "green"],
 		"img" : preload("res://Resources/96.png"),
 		"sound" : preload("res://Resources/96.wav")
 		},
@@ -1244,7 +1244,7 @@ var card_list_dict = {
 	100:{
 		"nome" : "Elezioni congolesi",
 		"tipo" : "spell",
-		"effetti" : ["played", "end_turn"],
+		"effetti" : ["played", "end_turn", "dead"],
 		#silenzia...
 		"vita" : 3,
 		"attacco" : 0,
