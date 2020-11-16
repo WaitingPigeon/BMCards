@@ -1702,22 +1702,22 @@ func get_spells_spots(player, color = null):
 		if player == 1:
 			for acolor in ["red", "blue", "green"]:
 				for pos in [0,1,2]:
-					if !(get_player1_spells_cards()[acolor][pos] == 0):
+					if !(get_player1_spells_cards()[acolor][pos] == 0) and !(load_card(get_player1_spells_cards()[acolor][pos])["tipo"] == "event"):
 						list.append({"color": acolor, "pos" : pos})
 		else:
 			for acolor in ["red", "blue", "green"]:
 				for pos in [0,1,2]:
-					if !(get_player2_spells_cards()[acolor][pos] == 0):
+					if !(get_player2_spells_cards()[acolor][pos] == 0) and !(load_card(get_player2_spells_cards()[acolor][pos])["tipo"] == "event"):
 						list.append({"color": acolor, "pos" : pos})
 		return(list)
 	else:
 		if player == 1:
 			for pos in [0,1,2]:
-				if !(get_player1_spells_cards()[color][pos] == 0):
+				if !(get_player1_spells_cards()[color][pos] == 0) and !(load_card(get_player1_spells_cards()[color][pos])["tipo"] == "event"):
 					list.append(pos)
 		else:
 			for pos in [0,1,2]:
-				if !(get_player2_spells_cards()[color][pos] == 0):
+				if !(get_player2_spells_cards()[color][pos] == 0) and !(load_card(get_player2_spells_cards()[color][pos])["tipo"] == "event"):
 					list.append(pos)
 	return(list)
 func get_hand1_empty_space():
@@ -3736,8 +3736,9 @@ func effect_93(type_of_effect, zone_activating, color_activating, pos_activating
 					if (kek["player"] == 2):
 						yield(kill_spell(kek["player"], kek["color"], kek["pos"]), "completed")
 						var list = get_heros_spots(1)
-						var target = list[randi() % list.size()]
-						yield(kill_hero(1, target["color"], target["pos"]), "completed")
+						if list.size() > 0:
+							var target = list[randi() % list.size()]
+							yield(kill_hero(1, target["color"], target["pos"]), "completed")
 
 #NASCONDI LA TESSERA
 func effect_94(type_of_effect, zone_activating, color_activating, pos_activating, player_trigger, zone_trigger, color_trigger, pos_trigger):

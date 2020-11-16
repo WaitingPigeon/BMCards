@@ -1160,7 +1160,7 @@ var card_list_dict = {
 	93:{
 		"nome" : "Alcolisti anonimi",
 		"tipo" : "spell",
-		"effetti" : ["played", "end_turn", "end_enemy_turn"],
+		"effetti" : ["played", "end_turn", "enemy_end_turn"],
 		#silenzia
 		"vita" : 3,
 		"attacco" : 0,
