@@ -1244,7 +1244,7 @@ var card_list_dict = {
 	100:{
 		"nome" : "Elezioni congolesi",
 		"tipo" : "spell",
-		"effetti" : ["played", "end_turn", "dead"],
+		"effetti" : ["played", "dead"],
 		#silenzia...
 		"vita" : 3,
 		"attacco" : 0,
