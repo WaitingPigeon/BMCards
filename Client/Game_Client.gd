@@ -1780,6 +1780,9 @@ func kill_hero(player, color, index):
 		meta_rset_id(Network.opponent, "kill_confirmation_flag", true)
 		yield(trigger_effects("killing_hero","heros", 1, color, index), "completed")
 		if kill_confirmation_flag == false:
+			rpc_id(Network.opponent,"zoom_card", dying_card)
+			zoom_card(dying_card)
+			yield(get_tree().create_timer(DEFAULT_WAIT_TIME),"timeout")
 			return(false)
 		history_write("L'eroe %s di %s in posizione %c%d è morto\n" % [load_card(dying_card)["nome"], Network.username, color[0].to_upper(), index])
 		rpc_id(Network.opponent, "play_sound", "death")
@@ -1811,6 +1814,9 @@ func kill_hero(player, color, index):
 		meta_rset_id(Network.opponent, "kill_confirmation_flag", true)
 		yield(trigger_effects("killing_hero","heros", 2, color, index), "completed")
 		if kill_confirmation_flag == false:
+			rpc_id(Network.opponent,"zoom_card", dying_card)
+			zoom_card(dying_card)
+			yield(get_tree().create_timer(DEFAULT_WAIT_TIME),"timeout")
 			return(false)
 		history_write("L'eroe %s di %s in posizione %c%d è morto\n" % [load_card(dying_card)["nome"], Network.opponent_user, color[0].to_upper(), index])
 		rpc_id(Network.opponent, "play_sound", "death")
@@ -1848,6 +1854,9 @@ func kill_spell(player, color, index):
 		meta_rset_id(Network.opponent, "kill_confirmation_flag", true)
 		yield(trigger_effects("killing_spell","spells", 1, color, index), "completed")
 		if kill_confirmation_flag == false:
+			rpc_id(Network.opponent,"zoom_card", dying_card)
+			zoom_card(dying_card)
+			yield(get_tree().create_timer(DEFAULT_WAIT_TIME),"timeout")
 			return(false)
 		history_write("L'oggetto magico %s di %s in posizione %c%d è stato distrutto\n" % [load_card(dying_card)["nome"], Network.username, color[0].to_upper(), index])
 		rpc_id(Network.opponent, "play_sound", "death")
@@ -1879,6 +1888,9 @@ func kill_spell(player, color, index):
 		meta_rset_id(Network.opponent, "kill_confirmation_flag", true)
 		yield(trigger_effects("killing_spell","spells", 2, color, index), "completed")
 		if kill_confirmation_flag == false:
+			rpc_id(Network.opponent,"zoom_card", dying_card)
+			zoom_card(dying_card)
+			yield(get_tree().create_timer(DEFAULT_WAIT_TIME),"timeout")
 			return(false)
 		history_write("L'oggetto magico %s di %s in posizione %c%d è stato distrutto\n" % [load_card(dying_card)["nome"], Network.opponent_user, color[0].to_upper(), index])
 		rpc_id(Network.opponent, "play_sound", "death")
@@ -3394,7 +3406,7 @@ func effect_67(type_of_effect, zone_activating, color_activating, pos_activating
 			win_game() #se sì, vince
 			yield(get_tree().create_timer(10.0), "timeout")
 		"dead":
-			yield(add_to_deck(68), "completed") #rimescolalo nel mazzo
+			yield(add_to_deck(67), "completed") #rimescolalo nel mazzo
 		"tease": #
 			var cards_in_hand = get_player1_hand_cards()
 			for item in [22, 54, 55, 75, 76]:
