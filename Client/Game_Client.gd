@@ -3814,11 +3814,11 @@ func effect_98(type_of_effect, zone_activating, color_activating, pos_activating
 			var number_of_cards = 0
 			for color in ["blue", "green", "red"]:
 				for index in range(3):
-					if(get_player1_cards()[color][index] in $Board_Stuff.get_alcolici()):
+					if(get_player1_spells_cards()[color][index] in $Board_Stuff.get_alcolici()):
 						number_of_cards += 1
 			for color in ["blue", "green", "red"]:
 				for index in range(3):
-					if(get_player2_cards()[color][index] in $Board_Stuff.get_alcolici()):
+					if(get_player2_spells_cards()[color][index] in $Board_Stuff.get_alcolici()):
 						number_of_cards += 1
 			yield(draw_cards(number_of_cards), "completed")
 
