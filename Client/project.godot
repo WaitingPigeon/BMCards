@@ -21,7 +21,7 @@ run/disable_stderr=true
 boot_splash/image="res://loading_screen.png"
 boot_splash/bg_color=Color( 0, 0, 0, 1 )
 config/icon="res://icon.png"
-config/windows_native_icon="res://Resources/icon.ico"
+config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
