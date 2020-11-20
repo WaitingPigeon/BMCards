@@ -7,7 +7,7 @@ var sound_volume
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	sound_volume = 0.2
+	sound_volume = 0.1
 	change_card(1)
 
 func change_card(id):

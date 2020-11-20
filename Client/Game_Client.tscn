@@ -239,6 +239,7 @@ margin_left = 831.311
 margin_top = 451.283
 margin_right = 871.311
 margin_bottom = 465.283
+custom_colors/font_color = Color( 1, 1, 1, 1 )
 text = "40 s"
 align = 1
 valign = 1

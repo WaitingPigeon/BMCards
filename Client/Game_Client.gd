@@ -976,6 +976,10 @@ func update_mana():
 	$Board_Stuff/Mana_left.text = str(mana_left)
 remotesync func update_time(time):
 	$Board_Stuff/Time_left.text = str(time) + " s"
+	if int(time) <= 15:
+		$Board_Stuff/Time_left.set("custom_colors/font_color", Color(1,0,0))
+	else:
+		$Board_Stuff/Time_left.set("custom_colors/font_color", Color(1,1,1))
 #Funzioni di meccanica gioco 
 func _ready():
 #warning-ignore:unused_variable
