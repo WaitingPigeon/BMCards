@@ -3091,26 +3091,26 @@ func effect_47(type_of_effect, zone_activating, color_activating, pos_activating
 		"played":
 			for card in get_heros_spots(2): #prendi gli spazi avversari occupati da eroi
 				var num = get_player2_heros_cards()[card["color"]][card["pos"]] #salva la posizione...
-				if load_card(num)["nome"].count("s") > 0: #e controlla il nome...
+				if (load_card(num)["nome"].to_lower()).count("s") > 0: #e controlla il nome...
 					yield(kill_hero(2, card["color"], card["pos"]), "completed")
 			for card in get_spells_spots(2): #stessa roba per le magie...
 				var num = get_player2_spells_cards()[card["color"]][card["pos"]]
-				if load_card(num)["nome"].count("s") > 0:
+				if (load_card(num)["nome"].to_lower()).count("s") > 0:
 					yield(kill_spell(2, card["color"], card["pos"]), "completed")
 		"tease":
 			var counter = 0 #contatore di "s"
 			for card in get_heros_spots(2): #fai la stessa roba di prima, ma includi anche il player 1 (non spacca)
 				var num = get_player2_heros_cards()[card["color"]][card["pos"]]
-				counter += load_card(num)["nome"].count("s")
+				counter += (load_card(num)["nome"].to_lower()).count("s")
 			for card in get_spells_spots(2):
 				var num = get_player2_spells_cards()[card["color"]][card["pos"]]
-				counter += load_card(num)["nome"].count("s")
+				counter += (load_card(num)["nome"].to_lower()).count("s")
 			for card in get_heros_spots(1):
 				var num = get_player1_heros_cards()[card["color"]][card["pos"]]
-				counter += load_card(num)["nome"].count("s")
+				counter += (load_card(num)["nome"].to_lower()).count("s")
 			for card in get_spells_spots(1):
 				var num = get_player1_spells_cards()[card["color"]][card["pos"]]
-				counter += load_card(num)["nome"].count("s")
+				counter += (load_card(num)["nome"].to_lower()).count("s")
 			yield(heal_player(1, "green", counter * 10), "completed")
 
 #MARCO MURO, IL PALADINO
