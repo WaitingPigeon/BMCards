@@ -1,0 +1,470 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://Card_1.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Resources/border.png" type="Texture" id=2]
+[ext_resource path="res://Resources/divider.png" type="Texture" id=3]
+[ext_resource path="res://Resources/green_board.png" type="Texture" id=4]
+[ext_resource path="res://Resources/red_board.png" type="Texture" id=5]
+[ext_resource path="res://Resources/blue_board.png" type="Texture" id=6]
+[ext_resource path="res://Resources/gray_background.jpg" type="Texture" id=7]
+[ext_resource path="res://Resources/red_obj.png" type="Texture" id=9]
+[ext_resource path="res://Resources/green_obj.png" type="Texture" id=10]
+[ext_resource path="res://Resources/blue_obj.png" type="Texture" id=11]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Player" type="Node2D" parent="."]
+
+[node name="Sprite2" type="Sprite" parent="Player"]
+position = Vector2( 500.945, 739.924 )
+scale = Vector2( 0.112, 0.178 )
+texture = ExtResource( 6 )
+
+[node name="divider" type="Sprite" parent="Player/Sprite2"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 40.7183, -20.8728 )
+scale = Vector2( 5.19175, 3.13023 )
+texture = ExtResource( 3 )
+
+[node name="border" type="Sprite" parent="Player/Sprite2"]
+position = Vector2( -1390.78, -554.108 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border3" type="Sprite" parent="Player/Sprite2"]
+position = Vector2( -95.1113, -547.171 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border2" type="Sprite" parent="Player/Sprite2"]
+position = Vector2( 1171.27, -547.17 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border4" type="Sprite" parent="Player/Sprite2"]
+position = Vector2( -1390.78, 506.256 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border5" type="Sprite" parent="Player/Sprite2"]
+position = Vector2( -95.1113, 513.193 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border6" type="Sprite" parent="Player/Sprite2"]
+position = Vector2( 1171.27, 513.194 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="Sprite3" type="Sprite" parent="Player"]
+position = Vector2( 954.383, 740.247 )
+scale = Vector2( 0.112, 0.178 )
+texture = ExtResource( 4 )
+
+[node name="divider" type="Sprite" parent="Player/Sprite3"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 40.7183, -20.8728 )
+scale = Vector2( 5.19175, 3.13023 )
+texture = ExtResource( 3 )
+
+[node name="border" type="Sprite" parent="Player/Sprite3"]
+position = Vector2( -1390.78, -554.108 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border3" type="Sprite" parent="Player/Sprite3"]
+position = Vector2( -95.1113, -547.171 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border2" type="Sprite" parent="Player/Sprite3"]
+position = Vector2( 1171.27, -547.17 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border4" type="Sprite" parent="Player/Sprite3"]
+position = Vector2( -1390.78, 506.256 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border5" type="Sprite" parent="Player/Sprite3"]
+position = Vector2( -95.1113, 513.193 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border6" type="Sprite" parent="Player/Sprite3"]
+position = Vector2( 1171.27, 513.194 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="Sprite5" type="Sprite" parent="Player"]
+position = Vector2( 1405.61, 739.165 )
+scale = Vector2( 0.112, 0.178 )
+texture = ExtResource( 5 )
+
+[node name="divider" type="Sprite" parent="Player/Sprite5"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 40.7183, -20.8728 )
+scale = Vector2( 5.19175, 3.13023 )
+texture = ExtResource( 3 )
+
+[node name="border" type="Sprite" parent="Player/Sprite5"]
+position = Vector2( -1390.78, -554.108 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border3" type="Sprite" parent="Player/Sprite5"]
+position = Vector2( -95.1113, -547.171 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border2" type="Sprite" parent="Player/Sprite5"]
+position = Vector2( 1171.27, -547.17 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border4" type="Sprite" parent="Player/Sprite5"]
+position = Vector2( -1390.78, 506.256 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border5" type="Sprite" parent="Player/Sprite5"]
+position = Vector2( -95.1113, 513.193 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border6" type="Sprite" parent="Player/Sprite5"]
+position = Vector2( 1171.27, 513.194 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="Opponent" type="Node2D" parent="."]
+
+[node name="Sprite2" type="Sprite" parent="Opponent"]
+position = Vector2( 497.528, 335.342 )
+scale = Vector2( 0.112, 0.178 )
+texture = ExtResource( 6 )
+
+[node name="divider" type="Sprite" parent="Opponent/Sprite2"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 40.7183, -20.8728 )
+scale = Vector2( 5.19175, 3.13023 )
+texture = ExtResource( 3 )
+
+[node name="border" type="Sprite" parent="Opponent/Sprite2"]
+position = Vector2( -1390.78, -554.108 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border3" type="Sprite" parent="Opponent/Sprite2"]
+position = Vector2( -95.1113, -547.171 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border2" type="Sprite" parent="Opponent/Sprite2"]
+position = Vector2( 1171.27, -547.17 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border4" type="Sprite" parent="Opponent/Sprite2"]
+position = Vector2( -1390.78, 506.256 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border5" type="Sprite" parent="Opponent/Sprite2"]
+position = Vector2( -95.1113, 513.193 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border6" type="Sprite" parent="Opponent/Sprite2"]
+position = Vector2( 1171.27, 513.194 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="Sprite3" type="Sprite" parent="Opponent"]
+position = Vector2( 950.701, 338.253 )
+scale = Vector2( 0.112, 0.178 )
+texture = ExtResource( 4 )
+
+[node name="divider" type="Sprite" parent="Opponent/Sprite3"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 40.7183, -20.8728 )
+scale = Vector2( 5.19175, 3.13023 )
+texture = ExtResource( 3 )
+
+[node name="border" type="Sprite" parent="Opponent/Sprite3"]
+position = Vector2( -1390.78, -554.108 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border3" type="Sprite" parent="Opponent/Sprite3"]
+position = Vector2( -95.1113, -547.171 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border2" type="Sprite" parent="Opponent/Sprite3"]
+position = Vector2( 1171.27, -547.17 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border4" type="Sprite" parent="Opponent/Sprite3"]
+position = Vector2( -1390.78, 506.256 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border5" type="Sprite" parent="Opponent/Sprite3"]
+position = Vector2( -95.1113, 513.193 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border6" type="Sprite" parent="Opponent/Sprite3"]
+position = Vector2( 1171.27, 513.194 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="Sprite5" type="Sprite" parent="Opponent"]
+position = Vector2( 1401.92, 338.171 )
+scale = Vector2( 0.112, 0.178 )
+texture = ExtResource( 5 )
+
+[node name="divider" type="Sprite" parent="Opponent/Sprite5"]
+modulate = Color( 0, 0, 0, 1 )
+position = Vector2( 40.7183, -20.8728 )
+scale = Vector2( 5.19175, 3.13023 )
+texture = ExtResource( 3 )
+
+[node name="border" type="Sprite" parent="Opponent/Sprite5"]
+position = Vector2( -1390.78, -554.108 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border3" type="Sprite" parent="Opponent/Sprite5"]
+position = Vector2( -95.1113, -547.171 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border2" type="Sprite" parent="Opponent/Sprite5"]
+position = Vector2( 1171.27, -547.17 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border4" type="Sprite" parent="Opponent/Sprite5"]
+position = Vector2( -1390.78, 506.256 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border5" type="Sprite" parent="Opponent/Sprite5"]
+position = Vector2( -95.1113, 513.193 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="border6" type="Sprite" parent="Opponent/Sprite5"]
+position = Vector2( 1171.27, 513.194 )
+rotation = 1.5708
+scale = Vector2( 0.391278, 0.648969 )
+texture = ExtResource( 2 )
+
+[node name="Card" parent="Opponent/Sprite5" instance=ExtResource( 1 )]
+position = Vector2( -8169.34, 521.852 )
+scale = Vector2( 1.34328, 0.841121 )
+
+[node name="gray_background" type="Sprite" parent="."]
+position = Vector2( 1034.97, 1002.23 )
+scale = Vector2( 0.169598, 0.0893815 )
+texture = ExtResource( 7 )
+
+[node name="border7" type="Sprite" parent="gray_background"]
+position = Vector2( -3225.24, 34.6533 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border9" type="Sprite" parent="gray_background"]
+position = Vector2( -1819.93, 24.5205 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border8" type="Sprite" parent="gray_background"]
+position = Vector2( -2523.01, 25.0859 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border10" type="Sprite" parent="gray_background"]
+position = Vector2( -406.395, 35.8701 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border11" type="Sprite" parent="gray_background"]
+position = Vector2( -1109.48, 36.4424 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border12" type="Sprite" parent="gray_background"]
+position = Vector2( 285.164, 43.1689 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border13" type="Sprite" parent="gray_background"]
+position = Vector2( 1690.48, 33.0381 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border14" type="Sprite" parent="gray_background"]
+position = Vector2( 987.395, 33.6045 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border15" type="Sprite" parent="gray_background"]
+position = Vector2( 3104.01, 44.3887 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border16" type="Sprite" parent="gray_background"]
+position = Vector2( 2400.93, 44.959 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="gray_background2" type="Sprite" parent="."]
+position = Vector2( 946.411, 80.9474 )
+scale = Vector2( 0.169598, 0.0893815 )
+texture = ExtResource( 7 )
+
+[node name="border7" type="Sprite" parent="gray_background2"]
+position = Vector2( -3225.24, 34.6533 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border9" type="Sprite" parent="gray_background2"]
+position = Vector2( -1819.93, 24.5205 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border8" type="Sprite" parent="gray_background2"]
+position = Vector2( -2523.01, 25.0869 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border10" type="Sprite" parent="gray_background2"]
+position = Vector2( -406.395, 35.8701 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border11" type="Sprite" parent="gray_background2"]
+position = Vector2( -1109.48, 36.4424 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border12" type="Sprite" parent="gray_background2"]
+position = Vector2( 285.164, 43.1689 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border13" type="Sprite" parent="gray_background2"]
+position = Vector2( 1690.48, 33.0381 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border14" type="Sprite" parent="gray_background2"]
+position = Vector2( 987.395, 33.6045 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border15" type="Sprite" parent="gray_background2"]
+position = Vector2( 3104.01, 44.3887 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="border16" type="Sprite" parent="gray_background2"]
+position = Vector2( 2400.93, 44.959 )
+rotation = 1.5708
+scale = Vector2( 0.779216, 0.428568 )
+texture = ExtResource( 2 )
+
+[node name="red_obj" type="Sprite" parent="."]
+position = Vector2( 115.615, 788.015 )
+rotation = 1.5708
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 9 )
+
+[node name="border7" type="Sprite" parent="red_obj"]
+position = Vector2( 6.42188, -11.707 )
+rotation = 2.23404e-06
+scale = Vector2( 0.232158, 0.242282 )
+texture = ExtResource( 2 )
+
+[node name="blue_obj" type="Sprite" parent="."]
+position = Vector2( 114.759, 302.771 )
+rotation = 1.5708
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 11 )
+
+[node name="border8" type="Sprite" parent="blue_obj"]
+position = Vector2( 8.44629, -8.52734 )
+rotation = 2.23404e-06
+scale = Vector2( 0.232158, 0.242282 )
+texture = ExtResource( 2 )
+
+[node name="green_obj" type="Sprite" parent="."]
+position = Vector2( 116.553, 539.993 )
+rotation = 1.5708
+scale = Vector2( 0.3, 0.3 )
+texture = ExtResource( 10 )
+
+[node name="border9" type="Sprite" parent="green_obj"]
+position = Vector2( 12.2998, -2.54703 )
+rotation = 2.23404e-06
+scale = Vector2( 0.232158, 0.242282 )
+texture = ExtResource( 2 )

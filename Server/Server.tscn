@@ -5,5 +5,6 @@
 [node name="Server" type="Node"]
 
 [node name="Immagine" type="Sprite" parent="."]
-position = Vector2( 645.87, 377.567 )
+position = Vector2( 612.482, 386.386 )
+scale = Vector2( 0.800491, 1.04083 )
 texture = ExtResource( 1 )

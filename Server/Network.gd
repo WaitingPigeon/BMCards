@@ -1,32 +1,65 @@
 extends Node
 
-const DEFAULT_PORT = 10001
-const MAX_PLAYERS = 20
-const SERVER_VERSION = "alpha_1.3"
-var players_online = {}
-var registred_players = {}
-var playing_players = {}
+const DEFAULT_PORT = 7777
+const MAX_PLAYERS = 500
+const SERVER_VERSION = "alpha_2.0"
+
+var offline_players = []
+var lobby_players = []
+var playing_players = []
+
+var current_games = []
+
 const data_file = "user://savegame.save"
 var queue = []
 
+#We create a dictionary (id: Card) with a copy of each card
+var cards_samples = {}
+var objectives_samples = {"blue":[], "green":[], "red":[]}
 
 func _ready():
+	randomize()
+	#We load each card from Cards_scripts folder
+	var card_dir = Directory.new()
+	card_dir.open("res://Cards_scripts/")
+	card_dir.list_dir_begin()
+	var file_name = card_dir.get_next()
+	while (file_name != ""):
+		if not card_dir.current_is_dir():
+			var card = load("res://Cards_scripts/" + file_name).new()
+			cards_samples[card.id] = card
+		file_name = card_dir.get_next()
+		
+	var obj_dir = Directory.new()
+	obj_dir.open("res://Objs_scripts/")
+	obj_dir.list_dir_begin()
+	file_name = obj_dir.get_next()
+	while (file_name != ""):
+		if not obj_dir.current_is_dir():
+			var obj = load("res://Objs_scripts/" + file_name).new()
+			objectives_samples[obj.color].append(obj)
+		file_name = obj_dir.get_next()
+	
 	var file_handler = File.new()
 	if not file_handler.file_exists(data_file):
 		var file_handler2 = File.new()
 		file_handler2.open(data_file, File.WRITE)
-		file_handler2.store_line(to_json({}))
+		file_handler2.store_line(to_json([]))
 		file_handler2.close()
 	file_handler.open(data_file, File.READ)
-	registred_players = parse_json(file_handler.get_line())
+	var registered_players = parse_json(file_handler.get_line())
 	file_handler.close()
-	create_server()
-	while true:
-		yield(get_tree().create_timer(1.0), "timeout")
-		check_online()
-		rpc("update_online_players", players_online, playing_players)
-		
 	
+	for dictionary in registered_players:
+		var nw_player = load("res://Player.gd").new()
+		nw_player.username = dictionary["username"]
+		nw_player.password = dictionary["password"]
+		nw_player.achievements = dictionary["achievements"]
+		add_child(nw_player)
+		offline_players.append(nw_player)
+		
+	create_server()
+
 func create_server():
 	var peer = NetworkedMultiplayerENet.new()
 	peer.create_server(DEFAULT_PORT, MAX_PLAYERS)
@@ -35,10 +68,20 @@ func create_server():
 	get_tree().connect('network_peer_connected', self, 'peer_connected')
 
 func peer_disconnected(id):
-	if id in players_online:
-		players_online.erase(id)
-		rpc("update_online_players", players_online)
-		rpc("disconnected_player", id)
+	for player in lobby_players:
+		if id == player.id:
+			lobby_players.erase(player)
+			offline_players.append(player)
+			player.status = "offline"
+			player.id = -1
+			
+	for player in playing_players:
+		if id == player.id:
+			player.game.player_disconnected(player)
+			lobby_players.erase(player)
+			offline_players.append(player)
+			player.status = "offline"
+			player.id = -1
 
 func peer_connected(id):
 	pass
@@ -49,14 +92,18 @@ remote func register_account(username, password, version):
 		rset_id(id, "SERVER_VERSION", SERVER_VERSION)
 		rpc_id(id, "different_version")
 		return
-	if username in registred_players:
-		rpc_id(id, "existing_username")
-		return
-	registred_players[username] = password
-	var file_handler3 = File.new()
-	file_handler3.open(data_file, File.WRITE)
-	file_handler3.store_line(to_json(registred_players))
-	file_handler3.close()
+	for player in (offline_players + lobby_players + playing_players):
+		if player.username == username:
+			rpc_id(id, "existing_username")
+			return
+	
+	var nw_player = load("res://Player.gd").new()
+	nw_player.username = username
+	nw_player.password = password
+	nw_player.achievements = []
+	add_child(nw_player)
+	offline_players.append(nw_player)
+	save_to_file()
 	rpc_id(id, "registration_successful")
 
 remote func login_account(username, password, version):
@@ -65,68 +112,40 @@ remote func login_account(username, password, version):
 		rset_id(id, "SERVER_VERSION", SERVER_VERSION)
 		rpc_id(id, "different_version")
 		return
-	if not username in registred_players:
-		rpc_id(id, "non_existing_username")
-		return
-	if username in players_online.values() or username in playing_players.values():
-		rpc_id(id, "already_online")
-		return
-	if not registred_players[username] == password:
-		rpc_id(id, "wrong_password")
-		return
-	rpc_id(id, "login_success")
-	players_online[id] = username
-	yield(get_tree().create_timer(0.5), "timeout")
-	rpc("update_online_players", players_online, playing_players)
-
-
-
-remote func join_queue():
-	var id = get_tree().get_rpc_sender_id()
-	queue.append(id)
-	if queue.size() > 1:
-		var letters = ['a', 'b']
-		letters.shuffle()
-		rpc_id(queue[0], "start_game", queue[1], letters[0])
-		rpc_id(queue[1], "start_game", queue[0], letters[1])
-		var id1 = queue[0]
-		var id2 = queue[1]
-		var user1 = players_online[queue[0]]
-		var user2 = players_online[queue[1]]
-		queue.pop_front()
-		queue.pop_front()
-		players_online.erase(id1)
-		players_online.erase(id2)
-		playing_players[id1] = user1
-		playing_players[id2] = user2
-		rpc("update_online_players", players_online, playing_players)
-	
-remote func leave_queue():
-	queue.erase(get_tree().get_rpc_sender_id())
-
-remote func won_game(loser, loser_user, winner, winner_user):
-	if winner in playing_players:
-		playing_players.erase(winner)
-		players_online[winner] = winner_user
-	if loser in playing_players:
-		playing_players.erase(loser)
-		players_online[loser] = loser_user
-	rpc("update_online_players", players_online, playing_players)
-	var msg = "\n\n[tornado radius=5 freq=2][rainbow freq=0.2 sat=10 val=20]" + winner_user + "[/rainbow] ha sconfitto [b][color=red]" + loser_user + "[/color][/b][/tornado]"
-	add_chat_line(msg)
+	for player in (lobby_players + playing_players):
+		if username == player.username:
+			rpc_id(id, "already_online")
+			return
+	for player in offline_players:
+		if username == player.username:
+			if password == player.password:
+				offline_players.erase(player)
+				lobby_players.append(player)
+				player.id = id
+				player.status = "lobby"
+				rpc_id(id, "login_success")
+				return
+			else:
+				rpc_id(id, "wrong_password")
+				return
+	rpc_id(id, "non_existing_username")
+	return
 
 remote func add_chat_line(string):
 	rpc("add_chat_line", string)
 	print(string)
 
-func check_online():
-	var list_id = get_tree().multiplayer.get_network_connected_peers()
-	for i in players_online:
-		if !(i in list_id):
-			players_online.erase(i)
-			rpc("disconnected_player", i)
-	for i in playing_players:
-		if !(i in list_id):
-			playing_players.erase(i)
-			rpc("disconnected_player", i)
+func save_to_file():
+	var registered_players = []
+	for player in (offline_players + lobby_players + playing_players):
+		var dictionary = {}
+		dictionary["username"] = player.username
+		dictionary["password"] = player.password
+		dictionary["achievements"] = player.achievements
+		registered_players.append(player)
+		
+	var file_handler = File.new()
+	file_handler.open(data_file, File.WRITE)
+	file_handler.store_line(to_json(registered_players))
+	file_handler.close()
 	
