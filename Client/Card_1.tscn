@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Arial_big.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Arial_small.tres" type="DynamicFont" id=2]
@@ -14,16 +14,26 @@
 [ext_resource path="res://Resources/heart.png" type="Texture" id=12]
 [ext_resource path="res://Resources/orange_tag.png" type="Texture" id=13]
 
-[node name="Card" type="Sprite"]
-position = Vector2( 553.148, 543.516 )
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 339.252, 553.522 )
+
+[node name="Area2D" type="Area2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
+shape = SubResource( 1 )
+
+[node name="Card" type="Sprite" parent="."]
+scale = Vector2( 1, 1.01455 )
+z_index = -1
 texture = ExtResource( 9 )
 
-[node name="Type_label" type="Sprite" parent="."]
+[node name="Type_label" type="Sprite" parent="Card"]
 position = Vector2( 401.037, -269.427 )
 scale = Vector2( 0.405201, 0.383175 )
 texture = ExtResource( 13 )
 
-[node name="RichTextLabel" type="Label" parent="Type_label"]
+[node name="RichTextLabel" type="Label" parent="Card/Type_label"]
 margin_left = -197.721
 margin_top = -113.484
 margin_right = 371.279
@@ -38,12 +48,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Family_label1" type="Sprite" parent="."]
+[node name="Family_label1" type="Sprite" parent="Card"]
 position = Vector2( 401.037, -50.4269 )
 scale = Vector2( 0.405201, 0.383175 )
 texture = ExtResource( 7 )
 
-[node name="Family1" type="Label" parent="Family_label1"]
+[node name="Family1" type="Label" parent="Card/Family_label1"]
 margin_left = -197.721
 margin_top = -113.484
 margin_right = 371.279
@@ -58,12 +68,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Family_label2" type="Sprite" parent="."]
+[node name="Family_label2" type="Sprite" parent="Card"]
 position = Vector2( 401.037, 81.5731 )
 scale = Vector2( 0.405201, 0.383175 )
 texture = ExtResource( 7 )
 
-[node name="Family2" type="Label" parent="Family_label2"]
+[node name="Family2" type="Label" parent="Card/Family_label2"]
 margin_left = -197.721
 margin_top = -113.484
 margin_right = 371.279
@@ -78,17 +88,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Card_image" type="Sprite" parent="."]
+[node name="Card_image" type="Sprite" parent="Card"]
 position = Vector2( 0, -111.092 )
 scale = Vector2( 0.908727, 0.905002 )
 texture = ExtResource( 5 )
 
-[node name="Effect_text" type="Sprite" parent="."]
+[node name="Effect_text" type="Sprite" parent="Card"]
 position = Vector2( 0, 339.756 )
 scale = Vector2( 0.962238, 1.01175 )
 texture = ExtResource( 4 )
 
-[node name="Container" type="MarginContainer" parent="Effect_text"]
+[node name="Container" type="MarginContainer" parent="Card/Effect_text"]
 light_mask = -2147483647
 margin_left = -313.0
 margin_top = -186.0
@@ -98,7 +108,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Effect" type="RichTextLabel" parent="Effect_text/Container"]
+[node name="Effect" type="RichTextLabel" parent="Card/Effect_text/Container"]
 margin_top = 35.0
 margin_right = 632.0
 margin_bottom = 287.0
@@ -121,12 +131,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Title_tag" type="Sprite" parent="."]
+[node name="Title_tag" type="Sprite" parent="Card"]
 position = Vector2( 10.6032, -431.981 )
 scale = Vector2( 1.11613, 0.774704 )
 texture = ExtResource( 10 )
 
-[node name="Title_container" type="MarginContainer" parent="."]
+[node name="Title_container" type="MarginContainer" parent="Card"]
 light_mask = -2147483647
 margin_left = -252.331
 margin_top = -492.794
@@ -136,7 +146,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Card_name" type="RichTextLabel" parent="Title_container"]
+[node name="Card_name" type="RichTextLabel" parent="Card/Title_container"]
 margin_top = 2.0
 margin_right = 496.0
 margin_bottom = 96.0
@@ -151,12 +161,12 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="heart" type="Sprite" parent="."]
+[node name="heart" type="Sprite" parent="Card"]
 position = Vector2( 308.057, 512.379 )
 scale = Vector2( 0.315928, 0.320161 )
 texture = ExtResource( 12 )
 
-[node name="health" type="Label" parent="heart"]
+[node name="health" type="Label" parent="Card/heart"]
 margin_left = -127.751
 margin_top = -124.307
 margin_right = -10.751
@@ -171,13 +181,13 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="sword" type="Sprite" parent="."]
+[node name="sword" type="Sprite" parent="Card"]
 position = Vector2( -268.617, 492.184 )
 rotation = -1.56961
 scale = Vector2( 0.628633, 0.641669 )
 texture = ExtResource( 11 )
 
-[node name="attack" type="Label" parent="sword"]
+[node name="attack" type="Label" parent="Card/sword"]
 margin_left = 38.7042
 margin_top = -59.4272
 margin_right = 147.704
@@ -193,29 +203,29 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Bolts" type="Node2D" parent="."]
+[node name="Bolts" type="Node2D" parent="Card"]
 
-[node name="bolt1" type="Sprite" parent="Bolts"]
+[node name="bolt1" type="Sprite" parent="Card/Bolts"]
 position = Vector2( -267.97, -295 )
 scale = Vector2( 0.18742, 0.237287 )
 texture = ExtResource( 3 )
 
-[node name="bolt2" type="Sprite" parent="Bolts"]
+[node name="bolt2" type="Sprite" parent="Card/Bolts"]
 position = Vector2( -267.97, -205 )
 scale = Vector2( 0.18742, 0.237287 )
 texture = ExtResource( 3 )
 
-[node name="bolt3" type="Sprite" parent="Bolts"]
+[node name="bolt3" type="Sprite" parent="Card/Bolts"]
 position = Vector2( -267.97, -115 )
 scale = Vector2( 0.18742, 0.237287 )
 texture = ExtResource( 3 )
 
-[node name="bolt4" type="Sprite" parent="Bolts"]
+[node name="bolt4" type="Sprite" parent="Card/Bolts"]
 position = Vector2( -267.97, -25 )
 scale = Vector2( 0.18742, 0.237287 )
 texture = ExtResource( 3 )
 
-[node name="bolt5" type="Sprite" parent="Bolts"]
+[node name="bolt5" type="Sprite" parent="Card/Bolts"]
 position = Vector2( -267.97, 65 )
 scale = Vector2( 0.18742, 0.237287 )
 texture = ExtResource( 3 )
