@@ -1,16 +1,18 @@
 extends Node
 
+#--------------------------------------------Game object-------------------------------------------
+
 var cards_samples = Network.cards_samples #Dictionary with a copy of each card
 var objectives_samples = Network.objective_samples #Dictionary with a copy of each objective
-var players = {'a': null, 'b': null}
-var letters = {players['a']:'a', players['b']:'b'}
+var player1 = null
+var player2 = null
 
-var stats = {'a':{'blue':0, 'green':0, 'red':0}, 'b':{'blue':0, 'green':0, 'red':0}}
-var energy = {'a':{'heros':0, 'spells':0}, 'b':{'heros':0, 'spells':0}}
+var stats = {player1:{'blue':0, 'green':0, 'red':0}, player2:{'blue':0, 'green':0, 'red':0}}
+var energy = {player1:{'heros':0, 'spells':0}, player2:{'heros':0, 'spells':0}}
 var deck = []
-var hand = {'a':[], 'b':[]}
+var hand = {player1:[], player2:[]}
 var board = {
-	'a':{
+	player1:{
 		'heros':{
 			'blue':{
 				"left":null,
@@ -46,7 +48,7 @@ var board = {
 			}
 		}
 	},
-	'b':{
+	player2:{
 		'heros':{
 			'blue':{
 				"left":null,
@@ -83,12 +85,14 @@ var board = {
 		}
 	}
 }
-var grave = {'a':[], 'b':[]}
+var grave = {player1:[], player2:[]}
 var objectives = {'blue': null, 'green': null, 'red': null}
 
-var turn_player = 'a'
+var turn_player = player1
 
 var effect_chain = [] #It will contain flags (true, false) that indicates if current effect has been neutralized (e.g. if attack has been cancelled)
+
+var token = 0 #A unique token given to every card instance (increased by one every time one is created)
 
 #------------------------------Signals-------------------------------
 signal drawing_card(player, card, source, chain_id)
@@ -164,13 +168,14 @@ signal beginning_turn(player)
 signal ending_turn(player)
 
 #------------------------------Game core-----------------------#
-func _init(players_dict):
+func _init(ply1, ply2):
 	randomize()
-	players = players_dict
+	player1 = ply1
+	player2 = ply2
 	
 	#Create deck
-	for card in cards_samples.values():
-		for _i in range(card.initial_quantity):
+	for card in cards_samples:
+		for _i in range(card.quantity):
 			deck.append(new_card(card.id, {"place":"deck"}))
 	shuffle_deck()
 	
@@ -183,8 +188,8 @@ func _init(players_dict):
 	
 	#Make players draw
 	for _i in range(5):
-		make_draw('a')
-		make_draw('b')
+		make_draw(player1)
+		make_draw(player2)
 
 func begin_turn(player):
 	turn_player = player
@@ -211,6 +216,8 @@ func new_card(id, loc=null):    #Create a new istance of a card
 	add_child(nw_card)
 	nw_card.set_game()
 	nw_card.set_loc(loc)
+	nw_card.token = token
+	token +=1
 	return(nw_card)
 
 func new_objective(id):    #Create a new istance of a card
@@ -229,7 +236,6 @@ func player_disconnected(player):
 	pass
 	
 #------------------Signal-emitting methods----------------#
-
 func make_draw(player, drawn_card=null, source=null):
 	if len(hand[player]) >= 10: #Max hand size
 		return
@@ -241,8 +247,7 @@ func make_draw(player, drawn_card=null, source=null):
 	emit_signal("drawing_card", player, drawn_card, source, chain_id)
 	if effect_chain.pop_front() == false:
 		return
-		
-	deck.pop_front()
+	deck.remove(drawn_card)
 	hand[player].append(drawn_card)
 	drawn_card.set_loc({"place": "hand", "player": player})
 	emit_signal("drawn_card", player, drawn_card, source)

@@ -1,6 +1,102 @@
 extends Node
 
+const Card_scene = preload("res://BMCard.tscn")
 
+var active_card = null
+var active_spot = null
+
+var token_timer = null
+
+func get_free_handspot():
+	for i in range(1, 11):
+		if get_node("player/hand/card{num}_spot".format({"num":i})).get_child_count() == 0: #If there isn't a card present
+			return(i)
+	return(-1)
+
+func change_active_card(card=null):
+	if not card == null:
+		#yield(get_tree().create_timer(0.1), "timeout")
+		while not $zoom_timer.is_stopped():
+			yield(get_tree().create_timer(0.01), "timeout")
+		active_card = card
+		$zoom_timer.start()
+
+	else:
+		$zoom_timer.stop()
+		$left_zoom.hide()
+		$center_zoom.hide()
+		$right_zoom.hide()
+
+func _on_zoom_timer_timeout():
+	if active_card == null:
+		return
+	if active_card.place == "hand" or active_card.board_color == "blue" or active_card.board_color == "red":
+		$center_zoom.id = active_card.id
+		$center_zoom.card_name =  active_card.card_name
+		$center_zoom.families = active_card.families
+		$center_zoom.type = active_card.type
+		$center_zoom.max_attack = active_card.max_attack
+		$center_zoom.attack = active_card.attack
+		$center_zoom.max_health = active_card.max_health
+		$center_zoom.health = active_card.health
+		$center_zoom.cost = active_card.cost
+		$center_zoom.quantity = active_card.quantity
+		$center_zoom.playable_colors = active_card.playable_colors
+		$center_zoom.card_text = active_card.card_text
+		$center_zoom.token = active_card.token
+		$center_zoom.place = active_card.place
+		$center_zoom.player = active_card.player
+		$center_zoom.board_type = active_card.board_type
+		$center_zoom.board_color = active_card.board_color
+		$center_zoom.board_pos = active_card.board_pos
+		$center_zoom.update_image()
+		$center_zoom.show()
+		
+func create_new_card(id, card_name, families, type, max_attack, attack, max_health, health, cost, quantity, playable_colors, card_text, token, loc): 
+	var new_card = Card_scene.instance()
+	new_card.id = id
+	new_card.card_name = card_name
+	new_card.families = families
+	new_card.type = type
+	new_card.max_attack = max_attack
+	new_card.attack = attack
+	new_card.max_health = max_health 
+	new_card.health = health
+	new_card.cost = cost
+	new_card.quantity = quantity
+	new_card.playable_colors = playable_colors
+	new_card.card_text = card_text
+	new_card.token = token
+	new_card.set_loc(loc)
+	
+	new_card.update_image()
+	
+	if new_card.place == 'board':
+		#print("{player}/{color}_board/{type}_{pos}_spot".format({"player":player, "color":board_color, "type":board_type, "pos":board_pos}))
+		get_node("{player}/{color}_board/{type}_{pos}_spot".format({"player":new_card.player, "color":new_card.board_color, "type":new_card.board_type, "pos":new_card.board_pos})).add_child(new_card)
+	elif new_card.place == 'hand':
+		get_node("{player}/hand/card{number}_spot".format({"player":new_card.player, "number":get_free_handspot()})).add_child(new_card)
+	#new_card.position = Vector2(-5000,-5000)
+	new_card.z_index = 3
+	new_card.scale = Vector2(2.1, 2.1)
+	new_card.rotation_degrees = -90
+	new_card.get_node("Card_shape").connect("mouse_entered", new_card, "change_active_card") #bad coding to overcome Godot limits
+	new_card.get_node("Card_shape").connect("mouse_exited", self, "change_active_card")
+	return(new_card)
+
+func _ready():
+	yield(get_tree().create_timer(1.0), "timeout")
+	var card1 = create_new_card(1, "ciao", [], "hero", 1, 1, 1, 1, 1, 1, ["red"], "ciao", -1, {"place":"board","player":"player", "board_type":"hero", "board_color":"blue", "board_pos":"left"})
+	yield(get_tree().create_timer(1.0), "timeout")
+	var card2 = create_new_card(1, "ciao", [], "hero", 1, 1, 1, 1, 1, 1, ["red"], "ciao", -1, {"place":"board","player":"player", "board_type":"hero", "board_color":"blue", "board_pos":"right"})
+	for i in range(5):
+		yield(get_tree().create_timer(1.0), "timeout")
+		create_new_card(1, "ciao", [], "hero", 1, 1, 1, 1, 1, 1, ["red"], "ciao", -1, {"place":"hand","player":"player"})
+
+	
+
+
+"""
 onready var isDraggingItem:bool = false
 onready var mouseButtonReleased:bool = true
 onready var draggedItemSlot:int = -1
@@ -76,3 +172,4 @@ func end_drag_item():
 
 
 
+"""

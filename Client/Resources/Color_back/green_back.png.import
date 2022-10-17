@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/blue_green_back.png-c2349bfab552b40ff9008079385eb0e8.stex"
+path="res://.import/green_back.png-7f51013939780a8862dc4255a835dacc.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Resources/blue_green_back.png"
-dest_files=[ "res://.import/blue_green_back.png-c2349bfab552b40ff9008079385eb0e8.stex" ]
+source_file="res://Resources/Color_back/green_back.png"
+dest_files=[ "res://.import/green_back.png-7f51013939780a8862dc4255a835dacc.stex" ]
 
 [params]
 
@@ -28,6 +28,7 @@ process/fix_alpha_border=true
 process/premult_alpha=false
 process/HDR_as_SRGB=false
 process/invert_color=false
+process/normal_map_invert_y=false
 stream=false
 size_limit=0
 detect_3d=true

@@ -1,4 +1,4 @@
-extends Node
+extends Node  #----------CARD INTERFACE--------
 #----------------------------Generic variables----------------------------#
 
 var id = 0 
@@ -12,7 +12,8 @@ var card_text = ''
 #----------------------------Position variables----------------------------#
 
 var place = null  #Can be deck, board, hand or grave
-var player = null #Can be 'a' or 'b'
+var player = null
+var opponent = null
 var board_type = null #Can be 'heros' or 'spells (or null if the card is in the deck, hand or grave)
 var board_color = null #Can be 'blue', 'green' or 'red' (or null if the card is in the deck, hand or grave)
 var board_pos = null #Can be 'left', 'center' or right (or null if the card is in the deck, hand or grave) 
@@ -20,11 +21,16 @@ var board_pos = null #Can be 'left', 'center' or right (or null if the card is i
 #-----------------------------Ingame variables-----------------------------#
 
 var conditions = {} #es. "frozen", "immortal" etc.
+var max_health = 0
 var health = 0
+var max_attack = 0
 var attack = 0
 var cost = 0
 
+var token = -1
+
 #----------------------------------Signals----------------------------------#
+#Event listener
 var deck_signals = [] #Signals that the card listens for when it is in the deck
 var board_signals = [] # // // in someone's board
 var hand_signals = [] # // // in someone's hand
@@ -42,7 +48,7 @@ func _init():
 func set_game():
 	game = get_parent()
 
-func set_loc(loc):
+func set_loc(loc): #loc = location
 	#We disconnect signal connections from previous place
 	if not place == null:
 		for single_signal in get(place + "_signals"):
@@ -50,7 +56,13 @@ func set_loc(loc):
 			
 	#We change loc variables
 	place = loc["place"] if "place" in loc else null
-	player = loc["player"] if "player" in loc else null
+	
+	if "player" in loc:
+		player = loc["player"]
+		opponent = game.player1 if game.player2 == player else game.player2
+	else:
+		player = null
+		opponent = null
 	board_type = loc["board_type"] if "board_type" in loc else null
 	board_color = loc["board_color"] if "board_color" in loc else null
 	board_pos = loc["board_pos"] if "board_pos" in loc else null

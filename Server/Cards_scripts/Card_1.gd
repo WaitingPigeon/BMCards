@@ -7,7 +7,9 @@ func _init():
 	card_name = 'Eleonora'
 	families = ['Alcolico', 'Professore']
 	type = 'hero'
+	max_attack = 10
 	attack = 10
+	max_health = 9
 	health = 9
 	cost = 5
 	quantity = 1
@@ -22,7 +24,5 @@ Dispetto: raddoppia la tua libido"""
 	board_signals = []
 	hand_signals = []
 	grave_signals = []
-	
-	
-	
+
 
