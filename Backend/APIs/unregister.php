@@ -14,57 +14,56 @@
         $params = json_decode(file_get_contents("php://input"), true);
 
         // check if they are not empty
-        if(!empty($params["username"])) {
+        if(!empty($params["username"]) && !empty($params["password"])) {
 
-            try {
+            // check if the credentials conform to the regexes (in case the client didn't do it already...)
+            if(checkCredentials($params["username"], $params["password"]) == false) {
 
-                // index the DB and fetch the status and ID of the target user
+                die();
+            }
+
+            else {
+
+                // index the DB and fetch the user_id, password and status
                 $database = dbConnect();
                 $query = $database -> prepare("
-                    
-                    SELECT user_id, status
+                
+                    SELECT user_id, password
                     FROM users
                     WHERE username = ?
                 ");
 
                 $query -> execute([$params["username"]]);
-
-                // check if it exists
+                
+                // check if the query found the target user
                 if($query -> rowCount() > 0) {
-
+    
                     $row = $query -> fetch(PDO::FETCH_ASSOC);
-                    
-                    // check if it's already offline
-                    if($row["status"] == 0) {
 
-                        requestError(7);
+                    // verify the passwords
+                    if(password_verify($params["password"], $row["password"]) == true) {
+
+                        // delete the user from the DB
+                        $query = $database -> prepare("
+                
+                            DELETE FROM users
+                            WHERE user_id = ?
+                        ");
+
+                        $query -> execute([$row["user_id"]]);
+                        requestOk("Unregistration ok");
                     }
 
                     else {
 
-                        // change the user status in the DB and set the logout datetime
-                        $query = $database -> prepare("
-                        
-                            UPDATE users
-                            SET status = 0, last_logout_date = ?
-                            WHERE user_id = ?
-                        ");
-
-                        $query -> execute([date("Y/m/d H:i:s"), $row["user_id"]]);
-                        requestOk("Logout ok");
+                        requestError(4);
                     }
                 }
 
                 else {
 
-                    // target user doesn't exist
                     requestError(5);
                 }
-            }
-
-            catch(PDOException $exc) {
-    
-                denyRequest(500, $exc -> getMessage());
             }
         }
 

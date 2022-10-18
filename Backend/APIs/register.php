@@ -2,6 +2,7 @@
 
     include("./common.php");
 
+    // check if the request method is the correct one
     if(empty($_SERVER["REQUEST_METHOD"]) || $_SERVER["REQUEST_METHOD"] != "POST") {
 
         denyRequest(400, "Invalid request method, expected POST while got: " . $_SERVER["REQUEST_METHOD"]);
@@ -9,10 +10,13 @@
 
     else {
 
+        // decode the JSON in the body of the request
         $params = json_decode(file_get_contents("php://input"), true);
 
+        // check if they are not empty
         if(!empty($params["username"]) && !empty($params["password"])) {
-
+            
+            // check if the credentials conform to the regexes (in case the client didn't do it already...)
             if(checkCredentials($params["username"], $params["password"]) == false) {
 
                 die();
@@ -22,6 +26,7 @@
 
                 try {
 
+                    // index the DB and see if the target username already exists
                     $database = dbConnect();
                     $query = $database -> prepare("
                     
@@ -38,17 +43,20 @@
                         
                         if($row["status"] != 0) {
 
+                            // target user already exists and is logged-in !
                             requestError(6);
                         }
 
                         else {
 
+                            // target user already exists
                             requestError(3);
                         }
                     }
 
                     else {
 
+                        // create a new DB row and populate it
                         $password_for_db = password_hash(trim($params["password"]), PASSWORD_DEFAULT);
                         $query = $database -> prepare("
 
@@ -65,7 +73,7 @@
 
                         else {
 
-                            denyRequest(500, "Query error");
+                            denyRequest(500, "Registration query error");
                         }
                     }
                 }

@@ -5,7 +5,7 @@
     // check if the request method is the correct one
     if(empty($_SERVER["REQUEST_METHOD"]) || $_SERVER["REQUEST_METHOD"] != "POST") {
 
-        denyRequest(400, "Invalid request method, expected POST while got: " . $_SERVER["REQUEST_METHOD"]);
+        denyRequest(400, "Invalid request method, expected POST while got: ".$_SERVER["REQUEST_METHOD"]);
     }
 
     else {
@@ -16,7 +16,7 @@
         // check if they are not empty
         if(!empty($params["username"]) && !empty($params["password"])) {
 
-            // check if the credentials conform to the regexes
+            // check if the credentials conform to the regexes (in case the client didn't do it already...)
             if(checkCredentials($params["username"], $params["password"]) == false) {
 
                 die();
@@ -67,6 +67,7 @@
         
                             else {
         
+                                // wrong password
                                 requestError(4);
                             }
                         }
@@ -74,6 +75,7 @@
     
                     else {
     
+                        // user doesn't exist
                         requestError(5);
                     }
                 }

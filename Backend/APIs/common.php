@@ -46,8 +46,9 @@
             case 2: $message = "Username doesn't conform"; break;
             case 3: $message = "Username already exists"; break;
             case 4: $message = "Wrong password"; break;
-            case 5: $message = "Username not found"; break;
-            case 6: $message = "You are already logged-in"; break;
+            case 5: $message = "Username doesn't exists"; break;
+            case 6: $message = "User already logged-in"; break;
+            case 7: $message = "User already offline"; break;
         }
         
         print json_encode([
@@ -86,12 +87,11 @@
             0: ok
             1: password doesn't conform
             2: username doesn't conform
-            3: register username already exists
-            4: login wrong password
-            5: login username not found
+            3: username already exists
+            4: wrong password
+            5: username not found
             6: user is already logged-in
-            7: logout username not found
-            8: logout user already offline
+            7: user already offline
         }
 
         if return code != 0, then the payload will be a string with the cause
