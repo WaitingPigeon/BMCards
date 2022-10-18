@@ -1,6 +1,6 @@
 <?php
 
-    // function to connect to the database
+    // function to create a database object and connect to it
     function dbConnect() {
         
         $config = json_decode(file_get_contents("./config.json"), true);
@@ -13,7 +13,7 @@
     // check if credentials conform to the given shape
     function checkCredentials($username, $password) {
 
-        if(!preg_match("/^[?!a-zA-Z0-9_-]{3,16}$/", $username)) {
+        if(!preg_match("/^[a-zA-Z0-9_-]{3,16}$/", $username)) {
 
             requestError(2);
             return(false);
@@ -90,6 +90,8 @@
             4: login wrong password
             5: login username not found
             6: user is already logged-in
+            7: logout username not found
+            8: logout user already offline
         }
 
         if return code != 0, then the payload will be a string with the cause

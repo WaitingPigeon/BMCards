@@ -9,7 +9,6 @@
 
     else {
 
-        session_start();
         $params = json_decode(file_get_contents("php://input"), true);
 
         if(!empty($params["username"]) && !empty($params["password"])) {
@@ -19,43 +18,45 @@
                 die();
             }
 
-            if(isset($_SESSION["session_username"]) && $_SESSION["session_username"] == $params["username"]) {
-
-                requestError(6);
-            }
-
             else {
 
                 try {
 
                     $database = dbConnect();
-                    $query = $database -> prepare("SELECT user_id FROM users WHERE username = ?");
+                    $query = $database -> prepare("
+                    
+                        SELECT user_id, status
+                        FROM users
+                        WHERE username = ?
+                    ");
+
                     $query -> execute([$params["username"]]);
 
                     if($query -> rowCount() > 0) {
 
-                        requestError(3);
+                        $row = $query -> fetch(PDO::FETCH_ASSOC);
+                        
+                        if($row["status"] != 0) {
+
+                            requestError(6);
+                        }
+
+                        else {
+
+                            requestError(3);
+                        }
                     }
 
                     else {
 
                         $password_for_db = password_hash(trim($params["password"]), PASSWORD_DEFAULT);
-                        $query = $database -> prepare("SELECT user_id FROM users ORDER BY user_id DESC");
-                        $query -> execute();
-                        $biggest_id = $query -> fetch(PDO::FETCH_ASSOC);
+                        $query = $database -> prepare("
 
-                        if($biggest_id == false) {
+                            INSERT INTO users (username, password, privilege, creation_date, avatar, status, last_logout_date)
+                            VALUES (?,?,?,?,?,?,?)
+                        ");
 
-                            $user_id = 0;
-                        }
-
-                        else {
-
-                            $user_id = $biggest_id["user_id"] + 1;
-                        }
-
-                        $query = $database -> prepare("INSERT INTO users (user_id, username, password) VALUES (?,?,?)");
-                        $query -> execute([$user_id, $params["username"], $password_for_db]);
+                        $query -> execute([$params["username"], $password_for_db, 0, date("Y/m/d"), 0, 0, NULL]);
 
                         if($query == true) {
 
