@@ -1,11 +1,50 @@
 <?php
 
+    /*
+        parameters & return values (all in JSON)
+
+        REQUEST BODY:
+
+            {
+                "username": String,
+                "password": String
+            }
+
+        RESPONSE BODY:
+
+            if HTTP != 200:
+
+                {
+                    "return_status": null,
+                    "cause": String
+                }
+
+            else:
+
+                if request was successful:
+
+                    {
+                        "return_status": 0,
+                        "payload": {
+
+                            "message": String
+                        }
+                    }
+
+                else:
+
+                    {
+                        "return_status": Int,
+                        "cause": String
+                    }
+    */
+
     include("./common.php");
 
     // check if the request method is the correct one
     if(empty($_SERVER["REQUEST_METHOD"]) || $_SERVER["REQUEST_METHOD"] != "POST") {
 
-        denyRequest(400, "Invalid request method, expected POST while got: " . $_SERVER["REQUEST_METHOD"]);
+        denyRequest(400, "Invalid request method, expected POST while got: ".$_SERVER["REQUEST_METHOD"]);
     }
 
     else {
@@ -31,7 +70,7 @@
                     $query = $database -> prepare("
                     
                         SELECT user_id, status
-                        FROM users
+                        FROM user
                         WHERE username = ?
                     ");
 
@@ -60,15 +99,15 @@
                         $password_for_db = password_hash(trim($params["password"]), PASSWORD_DEFAULT);
                         $query = $database -> prepare("
 
-                            INSERT INTO users (username, password, privilege, creation_date, avatar, status, last_logout_date)
-                            VALUES (?,?,?,?,?,?,?)
+                            INSERT INTO user (username, password, privilege, creation_date, avatar, status, last_logout_date)
+                            VALUES (?,?,?,?,?,?,?,?,?,?)
                         ");
 
-                        $query -> execute([$params["username"], $password_for_db, 0, date("Y/m/d"), 0, 0, NULL]);
+                        $query -> execute([$params["username"], $password_for_db, 0, date("Y/m/d"), 0, 0, NULL, NULL, NULL, NULL]);
 
                         if($query == true) {
 
-                            requestOk("Register ok");
+                            requestOk(array("message" => "Registration was successful"));
                         }
 
                         else {

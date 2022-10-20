@@ -1,11 +1,50 @@
 <?php
 
+    /*
+        parameters & return values (all in JSON)
+
+        REQUEST BODY:
+
+            {
+                "username": String,
+                "password": String
+            }
+
+        RESPONSE BODY:
+
+            if HTTP != 200:
+
+                {
+                    "return_status": null,
+                    "cause": String
+                }
+
+            else:
+
+                if request was successful:
+
+                    {
+                        "return_status": 0,
+                        "payload": {
+
+                            "message": String
+                        }
+                    }
+
+                else:
+
+                    {
+                        "return_status": Int,
+                        "cause": String
+                    }
+    */
+
     include("./common.php");
 
     // check if the request method is the correct one
     if(empty($_SERVER["REQUEST_METHOD"]) || $_SERVER["REQUEST_METHOD"] != "DELETE") {
 
-        denyRequest(400, "Invalid request method, expected DELETE while got: " . $_SERVER["REQUEST_METHOD"]);
+        denyRequest(400, "Invalid request method, expected DELETE while got: ".$_SERVER["REQUEST_METHOD"]);
     }
 
     else {
@@ -29,7 +68,7 @@
                 $query = $database -> prepare("
                 
                     SELECT user_id, password
-                    FROM users
+                    FROM user
                     WHERE username = ?
                 ");
 
@@ -44,14 +83,15 @@
                     if(password_verify($params["password"], $row["password"]) == true) {
 
                         // delete the user from the DB
+                        /* REMEMBER TO DEREFERENCE THE POTENTIAL FOREIGN KEYS */
                         $query = $database -> prepare("
                 
-                            DELETE FROM users
+                            DELETE FROM user
                             WHERE user_id = ?
                         ");
 
                         $query -> execute([$row["user_id"]]);
-                        requestOk("Unregistration ok");
+                        requestOk(array("message" => "Unregistration ok"));
                     }
 
                     else {

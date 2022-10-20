@@ -1,11 +1,49 @@
 <?php
 
+    /*
+        parameters & return values (all in JSON)
+
+        REQUEST BODY:
+
+            {
+                "username": String
+            }
+
+        RESPONSE BODY:
+
+            if HTTP != 200:
+
+                {
+                    "return_status": null,
+                    "cause": String
+                }
+
+            else:
+
+                if request was successful:
+
+                    {
+                        "return_status": 0,
+                        "payload": {
+
+                            "message": String
+                        }
+                    }
+
+                else:
+
+                    {
+                        "return_status": Int,
+                        "cause": String
+                    }
+    */
+
     include("./common.php");
 
     // check if the request method is the correct one
     if(empty($_SERVER["REQUEST_METHOD"]) || $_SERVER["REQUEST_METHOD"] != "DELETE") {
 
-        denyRequest(400, "Invalid request method, expected DELETE while got: " . $_SERVER["REQUEST_METHOD"]);
+        denyRequest(400, "Invalid request method, expected DELETE while got: ".$_SERVER["REQUEST_METHOD"]);
     }
 
     else {
@@ -23,7 +61,7 @@
                 $query = $database -> prepare("
                     
                     SELECT user_id, status
-                    FROM users
+                    FROM user
                     WHERE username = ?
                 ");
 
@@ -45,13 +83,13 @@
                         // change the user status in the DB and set the logout datetime
                         $query = $database -> prepare("
                         
-                            UPDATE users
+                            UPDATE user
                             SET status = 0, last_logout_date = ?
                             WHERE user_id = ?
                         ");
 
                         $query -> execute([date("Y/m/d H:i:s"), $row["user_id"]]);
-                        requestOk("Logout ok");
+                        requestOk(array("message" => "Logout ok"));
                     }
                 }
 

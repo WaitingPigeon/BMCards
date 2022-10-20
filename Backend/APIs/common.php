@@ -34,7 +34,7 @@
         print json_encode([
 
             "return_status" => null,
-            "payload" => $message
+            "cause" => $message
         ]);
     }
 
@@ -54,7 +54,7 @@
         print json_encode([
 
             "return_status" => $error_code,
-            "payload" => $message
+            "cause" => $message
         ]);
     }
 
@@ -68,19 +68,6 @@
     }
 
     /*
-        API response object {
-
-            {
-                return code,
-                payload
-            }
-
-            if HTTP == 200, then the object is populated
-            if HTTP != 200, the the request itself failed -> response json object is empty and the appropriate HTTP code is returned
-
-            even if HTTP == 200 doesn't mean that it 100% completed...
-            the server / DB might still fail (example login with wrong password)
-        }
 
         custom return codes {
 

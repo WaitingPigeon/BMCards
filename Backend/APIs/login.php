@@ -1,5 +1,45 @@
 <?php
 
+    /*
+        parameters & return values (all in JSON)
+
+        REQUEST BODY:
+
+            {
+                "username": String,
+                "password": String
+            }
+
+        RESPONSE BODY:
+
+            if HTTP != 200:
+
+                {
+                    "return_status": null,
+                    "cause": String
+                }
+
+            else:
+
+                if request was successful:
+
+                    {
+                        "return_status": 0,
+                        "payload": {
+
+                            "user_id": Int,
+                            "message": String
+                        }
+                    }
+
+                else:
+
+                    {
+                        "return_status": Int,
+                        "cause": String
+                    }
+    */
+
     include("./common.php");
 
     // check if the request method is the correct one
@@ -31,7 +71,7 @@
                     $query = $database -> prepare("
                     
                         SELECT user_id, password, status
-                        FROM users
+                        FROM user
                         WHERE username = ?
                     ");
 
@@ -56,13 +96,13 @@
                                 // change the user status in the DB
                                 $query = $database -> prepare("
                         
-                                    UPDATE users
+                                    UPDATE user
                                     SET status = 1
                                     WHERE user_id = ?
                                 ");
     
                                 $query -> execute([$row["user_id"]]);
-                                requestOk("Login ok");
+                                requestOk(array("user_id" => $row["user_id"], "message" => "Login was successful"));
                             }
         
                             else {
