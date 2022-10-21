@@ -6,10 +6,26 @@
 script = ExtResource( 1 )
 
 [node name="Login_button" type="Button" parent="."]
-margin_left = 599.0
-margin_top = 428.0
-margin_right = 1324.0
-margin_bottom = 761.0
+margin_left = 636.0
+margin_top = 248.0
+margin_right = 1361.0
+margin_bottom = 581.0
 text = "LOGIN"
+
+[node name="LineEdit" type="LineEdit" parent="."]
+margin_left = 637.0
+margin_top = 633.0
+margin_right = 1362.0
+margin_bottom = 738.0
+text = "Username"
+
+[node name="LineEdit2" type="LineEdit" parent="."]
+margin_left = 637.0
+margin_top = 755.0
+margin_right = 1362.0
+margin_bottom = 856.0
+text = "Password"
+
+[node name="HTTPRequest" type="HTTPRequest" parent="."]
 
 [connection signal="pressed" from="Login_button" to="." method="_on_Login_button_pressed"]
