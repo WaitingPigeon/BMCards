@@ -1,49 +1,11 @@
 <?php
 
-    /*
-        parameters & return values (all in JSON)
-
-        REQUEST BODY:
-
-            {
-                "username": String
-            }
-
-        RESPONSE BODY:
-
-            if HTTP != 200:
-
-                {
-                    "return_status": null,
-                    "cause": String
-                }
-
-            else:
-
-                if request was successful:
-
-                    {
-                        "return_status": 0,
-                        "payload": {
-
-                            "message": String
-                        }
-                    }
-
-                else:
-
-                    {
-                        "return_status": Int,
-                        "cause": String
-                    }
-    */
-
     include("./common.php");
 
     // check if the request method is the correct one
-    if(empty($_SERVER["REQUEST_METHOD"]) || $_SERVER["REQUEST_METHOD"] != "DELETE") {
+    if($_SERVER["REQUEST_METHOD"] !== "DELETE") {
 
-        denyRequest(400, "Invalid request method, expected DELETE while got: ".$_SERVER["REQUEST_METHOD"]);
+        http_response_code(400); // "bad request"
     }
 
     else {
@@ -51,8 +13,8 @@
         // decode the JSON in the body of the request
         $params = json_decode(file_get_contents("php://input"), true);
 
-        // check if they are not empty
-        if(!empty($params["username"])) {
+        // check if the credentials are valid
+        if(validateParam($params["username"]) == true) {
 
             try {
 
@@ -65,7 +27,8 @@
                     WHERE username = ?
                 ");
 
-                $query -> execute([$params["username"]]);
+                $query -> bindParam(1, $params["username"], PDO::PARAM_STR);
+                $query -> execute();
 
                 // check if it exists
                 if($query -> rowCount() > 0) {
@@ -75,7 +38,7 @@
                     // check if it's already offline
                     if($row["status"] == 0) {
 
-                        requestError(7);
+                        http_response_code(403); // "forbidden"
                     }
 
                     else {
@@ -88,27 +51,41 @@
                             WHERE user_id = ?
                         ");
 
-                        $query -> execute([date("Y/m/d H:i:s"), $row["user_id"]]);
-                        requestOk(array("message" => "Logout ok"));
+                        $query -> bindParam(1, date("Y/m/d H:i:s"), PDO::PARAM_STR);
+                        $query -> bindParam(2, $row["user_id"], PDO::PARAM_INT);
+                        $query -> execute();
+                        
+                        // check if the query was successful
+                        if($query == true) {
+
+                            http_response_code(200); // "OK"
+                        }
+
+                        else {
+
+                            http_response_code(500); // "internal server error"
+                        }
                     }
                 }
 
                 else {
 
                     // target user doesn't exist
-                    requestError(5);
+                    http_response_code(401); // "unauthorized"
                 }
             }
 
             catch(PDOException $exc) {
     
-                denyRequest(500, $exc -> getMessage());
+                // server error
+                http_response_code(500); // "internal server error"
             }
         }
 
         else {
 
-            denyRequest(400, "Invalid, null or empty arguments.");
+            // parameter is malformed
+            http_response_code(400); // "bad request"
         }
     }
 ?>

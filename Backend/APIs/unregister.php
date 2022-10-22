@@ -1,43 +1,6 @@
 <?php
 
-    /*
-        parameters & return values (all in JSON)
-
-        REQUEST BODY:
-
-            {
-                "username": String,
-                "password": String
-            }
-
-        RESPONSE BODY:
-
-            if HTTP != 200:
-
-                {
-                    "return_status": null,
-                    "cause": String
-                }
-
-            else:
-
-                if request was successful:
-
-                    {
-                        "return_status": 0,
-                        "payload": {
-
-                            "message": String
-                        }
-                    }
-
-                else:
-
-                    {
-                        "return_status": Int,
-                        "cause": String
-                    }
-    */
+    // UPDATE  THIS SCRIPT
 
     include("./common.php");
 

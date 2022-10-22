@@ -1,0 +1,195 @@
+\documentclass[a4paper,12pt]{article}
+
+\addtolength{\oddsidemargin}{-.875in}
+\addtolength{\evensidemargin}{-.875in}
+\addtolength{\textwidth}{1.75in}
+\addtolength{\topmargin}{-.875in}
+\addtolength{\textheight}{1.75in}
+
+\title{\par\noindent\huge{API functions documentation}}
+\date{21th, Oct 2022}
+%\author{BMCards team}
+
+\begin{document}
+
+    \pagenumbering{arabic}
+	\maketitle
+	\newpage
+%__________________________________________________________________________________________________________________________________
+
+	\tableofcontents
+	\newpage
+%__________________________________________________________________________________________________________________________________
+
+    \section[User API functions]{User API functions}
+        
+        \vspace{10pt}
+
+        These functions concern the manipulation of the user database which is responsible for holding the users, user messages, friendships as well as other relations. The implemented abstractions behave in a stateless and are compliant with the REST design pattern. The following is the list with all the API functions:
+
+        \subsection[User login]{User login}
+
+            \vspace{10pt}
+
+            This request, called \textbf{user\_login}, can be used to perform the login of the user by passing the JSON encoded credentials in the body of the request.
+
+            \begin{itemize}
+
+                \item \textit{url endpoint: \ldots/userservices/login.php}
+                \item \textit{method: POST}
+                \item \textit{possible HTTP status codes:}
+
+                    \begin{itemize}
+
+                        \item \textit{200 ``OK'': request was successful.}
+                        \item \textit{400 ``Bad Request'': request had missing or malformed parameters.}
+                        \item \textit{401 ``Unauthorized'': user doesn't exist.}
+                        \item \textit{403 ``Forbidden'': wrong password for the specified username or user is already logged-in.}
+                        \item \textit{404 ``Not found'': could not find the specified service.}
+                        \item \textit{500 ``internal server error'': error in negotiation with the database.}
+
+                    \end{itemize}
+
+                \item \textit{request parameters: JSON object containing two keys.}
+    
+    \begin{verbatim}
+                        
+        {
+            "username": String,
+            "password": String
+        }
+
+    \end{verbatim}
+
+                \item \textit{response parameters: JSON object containing different keys depending on the returned HTTP status code.}
+
+    \begin{verbatim}
+                        
+        {
+            "user_already_loggedin": (Boolean | null),
+            "payload": {
+
+                "user_id": (Int | null)
+            }
+        }
+            
+    \end{verbatim}
+
+            \end{itemize}
+
+        \clearpage
+        \subsection[User register]{User register}
+
+            \vspace{10pt}
+
+            This request, called \textbf{user\_register}, can be used to perform the registration of the user by passing the JSON encoded credentials in the body of the request.
+
+            \begin{itemize}
+
+                \item \textit{url endpoint: \ldots/userservices/register.php}
+                \item \textit{method: POST}
+                \item \textit{possible HTTP status codes:}
+
+                    \begin{itemize}
+
+                        \item \textit{200 ``OK'': request was successful.}
+                        \item \textit{400 ``Bad Request'': request had missing or malformed parameters.}
+                        \item \textit{403 ``Forbidden'': user already exists.}
+                        \item \textit{404 ``Not found'': could not find the specified service.}
+                        \item \textit{500 ``internal server error'': error in negotiation with the database.}
+
+                    \end{itemize}
+
+                \item \textit{request parameters: JSON object containing two keys.}
+    
+    \begin{verbatim}
+                        
+        {
+            "username": String,
+            "password": String
+        }
+
+    \end{verbatim}
+
+                \item \textit{response parameters: there is no response body.}
+
+            \end{itemize}
+
+        \clearpage
+        \subsection[User logout]{User logout}
+
+            \vspace{10pt}
+
+            This request, called \textbf{user\_logout}, can be used to perform the logout of the user by passing the JSON encoded username in the body of the request.
+
+            \begin{itemize}
+
+                \item \textit{url endpoint: \ldots/userservices/logout.php}
+                \item \textit{method: DELETE}
+                \item \textit{possible HTTP status codes:}
+
+                    \begin{itemize}
+
+                        \item \textit{200 ``OK'': request was successful.}
+                        \item \textit{400 ``Bad Request'': request had missing or malformed parameters.}
+                        \item \textit{401 ``Unauthorized'': user doesn't exist.}
+                        \item \textit{403 ``Forbidden'': user is already offline.}
+                        \item \textit{404 ``Not found'': could not find the specified service.}
+                        \item \textit{500 ``internal server error'': error in negotiation with the database.}
+
+                    \end{itemize}
+
+                \item \textit{request parameters: JSON object containing the username.}
+    
+    \begin{verbatim}
+                        
+        {
+            "username": String
+        }
+
+    \end{verbatim}
+
+                \item \textit{response parameters: there is no response body.}
+
+            \end{itemize}
+
+        \clearpage
+        \subsection[User unregister]{User unregister}
+
+            \vspace{10pt}
+
+            This request, called \textbf{user\_unregister}, can be used to perform the unregistration of the user by passing the JSON encoded credentials in the body of the request.
+
+            \begin{itemize}
+
+                \item \textit{url endpoint: \ldots/userservices/logout.php}
+                \item \textit{method: DELETE}
+                \item \textit{possible HTTP status codes:}
+
+                    \begin{itemize}
+
+                        \item \textit{200 ``OK'': request was successful.}
+                        \item \textit{400 ``Bad Request'': request had missing or malformed parameters.}
+                        \item \textit{401 ``Unauthorized'': user doesn't exist.}
+                        \item \textit{403 ``Forbidden'': wrong password for the specified username.}
+                        \item \textit{404 ``Not found'': could not find the specified service.}
+                        \item \textit{500 ``internal server error'': error in negotiation with the database.}
+
+                    \end{itemize}
+
+                \item \textit{request parameters: JSON object containing the credentials.}
+    
+    \begin{verbatim}
+                        
+        {
+            "username": String,
+            "password": String
+        }
+
+    \end{verbatim}
+
+                \item \textit{response parameters: there is no response body.}
+
+            \end{itemize}
+
+\end{document}

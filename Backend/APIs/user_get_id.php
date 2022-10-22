@@ -1,5 +1,7 @@
 <?php
 
+    // UPDATE  THIS SCRIPT
+
     include("./common.php");
 
     // check if the request method is the correct one
