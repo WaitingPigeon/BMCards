@@ -1,0 +1,6 @@
+# this file tells git what other file extentions should be ignored in the remote repository
+*.log
+*.aux
+*.dvi
+*.toc
+*.out
